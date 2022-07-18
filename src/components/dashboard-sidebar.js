@@ -44,9 +44,9 @@ const items = [
     role: '3'
   },
   {
-    href: '/account',
+    href: '/user',
     icon: (<UserIcon fontSize="small" />),
-    title: 'Account',
+    title: 'User',
     role: '4'
   },
   {

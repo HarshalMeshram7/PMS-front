@@ -48,6 +48,7 @@ const Login = () => {
       try {
         await login({ email, password });
         setLoading(false);
+        localStorage.setItem("role","Federation") 
       } catch (error) {
         setLoading(false);
         setError("Login Failed !");

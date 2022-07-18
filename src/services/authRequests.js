@@ -27,9 +27,9 @@ export const login = async ({ email, password }) => {
   }
 };
 
-//GET ADMIN DETAILS
-export const getAdmin = async () => {
-  const { token, user_id } = useStorage();
+//GET USER DETAILS
+export const getUser = async () => {
+  const { token, user_id  } = useStorage();
   if (!token) {
     throw new Error("No token");
   }
@@ -39,7 +39,6 @@ export const getAdmin = async () => {
         Authorization: "Bearer " + token,
       },
     });
-    console.log(res.data);
     return res.data;
   } catch (error) {
     console.log(error);

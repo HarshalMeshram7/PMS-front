@@ -15,32 +15,45 @@ import { Users as UsersIcon } from '../icons/users';
 import { XCircle as XCircleIcon } from '../icons/x-circle';
 import { Logo } from './logo';
 import { NavItem } from './nav-item';
+import { useState } from 'react';
+
+const access = [{
+  Federation : "5",
+  Club : "4",
+  Team : "3",
+  Player : "2",
+}]
 
 const items = [
   {
     href: '/',
     icon: (<ChartBarIcon fontSize="small" />),
-    title: 'Dashboard'
+    title: 'Dashboard',
+    role:'1'
   },
   {
     href: '/customers',
     icon: (<UsersIcon fontSize="small" />),
-    title: 'Customers'
+    title: 'Customers',
+    role: '2'
   },
   {
     href: '/products',
     icon: (<ShoppingBagIcon fontSize="small" />),
-    title: 'Products'
+    title: 'Products',
+    role: '3'
   },
   {
     href: '/account',
     icon: (<UserIcon fontSize="small" />),
-    title: 'Account'
+    title: 'Account',
+    role: '4'
   },
   {
     href: '/settings',
     icon: (<CogIcon fontSize="small" />),
-    title: 'Settings'
+    title: 'Settings',
+    role: '5'
   },
   // {
   //   href: '/login',
@@ -66,6 +79,10 @@ export const DashboardSidebar = (props) => {
     defaultMatches: true,
     noSsr: false
   });
+  const [role, setRole] = useState("Player")
+  useEffect(() => {
+   setRole(localStorage.getItem('role'))
+  }, [])
 
   useEffect(
     () => {
@@ -152,7 +169,13 @@ export const DashboardSidebar = (props) => {
           }}
         />
         <Box sx={{ flexGrow: 1 }}>
-          {items.map((item) => (
+          {items.filter(item =>
+            
+            
+            item.role <= access[0][role]
+
+
+          ).map((item) => (
             <NavItem
               key={item.title}
               icon={item.icon}

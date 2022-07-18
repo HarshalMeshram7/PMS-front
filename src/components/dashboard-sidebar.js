@@ -38,9 +38,9 @@ const items = [
     role: '2'
   },
   {
-    href: '/products',
+    href: '/clubs',
     icon: (<ShoppingBagIcon fontSize="small" />),
-    title: 'Products',
+    title: 'Clubs',
     role: '3'
   },
   {

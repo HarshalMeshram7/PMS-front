@@ -1,6 +1,9 @@
 import { v4 as uuid } from 'uuid';
 
-export const products = [
+
+
+
+export const clubs = [
   {
     id: uuid(),
     createdAt: '27/03/2019',

@@ -1,15 +1,15 @@
 import Head from 'next/head';
 import { Box, Container, Grid, Pagination } from '@mui/material';
-import { products } from '../__mocks__/products';
-import { ProductListToolbar } from '../components/product/product-list-toolbar';
-import { ProductCard } from '../components/product/product-card';
+import { clubs } from '../__mocks__/clubs';
+import { ClubListToolbar } from '../components/clubs/club-list-toolbar';
+import { ClubCard } from '../components/clubs/club-card';
 import { DashboardLayout } from '../components/dashboard-layout';
 
-const Products = () => (
+const Clubs = () => (
   <>
     <Head>
       <title>
-        Products | Material Kit
+        Clubs | PMS
       </title>
     </Head>
     <Box
@@ -20,13 +20,13 @@ const Products = () => (
       }}
     >
       <Container maxWidth={false}>
-        <ProductListToolbar />
+        <ClubListToolbar />
         <Box sx={{ pt: 3 }}>
           <Grid
             container
             spacing={3}
           >
-            {products.map((product) => (
+            {clubs.map((product) => (
               <Grid
                 item
                 key={product.id}
@@ -34,7 +34,7 @@ const Products = () => (
                 md={6}
                 xs={12}
               >
-                <ProductCard product={product} />
+                <ClubCard product={product} />
               </Grid>
             ))}
           </Grid>
@@ -57,10 +57,10 @@ const Products = () => (
   </>
 );
 
-Products.getLayout = (page) => (
+Clubs.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>
 );
 
-export default Products;
+export default Clubs;

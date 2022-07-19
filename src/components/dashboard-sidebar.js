@@ -14,14 +14,17 @@ import { UserAdd as UserAddIcon } from '../icons/user-add';
 import { Users as UsersIcon } from '../icons/users';
 import { XCircle as XCircleIcon } from '../icons/x-circle';
 import { Logo } from './logo';
+
+import htp_logo from "../../public/static/PMS/htp_transparent_logo.png"
+
 import { NavItem } from './nav-item';
 import { useState } from 'react';
 
 const access = [{
-  Federation : "5",
-  Club : "4",
-  Team : "3",
-  Player : "2",
+  Federation: "5",
+  Club: "4",
+  Team: "3",
+  Player: "2",
 }]
 
 const items = [
@@ -29,12 +32,12 @@ const items = [
     href: '/',
     icon: (<ChartBarIcon fontSize="small" />),
     title: 'Dashboard',
-    role:'1'
+    role: '1'
   },
   {
-    href: '/customers',
+    href: '/players',
     icon: (<UsersIcon fontSize="small" />),
-    title: 'Customers',
+    title: 'Players',
     role: '2'
   },
   {
@@ -81,7 +84,7 @@ export const DashboardSidebar = (props) => {
   });
   const [role, setRole] = useState("Player")
   useEffect(() => {
-   setRole(localStorage.getItem('role'))
+    setRole(localStorage.getItem('role'))
   }, [])
 
   useEffect(
@@ -114,12 +117,15 @@ export const DashboardSidebar = (props) => {
               passHref
             >
               <a>
-                <Logo
+                {/* <Logo                   //original logo
                   sx={{
                     height: 42,
                     width: 42
                   }}
-                />
+                /> */}
+
+                <img src={htp_logo.src} width={"150vw"} />
+
               </a>
             </NextLink>
           </Box>
@@ -170,8 +176,8 @@ export const DashboardSidebar = (props) => {
         />
         <Box sx={{ flexGrow: 1 }}>
           {items.filter(item =>
-            
-            
+
+
             item.role <= access[0][role]
 
 
@@ -191,7 +197,7 @@ export const DashboardSidebar = (props) => {
             py: 3
           }}
         >
-         
+
         </Box>
       </Box>
     </>

@@ -17,41 +17,43 @@ import {
 } from '@mui/material';
 import { getInitials } from '../../utils/get-initials';
 
-export const CustomerListResults = ({ customers, ...rest }) => {
-  const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
+
+
+export const PlayerListResults = ({ players, ...rest }) => {
+  const [selectedPlayerIds, setSelectedPlayerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
   const handleSelectAll = (event) => {
-    let newSelectedCustomerIds;
+    let newSelectedPlayerIds;
 
     if (event.target.checked) {
-      newSelectedCustomerIds = customers.map((customer) => customer.id);
+      newSelectedPlayerIds = players.map((customer) => customer.id);
     } else {
-      newSelectedCustomerIds = [];
+      newSelectedPlayerIds = [];
     }
 
-    setSelectedCustomerIds(newSelectedCustomerIds);
+    setSelectedPlayerIds(newSelectedPlayerIds);
   };
 
   const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedCustomerIds.indexOf(id);
-    let newSelectedCustomerIds = [];
+    const selectedIndex = selectedPlayerIds.indexOf(id);
+    let newSelectedPlayerIds = [];
 
     if (selectedIndex === -1) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds, id);
+      newSelectedPlayerIds = newSelectedPlayerIds.concat(selectedPlayerIds, id);
     } else if (selectedIndex === 0) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(1));
-    } else if (selectedIndex === selectedCustomerIds.length - 1) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(0, -1));
+      newSelectedPlayerIds = newSelectedPlayerIds.concat(selectedPlayerIds.slice(1));
+    } else if (selectedIndex === selectedPlayerIds.length - 1) {
+      newSelectedPlayerIds = newSelectedPlayerIds.concat(selectedPlayerIds.slice(0, -1));
     } else if (selectedIndex > 0) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(
-        selectedCustomerIds.slice(0, selectedIndex),
-        selectedCustomerIds.slice(selectedIndex + 1)
+      newSelectedPlayerIds = newSelectedPlayerIds.concat(
+        selectedPlayerIds.slice(0, selectedIndex),
+        selectedPlayerIds.slice(selectedIndex + 1)
       );
     }
 
-    setSelectedCustomerIds(newSelectedCustomerIds);
+    setSelectedPlayerIds(newSelectedPlayerIds);
   };
 
   const handleLimitChange = (event) => {
@@ -71,11 +73,11 @@ export const CustomerListResults = ({ customers, ...rest }) => {
               <TableRow>
                 <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedCustomerIds.length === customers.length}
+                    checked={selectedPlayerIds.length === players.length}
                     color="primary"
                     indeterminate={
-                      selectedCustomerIds.length > 0
-                      && selectedCustomerIds.length < customers.length
+                      selectedPlayerIds.length > 0
+                      && selectedPlayerIds.length < players.length
                     }
                     onChange={handleSelectAll}
                   />
@@ -98,16 +100,16 @@ export const CustomerListResults = ({ customers, ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {customers.slice(0, limit).map((customer) => (
+              {players.slice(0, limit).map((player) => (
                 <TableRow
                   hover
-                  key={customer.id}
-                  selected={selectedCustomerIds.indexOf(customer.id) !== -1}
+                  key={player.id}
+                  selected={selectedPlayerIds.indexOf(player.id) !== -1}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedCustomerIds.indexOf(customer.id) !== -1}
-                      onChange={(event) => handleSelectOne(event, customer.id)}
+                      checked={selectedPlayerIds.indexOf(player.id) !== -1}
+                      onChange={(event) => handleSelectOne(event, player.id)}
                       value="true"
                     />
                   </TableCell>
@@ -119,30 +121,30 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                       }}
                     >
                       <Avatar
-                        src={customer.avatarUrl}
+                        src={player.avatarUrl}
                         sx={{ mr: 2 }}
                       >
-                        {getInitials(customer.name)}
+                        {getInitials(player.name)}
                       </Avatar>
                       <Typography
                         color="textPrimary"
                         variant="body1"
                       >
-                        {customer.name}
+                        {player.name}
                       </Typography>
                     </Box>
                   </TableCell>
                   <TableCell>
-                    {customer.email}
+                    {player.email}
                   </TableCell>
                   <TableCell>
-                    {`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
+                    {`${player.address.city}, ${player.address.state}, ${player.address.country}`}
                   </TableCell>
                   <TableCell>
-                    {customer.phone}
+                    {player.phone}
                   </TableCell>
                   <TableCell>
-                    {format(customer.createdAt, 'dd/MM/yyyy')}
+                    {format(player.createdAt, 'dd/MM/yyyy')}
                   </TableCell>
                 </TableRow>
               ))}
@@ -152,7 +154,7 @@ export const CustomerListResults = ({ customers, ...rest }) => {
       </PerfectScrollbar>
       <TablePagination
         component="div"
-        count={customers.length}
+        count={players.length}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleLimitChange}
         page={page}
@@ -163,6 +165,6 @@ export const CustomerListResults = ({ customers, ...rest }) => {
   );
 };
 
-CustomerListResults.propTypes = {
-  customers: PropTypes.array.isRequired
+PlayerListResults.propTypes = {
+  players: PropTypes.array.isRequired
 };

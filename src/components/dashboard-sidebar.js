@@ -16,6 +16,7 @@ import { XCircle as XCircleIcon } from '../icons/x-circle';
 import { Logo } from './logo';
 import { NavItem } from './nav-item';
 import { useState } from 'react';
+import useStorage from 'src/hooks/useStorage';
 
 const access = [{
   Federation : "5",
@@ -79,10 +80,9 @@ export const DashboardSidebar = (props) => {
     defaultMatches: true,
     noSsr: false
   });
-  const [role, setRole] = useState("Player")
-  useEffect(() => {
-   setRole(localStorage.getItem('role'))
-  }, [])
+  // const [role, setRole] = useState("Player")
+  const {role } = useStorage();
+
 
   useEffect(
     () => {

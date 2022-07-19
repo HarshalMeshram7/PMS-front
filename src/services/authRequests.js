@@ -6,17 +6,17 @@ import { MAIN_URL } from "./apiConfig";
 //ADMIN LOGIN
 export const login = async ({ email, password }) => {
   try {
-    const res = await axios.post(`${MAIN_URL}/login/`, {
+    const res = await axios.post(`${MAIN_URL}/api/user/login`, {
       email,
       password,
     });
     const { setToken, setUserId, setEmail, setRole } = useStorage();
 
-    const authData = jwtDecode(res.data?.access_token);
+    const authData = jwtDecode(res.data?.token);
     const tokenExp = authData?.exp;
     const userRole = authData?.role;
 
-    setToken(res.data?.access_token);
+    setToken(res.data?.token);
     setRole(userRole);
     setUserId(res.data?.admin_id);
     setEmail(res.data?.email);
@@ -29,17 +29,17 @@ export const login = async ({ email, password }) => {
 
 //GET USER DETAILS
 export const getUser = async () => {
-  const { token, user_id  } = useStorage();
+  const { token } = useStorage();
   if (!token) {
     throw new Error("No token");
   }
   try {
-    let res = await axios.get(`${MAIN_URL}/profile`, {
+    let res = await axios.get(`${MAIN_URL}/api/user/loggeduser`, {
       headers: {
         Authorization: "Bearer " + token,
       },
     });
-    return res.data;
+    return res.data.user;
   } catch (error) {
     console.log(error);
 

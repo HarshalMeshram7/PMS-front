@@ -25,8 +25,8 @@ const Login = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: 'john@mail.com',
-      password: 'changeme'
+      email: 'Monish@pixonix.tech',
+      password: 'Monish@1995'
     },
     validationSchema: Yup.object({
       email: Yup
@@ -48,7 +48,7 @@ const Login = () => {
       try {
         await login({ email, password });
         setLoading(false);
-        localStorage.setItem("role","Federation") 
+        // localStorage.setItem("role", "Player")
       } catch (error) {
         setLoading(false);
         setError("Login Failed !");
@@ -72,7 +72,7 @@ const Login = () => {
         }}
       >
         <Container maxWidth="sm">
-          
+
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography
@@ -81,7 +81,7 @@ const Login = () => {
               >
                 Sign in
               </Typography>
-              
+
             </Box>
             <Grid
               container
@@ -92,7 +92,7 @@ const Login = () => {
                 xs={12}
                 md={12}
               >
-                
+
               </Grid>
               <Grid
                 item

@@ -1,14 +1,14 @@
 import Head from 'next/head';
 import { Box, Container, Grid, Typography } from '@mui/material';
-import { AccountProfile } from '../components/account/account-profile';
-import { AccountProfileDetails } from '../components/account/account-profile-details';
+import { UserProfile } from '../components/account/user-profile';
+import { UserProfileDetails } from '../components/account/user-profile-details';
 import { DashboardLayout } from '../components/dashboard-layout';
 
-const Account = () => (
+const User = () => (
   <>
     <Head>
       <title>
-        Account | Material Kit
+        User | PMS
       </title>
     </Head>
     <Box
@@ -23,7 +23,7 @@ const Account = () => (
           sx={{ mb: 3 }}
           variant="h4"
         >
-          Account
+          User's Profile
         </Typography>
         <Grid
           container
@@ -35,7 +35,7 @@ const Account = () => (
             md={6}
             xs={12}
           >
-            <AccountProfile />
+            <UserProfile />
           </Grid>
           <Grid
             item
@@ -43,7 +43,7 @@ const Account = () => (
             md={6}
             xs={12}
           >
-            <AccountProfileDetails />
+            <UserProfileDetails />
           </Grid>
         </Grid>
       </Container>
@@ -51,10 +51,10 @@ const Account = () => (
   </>
 );
 
-Account.getLayout = (page) => (
+User.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>
 );
 
-export default Account;
+export default User;

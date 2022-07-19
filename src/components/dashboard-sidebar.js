@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import { Box, Button, Divider, Drawer, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, Divider, Drawer, Tooltip, Typography, useMediaQuery } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { ChartBar as ChartBarIcon } from '../icons/chart-bar';
 import { Cog as CogIcon } from '../icons/cog';
@@ -14,6 +14,8 @@ import { UserAdd as UserAddIcon } from '../icons/user-add';
 import { Users as UsersIcon } from '../icons/users';
 import { XCircle as XCircleIcon } from '../icons/x-circle';
 import { Logo } from './logo';
+import GroupsIcon from '@mui/icons-material/Groups';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 import htp_logo from "../../public/static/PMS/htp_transparent_logo.png"
 
@@ -43,13 +45,13 @@ const items = [
   },
   {
     href: '/clubs',
-    icon: (<ShoppingBagIcon fontSize="small" />),
+    icon: (<GroupsIcon fontSize="small" />),
     title: 'Clubs',
     role: '3'
   },
   {
     href: '/user',
-    icon: (<UserIcon fontSize="small" />),
+    icon: (<ManageAccountsIcon fontSize="small" />),
     title: 'User',
     role: '4'
   },
@@ -84,7 +86,7 @@ export const DashboardSidebar = (props) => {
     noSsr: false
   });
   // const [role, setRole] = useState("Player")
-  const {role } = useStorage();
+  const { role } = useStorage();
 
 
   useEffect(
@@ -123,9 +125,10 @@ export const DashboardSidebar = (props) => {
                     width: 42
                   }}
                 /> */}
-
-                <img src={htp_logo.src} width={"150vw"} />
-
+                <Tooltip title="Federation Logo">
+                  <img src={htp_logo.src}
+                    width={"150vw"} />
+                </Tooltip>
               </a>
             </NextLink>
           </Box>

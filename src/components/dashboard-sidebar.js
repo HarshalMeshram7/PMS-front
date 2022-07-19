@@ -83,16 +83,9 @@ export const DashboardSidebar = (props) => {
     defaultMatches: true,
     noSsr: false
   });
-<<<<<<< HEAD
   // const [role, setRole] = useState("Player")
   const {role } = useStorage();
 
-=======
-  const [role, setRole] = useState("Player")
-  useEffect(() => {
-    setRole(localStorage.getItem('role'))
-  }, [])
->>>>>>> 886ad39edecebdb1971defde9a372893feb62a9e
 
   useEffect(
     () => {

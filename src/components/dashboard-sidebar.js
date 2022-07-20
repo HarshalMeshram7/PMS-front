@@ -16,8 +16,16 @@ import { XCircle as XCircleIcon } from '../icons/x-circle';
 import { Logo } from './logo';
 import GroupsIcon from '@mui/icons-material/Groups';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-
 import htp_logo from "../../public/static/PMS/htp_transparent_logo.png"
+
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import SchoolIcon from '@mui/icons-material/School';
+import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
+import SportsIcon from '@mui/icons-material/Sports';
+import TourIcon from '@mui/icons-material/Tour';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import SecurityIcon from '@mui/icons-material/Security';
 
 import { NavItem } from './nav-item';
 import { useState } from 'react';
@@ -37,24 +45,91 @@ const items = [
     title: 'Dashboard',
     role: '1'
   },
+
+  {
+    href: '/academy',
+    icon: (<SchoolIcon fontSize="small" />),
+    title: 'Acedamy',
+    role: '1'
+  },
+
+  {
+    href: '/clubs',
+    icon: (<SecurityIcon fontSize="small" />),
+    title: 'Clubs',
+    role: '3'
+  },
+
+  {
+    href: '/team',
+    icon: (<GroupsIcon fontSize="small" />),
+    title: 'Team',
+    role: '1'
+  },
+
   {
     href: '/players',
     icon: (<UsersIcon fontSize="small" />),
     title: 'Players',
     role: '2'
   },
+
   {
-    href: '/clubs',
+    href: '/contract-management',
     icon: (<GroupsIcon fontSize="small" />),
-    title: 'Clubs',
+    title: 'Contract Management',
     role: '3'
   },
+
+  {
+    href: '/staff-registration',
+    icon: (<HowToRegIcon fontSize="small" />),
+    title: 'Staff Registration',
+    role: '3'
+  },
+
+  {
+    href: '/referee-registration',
+    icon: (<SportsIcon fontSize="small" />),
+    title: 'Referee Registration',
+    role: '3'
+  },
+
+  {
+    href: '/coach-registration',
+    icon: (<SettingsAccessibilityIcon fontSize="small" />),
+    title: 'Coaches Registration',
+    role: '3'
+  },
+
+  {
+    href: '/scorecard',
+    icon: (<AssignmentIcon fontSize="small" />),
+    title: 'Scorecard',
+    role: '3'
+  },
+
+  {
+    href: '/tournament-matches',
+    icon: (<TourIcon fontSize="small" />),
+    title: 'Tournaments and Matches',
+    role: '3'
+  },
+
+  {
+    href: '/reports',
+    icon: (<AssessmentIcon fontSize="small" />),
+    title: 'Reports',
+    role: '3'
+  },
+
   {
     href: '/user',
     icon: (<ManageAccountsIcon fontSize="small" />),
     title: 'User',
     role: '4'
   },
+
   {
     href: '/settings',
     icon: (<CogIcon fontSize="small" />),

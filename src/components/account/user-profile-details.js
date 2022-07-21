@@ -32,7 +32,9 @@ export const UserProfileDetails = (props) => {
     email: 'demo@devias.io',
     phone: '',
     state: 'Alabama',
-    country: 'USA'
+    country: 'USA',
+    password: '',
+    confirm: ''
   });
 
   const handleChange = (event) => {
@@ -161,6 +163,39 @@ export const UserProfileDetails = (props) => {
                 ))}
               </TextField>
             </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                label="Password"
+                margin="normal"
+                name="password"
+                onChange={handleChange}
+                type="password"
+                value={values.password}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                label="Confirm Password"
+                margin="normal"
+                name="password"
+                onChange={handleChange}
+                type="password"
+                value={values.confirm}
+                variant="outlined"
+              />
+            </Grid>
+
           </Grid>
         </CardContent>
         <Divider />

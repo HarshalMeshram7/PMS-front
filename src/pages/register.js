@@ -11,31 +11,48 @@ import {
   FormHelperText,
   Link,
   TextField,
-  Typography
+  Typography,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
 } from '@mui/material';
+import { Grid } from '@material-ui/core';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import RegisterBackground from '../../public/static/images/background/register.jpg';
 import loginBackground from '../../public/static/images/background/login.jpg';
+
+
+import moment from 'moment';
+
+// import InputLabel from '@mui/material/InputLabel';
+// import Select, { SelectChangeEvent } from '@mui/material/Select';
+
+
+
 
 
 const Register = () => {
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
-      email: '',
       firstName: '',
       lastName: '',
+      email: '',
+      number: '',
+      date: '',
+      gender: '',
+      street: '',
+      country: '',
+      state: '',
+      city: '',
+      role: '',
+      file: '',
       password: '',
+      cnfpassword: '',
       policy: false
     },
     validationSchema: Yup.object({
-      email: Yup
-        .string()
-        .email(
-          'Must be a valid email')
-        .max(255)
-        .required(
-          'Email is required'),
       firstName: Yup
         .string()
         .max(255)
@@ -44,13 +61,40 @@ const Register = () => {
       lastName: Yup
         .string()
         .max(255)
-        .required(
-          'Last name is required'),
+        .required('Last name is required'),
+      email: Yup
+        .string()
+        .email('Must be a valid email')
+        .max(255)
+        .required('Email is required'),
+
+      dob: Yup
+        .string()
+        .test("DOB", "Shoud Be Greater Then 18",
+          value => {
+            return moment().diff(moment(value), 'years') >= 18;
+          }
+        )
+        .required('Required'),
+
+      street: Yup
+        .string()
+        .required('Required'),
+
+      city: Yup
+        .string()
+        .required('Required'),
+      state: Yup
+        .string()
+        .required('Required'),
+      country: Yup
+        .string()
+        .required('Required'),
+
       password: Yup
         .string()
         .max(255)
-        .required(
-          'Password is required'),
+        .required('Password is required'),
       policy: Yup
         .boolean()
         .oneOf(
@@ -113,9 +157,11 @@ const Register = () => {
                 Use your email to create a new account
               </Typography> */}
             </Box>
+
+
             <TextField
               error={Boolean(formik.touched.firstName && formik.errors.firstName)}
-              // fullWidth
+              fullWidth
               helperText={formik.touched.firstName && formik.errors.firstName}
               label="First Name"
               margin="normal"
@@ -125,9 +171,10 @@ const Register = () => {
               value={formik.values.firstName}
               variant="outlined"
             />
+
             <TextField
               error={Boolean(formik.touched.lastName && formik.errors.lastName)}
-              // fullWidth
+              fullWidth
               helperText={formik.touched.lastName && formik.errors.lastName}
               label="Last Name"
               margin="normal"
@@ -137,9 +184,10 @@ const Register = () => {
               value={formik.values.lastName}
               variant="outlined"
             />
+
             <TextField
               error={Boolean(formik.touched.email && formik.errors.email)}
-              // fullWidth
+              fullWidth
               helperText={formik.touched.email && formik.errors.email}
               label="Email Address"
               margin="normal"
@@ -150,9 +198,10 @@ const Register = () => {
               value={formik.values.email}
               variant="outlined"
             />
+
             <TextField
               error={Boolean(formik.touched.number && formik.errors.number)}
-              // fullWidth
+              fullWidth
               helperText={formik.touched.number && formik.errors.number}
               label="Number"
               margin="normal"
@@ -163,9 +212,112 @@ const Register = () => {
               value={formik.values.number}
               variant="outlined"
             />
+
+            <TextField
+              error={Boolean(formik.touched.dob && formik.errors.dob)}
+              fullWidth
+              helperText={formik.touched.dob && formik.errors.dob}
+              // label="Date of Birth"
+              margin="normal"
+              name="dob"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              type="date"
+              value={formik.values.dob}
+              variant="outlined"
+            />
+
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-helper-label">Gender</InputLabel>
+              <Select
+                labelId="demo-simple-select-helper-label"
+                id="demo-simple-select-helper"
+                value={formik.values.gender}
+                name="gender"
+                label="Gender"
+                onChange={formik.handleChange}
+              >
+                <MenuItem value="Male">Male</MenuItem>
+                <MenuItem value="Female">Female</MenuItem>
+                <MenuItem value="Other">Other</MenuItem>
+              </Select>
+            </FormControl>
+
+            <TextField
+              error={Boolean(formik.touched.street && formik.errors.street)}
+              fullWidth
+              helperText={formik.touched.street && formik.errors.street}
+              label="Street"
+              margin="normal"
+              name="street"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              type="text"
+              value={formik.values.street}
+              variant="outlined"
+            />
+
+            <TextField
+              error={Boolean(formik.touched.country && formik.errors.country)}
+              fullWidth
+              helperText={formik.touched.country && formik.errors.country}
+              label="Country"
+              margin="normal"
+              name="country"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              type="address"
+              value={formik.values.country}
+              variant="outlined"
+            />
+
+            <TextField
+              error={Boolean(formik.touched.state && formik.errors.state)}
+              fullWidth
+              helperText={formik.touched.state && formik.errors.state}
+              label="State"
+              margin="normal"
+              name="state"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              type="address"
+              value={formik.values.state}
+              variant="outlined"
+            />
+
+            <TextField
+              error={Boolean(formik.touched.city && formik.errors.city)}
+              fullWidth
+              helperText={formik.touched.city && formik.errors.city}
+              label="City"
+              margin="normal"
+              name="city"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              type="address"
+              value={formik.values.city}
+              variant="outlined"
+            />
+
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-helper-label">Role</InputLabel>
+              <Select
+                labelId="demo-simple-select-helper-label"
+                id="demo-simple-select-helper"
+                value={formik.values.role}
+                name="role"
+                label="Role"
+                onChange={formik.handleChange}
+              >
+                <MenuItem value="Academy">Academy</MenuItem>
+                <MenuItem value="Club">Club</MenuItem>
+                <MenuItem value="Player">Player</MenuItem>
+              </Select>
+            </FormControl>
+
             <TextField
               error={Boolean(formik.touched.password && formik.errors.password)}
-              // fullWidth
+              fullWidth
               helperText={formik.touched.password && formik.errors.password}
               label="Password"
               margin="normal"
@@ -176,9 +328,10 @@ const Register = () => {
               value={formik.values.password}
               variant="outlined"
             />
+
             <TextField
               error={Boolean(formik.touched.cnfpassword && formik.errors.cnfpassword)}
-              // fullWidth
+              fullWidth
               helperText={formik.touched.cnfpassword && formik.errors.cnfpassword}
               label="Confirm Password"
               margin="normal"
@@ -189,19 +342,21 @@ const Register = () => {
               value={formik.values.cnfpassword}
               variant="outlined"
             />
+
             <TextField
-              error={Boolean(formik.touched.dob && formik.errors.dob)}
-              // fullWidth
-              helperText={formik.touched.dob && formik.errors.dob}
-              label="Email Address"
+              error={Boolean(formik.touched.upload && formik.errors.upload)}
+              fullWidth
+              helperText={formik.touched.upload && formik.errors.upload}
+              // label="Upload Document"
               margin="normal"
-              name="email"
+              name="upload"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              type="email"
-              value={formik.values.email}
+              type="file"
+              value={formik.values.upload}
               variant="outlined"
             />
+
             <Box
               sx={{
                 alignItems: 'center',
@@ -234,6 +389,7 @@ const Register = () => {
                 </NextLink>
               </Typography>
             </Box>
+
             {Boolean(formik.touched.policy && formik.errors.policy) && (
               <FormHelperText error>
                 {formik.errors.policy}
@@ -272,6 +428,8 @@ const Register = () => {
           </form>
         </Container>
       </Box>
+
+
     </>
   );
 };

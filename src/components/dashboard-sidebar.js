@@ -49,7 +49,7 @@ const items = [
   {
     href: '/academy',
     icon: (<SchoolIcon fontSize="small" />),
-    title: 'Acedamy',
+    title: 'Acadamy',
     role: '1'
   },
 
@@ -130,12 +130,12 @@ const items = [
     role: '4'
   },
 
-  {
-    href: '/settings',
-    icon: (<CogIcon fontSize="small" />),
-    title: 'Settings',
-    role: '5'
-  },
+  // {
+  //   href: '/settings',
+  //   icon: (<CogIcon fontSize="small" />),
+  //   title: 'Settings',
+  //   role: '5'
+  // },
   // {
   //   href: '/login',
   //   icon: (<LockIcon fontSize="small" />),

@@ -9,6 +9,7 @@ import { theme } from '../theme';
 import useStorage from 'src/hooks/useStorage';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { SnackbarProvider } from "notistack";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -39,12 +40,14 @@ const App = (props) => {
           content="initial-scale=1, width=device-width"
         />
       </Head>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          {getLayout(<Component {...pageProps} />)}
-        </ThemeProvider>
-      </LocalizationProvider>
+      <SnackbarProvider>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            {getLayout(<Component {...pageProps} />)}
+          </ThemeProvider>
+        </LocalizationProvider>
+      </SnackbarProvider >
     </CacheProvider>
 
   );

@@ -31,7 +31,7 @@ const Dashboard = () => {
             container
             spacing={3}
           >
-            <Grid
+            {/* <Grid
               item
               lg={3}
               sm={6}
@@ -84,7 +84,7 @@ const Dashboard = () => {
               xs={12}
             >
               <TrafficByDevice sx={{ height: '100%' }} />
-            </Grid>
+            </Grid> */}
             <Grid
               item
               lg={4}

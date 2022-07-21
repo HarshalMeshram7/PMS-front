@@ -23,7 +23,7 @@ const User = () => (
           sx={{ mb: 3 }}
           variant="h4"
         >
-          User's Profile
+          User Profile
         </Typography>
         <Grid
           container

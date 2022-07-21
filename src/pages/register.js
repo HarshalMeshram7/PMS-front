@@ -14,6 +14,9 @@ import {
   Typography
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import RegisterBackground from '../../public/static/images/background/register.jpg';
+import loginBackground from '../../public/static/images/background/login.jpg';
+
 
 const Register = () => {
   const router = useRouter();
@@ -64,10 +67,11 @@ const Register = () => {
     <>
       <Head>
         <title>
-          Register | Material Kit
+          Register | PMS
         </title>
       </Head>
       <Box
+        style={{ background: `url("${loginBackground.src}")center center,linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5))`, backgroundBlendMode: "overlay", backgroundSize: "cover" }}
         component="main"
         sx={{
           alignItems: 'center',
@@ -76,37 +80,42 @@ const Register = () => {
           minHeight: '100%'
         }}
       >
-        <Container maxWidth="sm">
+        <Container maxWidth="sm"
+          style={{
+            paddingBottom: "20px",
+            background: "white",
+            borderRadius: "20px"
+          }}>
           <NextLink
-            href="/"
+            href="/login"
             passHref
           >
-            <Button
+            <Button style={{ float: "left" }}
               component="a"
               startIcon={<ArrowBackIcon fontSize="small" />}
             >
-              Dashboard
+              Login
             </Button>
           </NextLink>
           <form onSubmit={formik.handleSubmit}>
-            <Box sx={{ my: 3 }}>
+            <Box sx={{ mt: 3 }}>
               <Typography
                 color="textPrimary"
                 variant="h4"
               >
-                Create a new account
+                Create a account
               </Typography>
-              <Typography
+              {/* <Typography
                 color="textSecondary"
                 gutterBottom
                 variant="body2"
               >
                 Use your email to create a new account
-              </Typography>
+              </Typography> */}
             </Box>
             <TextField
               error={Boolean(formik.touched.firstName && formik.errors.firstName)}
-              fullWidth
+              // fullWidth
               helperText={formik.touched.firstName && formik.errors.firstName}
               label="First Name"
               margin="normal"
@@ -118,7 +127,7 @@ const Register = () => {
             />
             <TextField
               error={Boolean(formik.touched.lastName && formik.errors.lastName)}
-              fullWidth
+              // fullWidth
               helperText={formik.touched.lastName && formik.errors.lastName}
               label="Last Name"
               margin="normal"
@@ -130,7 +139,7 @@ const Register = () => {
             />
             <TextField
               error={Boolean(formik.touched.email && formik.errors.email)}
-              fullWidth
+              // fullWidth
               helperText={formik.touched.email && formik.errors.email}
               label="Email Address"
               margin="normal"
@@ -142,8 +151,21 @@ const Register = () => {
               variant="outlined"
             />
             <TextField
+              error={Boolean(formik.touched.number && formik.errors.number)}
+              // fullWidth
+              helperText={formik.touched.number && formik.errors.number}
+              label="Number"
+              margin="normal"
+              name="number"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              type="tel"
+              value={formik.values.number}
+              variant="outlined"
+            />
+            <TextField
               error={Boolean(formik.touched.password && formik.errors.password)}
-              fullWidth
+              // fullWidth
               helperText={formik.touched.password && formik.errors.password}
               label="Password"
               margin="normal"
@@ -152,6 +174,32 @@ const Register = () => {
               onChange={formik.handleChange}
               type="password"
               value={formik.values.password}
+              variant="outlined"
+            />
+            <TextField
+              error={Boolean(formik.touched.cnfpassword && formik.errors.cnfpassword)}
+              // fullWidth
+              helperText={formik.touched.cnfpassword && formik.errors.cnfpassword}
+              label="Confirm Password"
+              margin="normal"
+              name="cnfpassword"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              type="password"
+              value={formik.values.cnfpassword}
+              variant="outlined"
+            />
+            <TextField
+              error={Boolean(formik.touched.dob && formik.errors.dob)}
+              // fullWidth
+              helperText={formik.touched.dob && formik.errors.dob}
+              label="Email Address"
+              margin="normal"
+              name="email"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              type="email"
+              value={formik.values.email}
               variant="outlined"
             />
             <Box
@@ -217,7 +265,7 @@ const Register = () => {
                   variant="subtitle2"
                   underline="hover"
                 >
-                  Sign In
+                  Login
                 </Link>
               </NextLink>
             </Typography>

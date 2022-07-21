@@ -4,13 +4,14 @@ import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Facebook as FacebookIcon } from '../icons/facebook';
 import { Google as GoogleIcon } from '../icons/google';
 // import { PostData } from 'src/apiRequest';
 import { useState } from 'react';
 import useAuth from "src/adapters/authAdapters";
 import { login } from "src/services/authRequests";
+import loginBackground from '../../public/static/images/background/login.jpg';
 
 const Login = () => {
   const router = useRouter();
@@ -25,8 +26,8 @@ const Login = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: 'Monish@pixonix.tech',
-      password: 'Monish@1995'
+      email: 'Federation@pixonix.tech',
+      password: 'Federation@1234'
     },
     validationSchema: Yup.object({
       email: Yup
@@ -46,9 +47,12 @@ const Login = () => {
       setLoading(true);
       setError("");
       try {
-        await login({ email, password });
+        await login({ email, password }).then((res) => {
+          if (res.status === "failed") {
+            setError(res.message);
+          }
+        });
         setLoading(false);
-        // localStorage.setItem("role", "Player")
       } catch (error) {
         setLoading(false);
         setError("Login Failed !");
@@ -64,6 +68,7 @@ const Login = () => {
       </Head>
       <Box
         component="main"
+        style={{ background: `url("${loginBackground.src}")center center,linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5))`, backgroundBlendMode: "overlay",backgroundSize:"cover" }}
         sx={{
           alignItems: 'center',
           display: 'flex',
@@ -71,7 +76,23 @@ const Login = () => {
           minHeight: '100%'
         }}
       >
-        <Container maxWidth="sm">
+        <Container maxWidth="sm"
+          style={{
+            paddingBottom: "20px",
+            background: "white",
+            borderRadius: "20px"
+          }} >
+          <NextLink
+            href="/register"
+            passHref
+          >
+            <Button style={{float:"right"}}
+              component="a"
+              endIcon={<ArrowForwardIcon fontSize="small" />}
+            >
+              Register
+            </Button>
+          </NextLink>
 
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
@@ -79,7 +100,7 @@ const Login = () => {
                 color="textPrimary"
                 variant="h4"
               >
-                Sign in
+                Login
               </Typography>
 
             </Box>
@@ -117,7 +138,7 @@ const Login = () => {
                 pt: 3
               }}
             >
-              <Typography>
+              <Typography style={{ color: "red" }}>
                 {error}
               </Typography>
             </Box>
@@ -176,7 +197,7 @@ const Login = () => {
                     cursor: 'pointer'
                   }}
                 >
-                  Sign Up
+                  Register
                 </Link>
               </NextLink>
             </Typography>

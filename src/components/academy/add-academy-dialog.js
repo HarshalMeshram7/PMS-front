@@ -16,35 +16,53 @@ import * as Yup from "yup";
 import { addAcademy } from "src/services/academyRequest";
 import LoadingBox from "src/components/common/loading-box";
 
-export const AddAcademyDialog = ({ open, handleClose}) => {
+export const AddAcademyDialog = ({ open, handleClose }) => {
     const { enqueueSnackbar } = useSnackbar();
     const [loading, setLoading] = useState();
 
     const formik = useFormik({
         initialValues: {
-            name: "",
+            academyName: "",
+            address: "",
+            phone: "",
             email: "",
-            phoneNumber: "",
+            personName: "",
+            logo: "",
+            banner: "",
+            accreditation: "",
+            facebook: "",
+            twitter: "",
+            instagram: "",
+            sportsList: [],
         },
         validationSchema: Yup.object({
-            name: Yup.string().max(100).required("Name is required"),
-            email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
-            phoneNumber: Yup.string()
+            academyName: Yup.string().max(100).required("Academy Name is required"),
+            email: Yup.string().email("Must be a valid Email").max(255).required("Email is required"),
+            phone: Yup.string()
                 .length(10)
-                .matches(new RegExp("[0-9]{7}"))
+                .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
                 .required("Phone number is required"),
         }),
-        onSubmit: async ({ name, email, phoneNumber }) => {
+        onSubmit: async ({ academyName, address, phone, email, personName, logo, accreditation, facebook,twitter,instagram,sportsList }) => {
             setLoading(true);
 
             try {
                 const data = {
-                    name: name,
-                    email: email,
-                    mobile: phoneNumber,
+                    academyName,
+                    address,
+                    phone,
+                    email,
+                    personName,
+                    logo,
+                    banner,
+                    accreditation,
+                    facebook,
+                    twitter,
+                    instagram,
+                    sportsList,
                 };
-                if (name && email && phoneNumber) {
-                    await addAcademy(data);
+                if (name && email && phone) {
+                    // await addAcademy(data);
                     handleClose();
                     enqueueSnackbar("Academy Added Succesfully", { variant: "success" });
                 }
@@ -79,16 +97,16 @@ export const AddAcademyDialog = ({ open, handleClose}) => {
                     </DialogContentText>
 
                     <TextField
-                        error={Boolean(formik.touched.name && formik.errors.name)}
+                        error={Boolean(formik.touched.academyName && formik.errors.academyName)}
                         fullWidth
-                        helperText={formik.touched.name && formik.errors.name}
+                        helperText={formik.touched.academyName && formik.errors.academyName}
                         label="Name"
                         margin="dense"
                         name="name"
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
                         type="text"
-                        value={formik.values.name}
+                        value={formik.values.academyName}
                         variant="outlined"
                         required
                     />
@@ -108,16 +126,16 @@ export const AddAcademyDialog = ({ open, handleClose}) => {
                         required
                     />
                     <TextField
-                        error={Boolean(formik.touched.phoneNumber && formik.errors.phoneNumber)}
+                        error={Boolean(formik.touched.phone && formik.errors.phone)}
                         fullWidth
-                        helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
+                        helperText={formik.touched.phone && formik.errors.phone}
                         label="Phone Number"
                         margin="dense"
-                        name="phoneNumber"
+                        name="phone"
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
                         type="tel"
-                        value={formik.values.phoneNumber}
+                        value={formik.values.phone}
                         variant="outlined"
                         required
                     />

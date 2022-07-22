@@ -39,7 +39,7 @@ const Clubs = () => (
             ))}
           </Grid>
         </Box>
-        <Box
+        {/* <Box
           sx={{
             display: 'flex',
             justifyContent: 'center',
@@ -51,7 +51,7 @@ const Clubs = () => (
             count={3}
             size="small"
           />
-        </Box>
+        </Box> */}
       </Container>
     </Box>
   </>

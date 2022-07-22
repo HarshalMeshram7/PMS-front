@@ -3,7 +3,7 @@ import { Avatar, Box, Button, Card, CardContent, Divider, Grid, Typography } fro
 import { Clock as ClockIcon } from '../../icons/clock';
 import { Download as DownloadIcon } from '../../icons/download';
 
-export const ClubCard = ({ product, ...rest }) => (
+export const TeamCard = ({ product, ...rest }) => (
   <Card
     sx={{
       display: 'flex',
@@ -57,8 +57,8 @@ export const ClubCard = ({ product, ...rest }) => (
             display: 'flex'
           }}
         >
-          {/* <ClockIcon color="action" />
-          <Typography
+          {/* <ClockIcon color="action" /> */}
+          {/* <Typography
             color="textSecondary"
             display="inline"
             sx={{ pl: 1 }}
@@ -92,6 +92,6 @@ export const ClubCard = ({ product, ...rest }) => (
   </Card>
 );
 
-ClubCard.propTypes = {
+TeamCard.propTypes = {
   product: PropTypes.object.isRequired
 };

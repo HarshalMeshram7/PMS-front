@@ -30,7 +30,7 @@ export const ClubListToolbar = (props) => (
         Clubs
       </Typography>
       <Box sx={{ m: 1 }}>
-        <Button
+        {/* <Button
           startIcon={(<UploadIcon fontSize="small" />)}
           sx={{ mr: 1 }}
         >
@@ -41,7 +41,7 @@ export const ClubListToolbar = (props) => (
           sx={{ mr: 1 }}
         >
           Export
-        </Button>
+        </Button> */}
         <Button
           color="primary"
           variant="contained"

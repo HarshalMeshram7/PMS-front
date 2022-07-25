@@ -14,12 +14,11 @@ export const login = async ({ email, password }) => {
 
     const authData = jwtDecode(res.data?.token);
     const tokenExp = authData?.exp;
-    const userRole = authData?.role;
-
+    
     setToken(res.data?.token);
-    setRole(userRole);
-    setUserId(res.data?.admin_id);
-    setEmail(res.data?.email);
+    setRole(authData?.role);
+    setUserId(authData?.userId);
+    setEmail(authData?.email);
 
     return res.data;
   } catch (error) {
@@ -29,7 +28,7 @@ export const login = async ({ email, password }) => {
 
 //GET USER DETAILS
 export const getUser = async () => {
-  const { token } = useStorage();
+  const { token  } = useStorage();
   if (!token) {
     throw new Error("No token");
   }

@@ -48,26 +48,30 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                 .required("Academy Name is required"),
             address: Yup
                 .string()
-                .required('Required'),
+            // .required('Required')
+            ,
             phone: Yup.string()
                 .length(10)
                 .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
-                .required("Phone number is required"),
+            // .required("Phone number is required")
+            ,
             email: Yup
                 .string()
                 .email("Must be a valid Email")
                 .max(255)
-                .required("Email is required"),
+            // .required("Email is required")
+            ,
             personName: Yup
                 .string()
                 .max(100)
-                .required("Person Name is required"),
+            // .required("Person Name is required")
+            ,
             accreditation: Yup
                 .string()
                 .max(100),
             accreditation: Yup
                 .string()
-                .max(100),                
+                .max(100),
             facebook: Yup
                 .string()
                 .max(100),
@@ -77,44 +81,40 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
             instagram: Yup
                 .string()
                 .max(100),
-            sportsList: Yup
-                .string()
-                .max(100)
-                .required("Sport List is required"),
             password: Yup
                 .string()
                 .max(255)
                 .required('Password is required'),
             cnfpassword: Yup
-            .string()
-            .oneOf([Yup.ref('password'), null], 'Passwords must match')
+                .string()
+                .oneOf([Yup.ref('password'), null], 'Passwords must match')
 
         }),
-        onSubmit: async ({ academyName, address, phone, email, personName, logo, accreditation, facebook, twitter, instagram, sportsList }) => {
+        onSubmit: async (data) => {
             setLoading(true);
-
             try {
-                const data = {
-                    academyName,
-                    address,
-                    phone,
-                    email,
-                    personName,
-                    logo,
-                    banner,
-                    accreditation,
-                    facebook,
-                    twitter,
-                    instagram,
-                    sportsList,
-                    password,
-                    cnfpassword,
-                };
-                if (name && email && phone ) {
-                    // await addAcademy(data);
-                    handleClose();
-                    enqueueSnackbar("Academy Added Succesfully", { variant: "success" });
-                }
+                // const data = {
+                //     academyName,
+                //     address,
+                //     phone,
+                //     email,
+                //     personName,
+                //     logo,
+                //     banner,
+                //     accreditation,
+                //     facebook,
+                //     twitter,
+                //     instagram,
+                //     sportsList,
+                //     password,
+                //     cnfpassword,
+                // };
+                console.log("*********************");
+                console.log(data);
+                // await addAcademy(data);
+                handleClose();
+                enqueueSnackbar("Academy Added Succesfully", { variant: "success" });
+
                 setLoading(false);
             } catch (error) {
                 setLoading(false);
@@ -157,7 +157,6 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="text"
                         value={formik.values.academyName}
                         variant="outlined"
-                        required
                     />
 
                     <TextField
@@ -172,7 +171,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="address"
                         value={formik.values.address}
                         variant="outlined"
-                        required
+                        
                     />
 
                     <TextField
@@ -187,7 +186,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="tel"
                         value={formik.values.phone}
                         variant="outlined"
-                        required
+                        
                     />
 
                     <TextField
@@ -202,7 +201,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="email"
                         value={formik.values.email}
                         variant="outlined"
-                        required
+                        
                     />
 
                     <TextField
@@ -217,7 +216,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="text"
                         value={formik.values.personName}
                         variant="outlined"
-                        required
+                        
                     />
 
                     <TextField
@@ -232,7 +231,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="text"
                         value={formik.values.accreditation}
                         variant="outlined"
-                        required
+                        
                     />
 
                     <TextField
@@ -247,7 +246,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="text"
                         value={formik.values.facebook}
                         variant="outlined"
-                        required
+                        
                     />
 
                     <TextField
@@ -262,7 +261,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="text"
                         value={formik.values.twitter}
                         variant="outlined"
-                        required
+                        
                     />
 
                     <TextField
@@ -277,7 +276,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="text"
                         value={formik.values.instagram}
                         variant="outlined"
-                        required
+                        
                     />
 
                     {/* <TextField
@@ -298,6 +297,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                     <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-helper-label">Sports List</InputLabel>
                         <Select
+                            multiple
                             labelId="demo-simple-select-helper-label"
                             id="demo-simple-select-helper"
                             value={formik.values.sportsList}
@@ -323,7 +323,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="password"
                         value={formik.values.password}
                         variant="outlined"
-                        required
+                        
                     />
 
                     <TextField
@@ -338,7 +338,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="password"
                         value={formik.values.cnfpassword}
                         variant="outlined"
-                        required
+                        
                     />
 
                     <TextField style={{ display: 'none' }}
@@ -354,7 +354,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="file"
                         value={formik.values.logo}
                         variant="outlined"
-                        required
+                        
                     />
                     <Button onClick={() => { document.getElementById("uploadLogo").click() }}>Upload Logo</Button>
 
@@ -371,7 +371,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="file"
                         value={formik.values.banner}
                         variant="outlined"
-                        required
+                        
                     />
                     <Button onClick={() => { document.getElementById("uploadBanner").click() }}>Upload Banner</Button>
 

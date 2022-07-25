@@ -5,8 +5,15 @@ import { Box, Container, Grid, Pagination } from '@mui/material';
 import { teams } from "src/__mocks__/teams";
 import { TeamListToolbar } from "src/components/team/team-list-toolbar";
 import { TeamCard } from "src/components/team/team-card";
+import { useState } from 'react';
+import { AddTeamDialog } from "src/components/team/add-team-dialog";
 
-const Team = () => (
+const Team = () => {
+  const [showAddTeamDialog, setShowAddTeamDialog] = useState(false);
+  const handleOpenAddTeam = () => setShowAddTeamDialog(true);
+  const handleCloseAddTeam = () => setShowAddTeamDialog(false);
+
+return (
   <>
   <Head>
     <title>
@@ -20,8 +27,15 @@ const Team = () => (
       py: 8
     }}
   >
+    <AddTeamDialog
+          open={showAddTeamDialog}
+          handleClose={handleCloseAddTeam}
+        />
     <Container maxWidth={false}>
-      <TeamListToolbar />
+    <TeamListToolbar
+            handleOpenAddTeam={handleOpenAddTeam}
+            open={showAddTeamDialog}
+             />
       <Box sx={{ pt: 3 }}>
         <Grid
           container
@@ -57,7 +71,7 @@ const Team = () => (
   </Box>
 </>
 );
-
+}
 
 
 Team.getLayout = (page) => (

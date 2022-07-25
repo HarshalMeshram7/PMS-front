@@ -4,8 +4,15 @@ import { clubs } from '../__mocks__/clubs';
 import { ClubListToolbar } from '../components/clubs/club-list-toolbar';
 import { ClubCard } from '../components/clubs/club-card';
 import { DashboardLayout } from '../components/dashboard-layout';
+import { useState } from 'react';
+import { AddClubDialog } from 'src/components/clubs/add-club-dialog';
 
-const Clubs = () => (
+const Clubs = () => {
+  const [showAddClubDialog, setShowAddClubDialog] = useState(false);
+  const handleOpenAddClub = () => setShowAddClubDialog(true);
+  const handleCloseAddClub = () => setShowAddClubDialog(false);
+
+return(
   <>
     <Head>
       <title>
@@ -19,8 +26,16 @@ const Clubs = () => (
         py: 8
       }}
     >
+      <AddClubDialog
+          open={showAddClubDialog}
+          handleClose={handleCloseAddClub}
+        />
       <Container maxWidth={false}>
-        <ClubListToolbar />
+      <ClubListToolbar
+            handleOpenAddClub={handleOpenAddClub}
+            open={showAddClubDialog}
+             />
+        
         <Box sx={{ pt: 3 }}>
           <Grid
             container
@@ -56,6 +71,7 @@ const Clubs = () => (
     </Box>
   </>
 );
+}
 
 Clubs.getLayout = (page) => (
   <DashboardLayout>

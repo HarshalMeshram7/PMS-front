@@ -1,17 +1,23 @@
 import Head from 'next/head';
 import { Box, Container, Grid, Pagination } from '@mui/material';
-import { clubs } from '../__mocks__/clubs';
-import { academy } from 'src/__mocks__/academy';
 import { AcademyCard } from 'src/components/academy/academy-card';
 import { AcademyListToolbar } from 'src/components/academy/academy-list-toolbar';
 import { DashboardLayout } from '../components/dashboard-layout';
 import { AddAcademyDialog } from 'src/components/academy/add-academy-dialog';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getAllacademy } from 'src/services/academyRequest';
 
 const Academy = () => {
   const [showAddAcademyDialog, setShowAddAcademyDialog] = useState(false);
   const handleOpenAddAcademy = () => setShowAddAcademyDialog(true);
   const handleCloseAddAcademy = () => setShowAddAcademyDialog(false);
+  const [academy,setAcademy] = useState([])
+  useEffect(() => {
+    getAllacademy().then((res) => {
+      console.log(res);
+      setAcademy(res);
+    })
+  },[])
 
   return (
     <>

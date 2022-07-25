@@ -2,17 +2,32 @@ import axios from "axios";
 import useStorage from "src/hooks/useStorage";
 import { MAIN_URL } from "./apiConfig";
 
-// add academy
+// Add Academy
 export const addAcademy = async (data) => {
-    const { token, user_id } = useStorage();
+    const { token} = useStorage();
     if (!token) {
         throw "No Token";
     }
-    if (!user_id) {
-        throw "No User Id";
+    try {
+        const res = await axios.post(`${MAIN_URL}/api/academy/addAcademy/`, data, {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        });
+        return res.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};
+// Get All Academy
+export const getAllacademy = async (data) => {
+    const { token} = useStorage();
+    if (!token) {
+        throw "No Token";
     }
     try {
-        const res = await axios.post(`${MAIN_URL}/addAcademy/`, data, {
+        const res = await axios.get(`${MAIN_URL}/api/academy/getallacademy/`, {
             headers: {
                 Authorization: "Bearer " + token,
             },

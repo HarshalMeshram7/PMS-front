@@ -32,7 +32,7 @@ export const AcademyCard = ({ product, ...rest }) => (
         gutterBottom
         variant="h5"
       >
-        {product.title}
+        {product.academyName}
       </Typography>
       <Typography
         align="center"

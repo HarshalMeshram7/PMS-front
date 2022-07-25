@@ -26,20 +26,20 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
 
     const formik = useFormik({
         initialValues: {
-            academyName: "",
-            address: "",
-            phone: "",
+            academyName: "Academy1",
+            address: "Address",
+            phone: "8208793805",
             email: "",
-            personName: "",
+            personName: "Person name",
             logo: "",
             banner: "",
-            accreditation: "",
-            facebook: "",
-            twitter: "",
-            instagram: "",
+            accreditation: "accreditation",
+            facebook: "fb",
+            twitter: "tw",
+            instagram: "ins",
             sportsList: [],
-            password: "",
-            cnfpassword: ""
+            password: "Monish@1995",
+            cnfpassword: "Monish@1995"
         },
         validationSchema: Yup.object({
             academyName: Yup
@@ -93,27 +93,10 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
         onSubmit: async (data) => {
             setLoading(true);
             try {
-                // const data = {
-                //     academyName,
-                //     address,
-                //     phone,
-                //     email,
-                //     personName,
-                //     logo,
-                //     banner,
-                //     accreditation,
-                //     facebook,
-                //     twitter,
-                //     instagram,
-                //     sportsList,
-                //     password,
-                //     cnfpassword,
-                // };
-                console.log("*********************");
                 console.log(data);
-                // await addAcademy(data);
+                await addAcademy(data);
                 handleClose();
-                enqueueSnackbar("Academy Added Succesfully", { variant: "success" });
+                enqueueSnackbar("Academy Added Succesfully Please Refresh", { variant: "success" });
 
                 setLoading(false);
             } catch (error) {

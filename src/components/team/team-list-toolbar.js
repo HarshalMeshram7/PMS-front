@@ -45,6 +45,7 @@ import {
           <Button
             color="primary"
             variant="contained"
+            onClick={ props.handleOpenAddTeam }
           >
             Add team
           </Button>

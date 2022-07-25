@@ -67,7 +67,10 @@ const Register = () => {
         .email('Must be a valid email')
         .max(255)
         .required('Email is required'),
-
+      number: Yup.string()
+        .length(10)
+        .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
+        .required("Phone number is required"),
       dob: Yup
         .string()
         .test("DOB", "Shoud Be Greater Then 18",
@@ -76,7 +79,7 @@ const Register = () => {
           }
         )
         .required('Required'),
-
+        
       street: Yup
         .string()
         .required('Required'),
@@ -95,6 +98,11 @@ const Register = () => {
         .string()
         .max(255)
         .required('Password is required'),
+      
+      cnfpassword: Yup
+        .string()
+        .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+
       policy: Yup
         .boolean()
         .oneOf(
@@ -343,12 +351,13 @@ const Register = () => {
               variant="outlined"
             />
 
-            <TextField
+            <TextField style={{ display: 'none' }}
               error={Boolean(formik.touched.upload && formik.errors.upload)}
               fullWidth
               helperText={formik.touched.upload && formik.errors.upload}
               // label="Upload Document"
               margin="normal"
+              id="uploadPhoto"
               name="upload"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
@@ -356,6 +365,8 @@ const Register = () => {
               value={formik.values.upload}
               variant="outlined"
             />
+            <Button onClick={() => { document.getElementById("uploadPhoto").click() }}>Upload Photo</Button>
+
 
             <Box
               sx={{

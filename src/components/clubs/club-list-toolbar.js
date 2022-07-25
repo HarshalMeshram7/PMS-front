@@ -45,6 +45,7 @@ export const ClubListToolbar = (props) => (
         <Button
           color="primary"
           variant="contained"
+          onClick={ props.handleOpenAddClub }
         >
           Add club
         </Button>

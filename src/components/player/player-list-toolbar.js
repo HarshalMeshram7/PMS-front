@@ -11,7 +11,9 @@ import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
 import { Download as DownloadIcon } from '../../icons/download';
 
-export const PlayerListToolbar = (props) => (
+export const PlayerListToolbar = (props) => {
+
+return(
   <Box {...props}>
     <Box
       sx={{
@@ -29,7 +31,7 @@ export const PlayerListToolbar = (props) => (
         Players
       </Typography>
       <Box sx={{ m: 1 }}>
-        <Button
+        {/* <Button
           startIcon={(<UploadIcon fontSize="small" />)}
           sx={{ mr: 1 }}
         >
@@ -40,10 +42,11 @@ export const PlayerListToolbar = (props) => (
           sx={{ mr: 1 }}
         >
           Export
-        </Button>
+        </Button> */}
         <Button
           color="primary"
           variant="contained"
+          onClick={ props.handleOpenAddPlayer }
         >
           Add Players
         </Button>
@@ -76,3 +79,4 @@ export const PlayerListToolbar = (props) => (
     </Box>
   </Box>
 );
+}

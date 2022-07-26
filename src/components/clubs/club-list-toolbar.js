@@ -12,7 +12,9 @@ import { Download as DownloadIcon } from '../../icons/download';
 import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
 
-export const ClubListToolbar = (props) => (
+export const ClubListToolbar = (props) => {
+  
+return(
   <Box {...props}>
     <Box
       sx={{
@@ -78,3 +80,4 @@ export const ClubListToolbar = (props) => (
     </Box>
   </Box>
 );
+}

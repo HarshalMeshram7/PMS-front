@@ -48,20 +48,24 @@ export const AddTeamDialog = ({ open, handleClose }) => {
                 .required("Team Name is required"),
             address: Yup
                 .string()
-                .required('Required'),
+                // .required('Required')
+                ,
             phone: Yup.string()
                 .length(10)
                 .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
-                .required("Phone number is required"),
+                // .required("Phone number is required")
+                ,
             email: Yup
                 .string()
                 .email("Must be a valid Email")
                 .max(255)
-                .required("Email is required"),
+                // .required("Email is required")
+                ,
             personName: Yup
                 .string()
                 .max(100)
-                .required("Person Name is required"),
+                // .required("Person Name is required")
+                ,
             accreditation: Yup
                 .string()
                 .max(100),
@@ -77,44 +81,47 @@ export const AddTeamDialog = ({ open, handleClose }) => {
             instagram: Yup
                 .string()
                 .max(100),
-            sportsList: Yup
-                .string()
-                .max(100)
-                .required("Sport List is required"),
+            // sportsList: Yup
+            //     .string()
+            //     .max(100)
+            //     // .required("Sport List is required")
+            //     ,
             password: Yup
                 .string()
                 .max(255)
-                .required('Password is required'),
+                // .required('Password is required')
+                ,
             cnfpassword: Yup
             .string()
             .oneOf([Yup.ref('password'), null], 'Passwords must match')
 
         }),
-        onSubmit: async ({ teamName, address, phone, email, personName, logo, accreditation, facebook, twitter, instagram, sportsList }) => {
+        onSubmit: async (data) => {
             setLoading(true);
 
             try {
-                const data = {
-                    teamName,
-                    address,
-                    phone,
-                    email,
-                    personName,
-                    logo,
-                    banner,
-                    accreditation,
-                    facebook,
-                    twitter,
-                    instagram,
-                    sportsList,
-                    password,
-                    cnfpassword,
-                };
-                if (name && email && phone ) {
+                // const data = {
+                //     teamName,
+                //     address,
+                //     phone,
+                //     email,
+                //     personName,
+                //     logo,
+                //     banner,
+                //     accreditation,
+                //     facebook,
+                //     twitter,
+                //     instagram,
+                //     sportsList,
+                //     password,
+                //     cnfpassword,
+                // };
+                    console.log("*********");
+                    console.log(data);
                     // await addTeam(data);
                     handleClose();
                     enqueueSnackbar("Team Added Succesfully", { variant: "success" });
-                }
+                
                 setLoading(false);
             } catch (error) {
                 setLoading(false);
@@ -157,8 +164,7 @@ export const AddTeamDialog = ({ open, handleClose }) => {
                         type="text"
                         value={formik.values.teamName}
                         variant="outlined"
-                        required
-                    />
+                        />
 
                     <TextField
                         error={Boolean(formik.touched.address && formik.errors.address)}
@@ -172,8 +178,7 @@ export const AddTeamDialog = ({ open, handleClose }) => {
                         type="address"
                         value={formik.values.address}
                         variant="outlined"
-                        required
-                    />
+                        />
 
                     <TextField
                         error={Boolean(formik.touched.phone && formik.errors.phone)}
@@ -187,8 +192,7 @@ export const AddTeamDialog = ({ open, handleClose }) => {
                         type="tel"
                         value={formik.values.phone}
                         variant="outlined"
-                        required
-                    />
+                        />
 
                     <TextField
                         error={Boolean(formik.touched.email && formik.errors.email)}
@@ -202,8 +206,7 @@ export const AddTeamDialog = ({ open, handleClose }) => {
                         type="email"
                         value={formik.values.email}
                         variant="outlined"
-                        required
-                    />
+                        />
 
                     <TextField
                         error={Boolean(formik.touched.personName && formik.errors.personName)}
@@ -217,8 +220,7 @@ export const AddTeamDialog = ({ open, handleClose }) => {
                         type="text"
                         value={formik.values.personName}
                         variant="outlined"
-                        required
-                    />
+                        />
 
                     <TextField
                         error={Boolean(formik.touched.accreditation && formik.errors.accreditation)}
@@ -232,8 +234,7 @@ export const AddTeamDialog = ({ open, handleClose }) => {
                         type="text"
                         value={formik.values.accreditation}
                         variant="outlined"
-                        required
-                    />
+                        />
 
                     <TextField
                         error={Boolean(formik.touched.facebook && formik.errors.facebook)}
@@ -247,8 +248,7 @@ export const AddTeamDialog = ({ open, handleClose }) => {
                         type="text"
                         value={formik.values.facebook}
                         variant="outlined"
-                        required
-                    />
+                        />
 
                     <TextField
                         error={Boolean(formik.touched.twitter && formik.errors.twitter)}
@@ -262,8 +262,7 @@ export const AddTeamDialog = ({ open, handleClose }) => {
                         type="text"
                         value={formik.values.twitter}
                         variant="outlined"
-                        required
-                    />
+                        />
 
                     <TextField
                         error={Boolean(formik.touched.instagram && formik.errors.instagram)}
@@ -277,8 +276,7 @@ export const AddTeamDialog = ({ open, handleClose }) => {
                         type="text"
                         value={formik.values.instagram}
                         variant="outlined"
-                        required
-                    />
+                        />
 
                     {/* <TextField
                         error={Boolean(formik.touched.sportsList && formik.errors.sportsList)}
@@ -338,8 +336,7 @@ export const AddTeamDialog = ({ open, handleClose }) => {
                         type="password"
                         value={formik.values.cnfpassword}
                         variant="outlined"
-                        required
-                    />
+                        />
 
                     <TextField style={{ display: 'none' }}
                         error={Boolean(formik.touched.logo && formik.errors.logo)}
@@ -354,8 +351,7 @@ export const AddTeamDialog = ({ open, handleClose }) => {
                         type="file"
                         value={formik.values.logo}
                         variant="outlined"
-                        required
-                    />
+                        />
                     <Button onClick={() => { document.getElementById("uploadLogo").click() }}>Upload Logo</Button>
 
                     <TextField style={{ display: 'none' }}
@@ -371,8 +367,8 @@ export const AddTeamDialog = ({ open, handleClose }) => {
                         type="file"
                         value={formik.values.banner}
                         variant="outlined"
-                        required
-                    />
+                        />
+
                     <Button onClick={() => { document.getElementById("uploadBanner").click() }}>Upload Banner</Button>
 
                 </DialogContent>

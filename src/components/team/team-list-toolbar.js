@@ -12,7 +12,9 @@ import {
   import { Search as SearchIcon } from '../../icons/search';
   import { Upload as UploadIcon } from '../../icons/upload';
   
-  export const TeamListToolbar = (props) => (
+  export const TeamListToolbar = (props) => {
+  
+  return(
     <Box {...props}>
       <Box
         sx={{
@@ -78,4 +80,4 @@ import {
       </Box>
     </Box>
   );
-  
+}

@@ -41,47 +41,53 @@ export const AddClubDialog = ({ open, handleClose }) => {
                 .required("Club Name is required"),
             address: Yup
                 .string()
-                .required('Required'),
+                // .required('Required')
+                ,
             phone: Yup.string()
                 .length(10)
                 .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
-                .required("Phone number is required"),
+                // .required("Phone number is required")
+                ,
             email: Yup
                 .string()
                 .email("Must be a valid Email")
                 .max(255)
-                .required("Email is required"),
+                // .required("Email is required")
+                ,
             personName: Yup
                 .string()
                 .max(100)
-                .required("Person Name is required"),
+                // .required("Person Name is required")
+                ,
             password: Yup
                 .string()
                 .max(255)
-                .required('Password is required'),
+                .required('Password is required')
+                ,
             cnfpassword: Yup
             .string()
             .oneOf([Yup.ref('password'), null], 'Passwords must match')
 
         }),
-        onSubmit: async ({ clubName, address, phone, email, personName}) => {
+        onSubmit: async (data) => {
             setLoading(true);
 
             try {
-                const data = {
-                    clubName,
-                    address,
-                    phone,
-                    email,
-                    personName,
-                    password,
-                    cnfpassword,
-                };
-                if (name && email && phone ) {
+                // const data = {
+                //     clubName,
+                //     address,
+                //     phone,
+                //     email,
+                //     personName,
+                //     password,
+                //     cnfpassword,
+                // };
+                console.log("********");
+                console.log(data);
                     // await addAcademy(data);
                     handleClose();
                     enqueueSnackbar("Club Added Succesfully", { variant: "success" });
-                }
+                
                 setLoading(false);
             } catch (error) {
                 setLoading(false);
@@ -230,7 +236,7 @@ export const AddClubDialog = ({ open, handleClose }) => {
                         type="file"
                         value={formik.values.logo}
                         variant="outlined"
-                        required
+                        // required
                     />
                     <Button onClick={() => { document.getElementById("uploadLogo").click() }}>Upload Logo</Button>
 
@@ -247,7 +253,7 @@ export const AddClubDialog = ({ open, handleClose }) => {
                         type="file"
                         value={formik.values.banner}
                         variant="outlined"
-                        required
+                        // required
                     />
                     <Button onClick={() => { document.getElementById("uploadBanner").click() }}>Upload Banner</Button>
 

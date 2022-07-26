@@ -26,7 +26,7 @@ export const AddPlayerDialog = ({ open, handleClose }) => {
 
     const formik = useFormik({
         initialValues: {
-            academyName: "",
+            playerName: "",
             address: "",
             phone: "",
             email: "",
@@ -42,13 +42,14 @@ export const AddPlayerDialog = ({ open, handleClose }) => {
             cnfpassword: ""
         },
         validationSchema: Yup.object({
-            academyName: Yup
+            playerName: Yup
                 .string()
                 .max(100)
                 .required("Academy Name is required"),
             address: Yup
                 .string()
-                .required('Required'),
+                // .required('Required')
+                ,
             phone: Yup.string()
                 .length(10)
                 .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
@@ -77,10 +78,10 @@ export const AddPlayerDialog = ({ open, handleClose }) => {
             instagram: Yup
                 .string()
                 .max(100),
-            sportsList: Yup
-                .string()
-                .max(100)
-                .required("Sport List is required"),
+            // sportsList: Yup
+            //     .string()
+            //     .max(100)
+            //     .required("Sport List is required"),
             password: Yup
                 .string()
                 .max(255)
@@ -90,31 +91,32 @@ export const AddPlayerDialog = ({ open, handleClose }) => {
             .oneOf([Yup.ref('password'), null], 'Passwords must match')
 
         }),
-        onSubmit: async ({ academyName, address, phone, email, personName, logo, accreditation, facebook, twitter, instagram, sportsList }) => {
+        onSubmit: async (data) => {
             setLoading(true);
 
             try {
-                const data = {
-                    academyName,
-                    address,
-                    phone,
-                    email,
-                    personName,
-                    logo,
-                    banner,
-                    accreditation,
-                    facebook,
-                    twitter,
-                    instagram,
-                    sportsList,
-                    password,
-                    cnfpassword,
-                };
-                if (name && email && phone ) {
+                // const data = {
+                //     academyName,
+                //     address,
+                //     phone,
+                //     email,
+                //     personName,
+                //     logo,
+                //     banner,
+                //     accreditation,
+                //     facebook,
+                //     twitter,
+                //     instagram,
+                //     sportsList,
+                //     password,
+                //     cnfpassword,
+                // };
+                console.log("**********");
+                console.log(data);
                     // await addAcademy(data);
                     handleClose();
                     enqueueSnackbar("Academy Added Succesfully", { variant: "success" });
-                }
+                
                 setLoading(false);
             } catch (error) {
                 setLoading(false);
@@ -146,16 +148,16 @@ export const AddPlayerDialog = ({ open, handleClose }) => {
                     </DialogContentText>
 
                     <TextField
-                        error={Boolean(formik.touched.academyName && formik.errors.academyName)}
+                        error={Boolean(formik.touched.playerName && formik.errors.playerName)}
                         fullWidth
-                        helperText={formik.touched.academyName && formik.errors.academyName}
+                        helperText={formik.touched.playerName && formik.errors.playerName}
                         label="Name"
                         margin="dense"
-                        name="academyName"
+                        name="playerName"
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
                         type="text"
-                        value={formik.values.academyName}
+                        value={formik.values.playerName}
                         variant="outlined"
                         />
 
@@ -290,7 +292,7 @@ export const AddPlayerDialog = ({ open, handleClose }) => {
                         <Select
                             labelId="demo-simple-select-helper-label"
                             id="demo-simple-select-helper"
-                            value={formik.values.sportsList}
+                            value= {formik.values.sportsList}
                             label="Sports List"
                             name="sportsList"
                             onChange={formik.handleChange}

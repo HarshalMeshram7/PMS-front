@@ -22,7 +22,7 @@ export const AcademyCard = ({ product, ...rest }) => (
       >
         <Avatar
           alt="Product"
-          src={product.media}
+          src={product.logo}
           variant="square"
         />
       </Box>

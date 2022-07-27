@@ -45,7 +45,7 @@ export const AddPlayerDialog = ({ open, handleClose }) => {
             playerName: Yup
                 .string()
                 .max(100)
-                .required("Academy Name is required"),
+                .required("Player Name is required"),
             address: Yup
                 .string()
                 // .required('Required')
@@ -115,7 +115,7 @@ export const AddPlayerDialog = ({ open, handleClose }) => {
                 console.log(data);
                     // await addAcademy(data);
                     handleClose();
-                    enqueueSnackbar("Academy Added Succesfully", { variant: "success" });
+                    enqueueSnackbar("Player Added Succesfully", { variant: "success" });
                 
                 setLoading(false);
             } catch (error) {
@@ -141,10 +141,10 @@ export const AddPlayerDialog = ({ open, handleClose }) => {
         >
             {loading && <LoadingBox />}
             <form onSubmit={formik.handleSubmit}>
-                <DialogTitle>Add New Academy</DialogTitle>
+                <DialogTitle>Add New Player</DialogTitle>
                 <DialogContent>
                     <DialogContentText sx={{ marginBottom: 2 }}>
-                        Enter the required basic details of the Academy below.
+                        Enter the required basic details of the Player below.
                     </DialogContentText>
 
                     <TextField

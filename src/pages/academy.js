@@ -14,7 +14,7 @@ const Academy = () => {
   const [academy,setAcademy] = useState([])
   useEffect(() => {
     getAllacademy().then((res) => {
-      console.log(res);
+      // console.log(res);
       setAcademy(res);
     })
   },[])

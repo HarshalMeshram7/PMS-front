@@ -21,13 +21,14 @@ export const addAcademy = async (data) => {
     }
 };
 // Get All Academy
-export const getAllacademy = async (data) => {
+export const getAllacademy = async (params) => {
     const { token} = useStorage();
     if (!token) {
         throw "No Token";
     }
     try {
         const res = await axios.get(`${MAIN_URL}/api/academy/getallacademy/`, {
+            params:params,
             headers: {
                 Authorization: "Bearer " + token,
             },

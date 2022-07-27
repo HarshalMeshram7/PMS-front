@@ -6,14 +6,39 @@ import {
   TextField,
   InputAdornment,
   SvgIcon,
-  Typography
+  Typography,
+  IconButton
 } from '@mui/material';
 import { Download as DownloadIcon } from '../../icons/download';
 import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
+import { Close } from "@mui/icons-material";
+import { useState,useEffect } from 'react';
+
 
 export const AcademyListToolbar = (props) => {
-  
+  const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    if (props.params?.searched_name_pattern) {
+      setSearchText(props.params?.searched_name_pattern);
+    }
+  }, [props.params?.searched_name_pattern]);
+
+  const handleClear = () => {
+    setSearchText("");
+    props.onSearch && props.onSearch("");
+  };
+
+  const handleSubmitSearch = () => {
+    if (searchText.length > 0) {
+      props.onSearch && props.onSearch(searchText);
+    } else {
+      props.onSearch && props.onSearch("");
+    }
+  };
+
+
   return (
     <Box {...props}>
       <Box
@@ -58,21 +83,42 @@ export const AcademyListToolbar = (props) => {
           <CardContent>
             <Box sx={{ maxWidth: 500 }}>
               <TextField
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SvgIcon
-                        fontSize="small"
-                        color="action"
-                      >
-                        <SearchIcon />
-                      </SvgIcon>
-                    </InputAdornment>
-                  )
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    handleSubmitSearch();
+                  }
                 }}
-                placeholder="Search Academy"
+                onChange={(e) => setSearchText(e.target.value)}
+                value={searchText}
+                fullWidth
+                size="small"
+                onSubmit={handleSubmitSearch}
+                InputProps={{
+                  sx: { px: 0 },
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleSubmitSearch}>
+                        <SvgIcon color="action"
+                          fontSize="small">
+                          <SearchIcon />
+                        </SvgIcon>
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                  startAdornment: searchText?.length > 0 && (
+                    <InputAdornment position="start">
+                      <IconButton onClick={handleClear}>
+                        <SvgIcon color="action"
+                          fontSize="small">
+                          <Close />
+                        </SvgIcon>
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                placeholder="Search"
                 variant="outlined"
+                color="info"
               />
             </Box>
           </CardContent>

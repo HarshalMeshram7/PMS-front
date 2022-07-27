@@ -9,15 +9,21 @@ import { getAllacademy } from 'src/services/academyRequest';
 
 const Academy = () => {
   const [showAddAcademyDialog, setShowAddAcademyDialog] = useState(false);
+  const [academy, setAcademy] = useState([])
+  const [params, setParams] = useState({})
+  
   const handleOpenAddAcademy = () => setShowAddAcademyDialog(true);
   const handleCloseAddAcademy = () => setShowAddAcademyDialog(false);
-  const [academy,setAcademy] = useState([])
+  
+  const handleSearch = (value) => {
+    setParams((p) => ({ ...p, searched_name_pattern: value }))
+  };
+  
   useEffect(() => {
-    getAllacademy().then((res) => {
-      console.log(res);
+    getAllacademy(params).then((res) => {
       setAcademy(res);
     })
-  },[])
+  }, [params])
 
   return (
     <>
@@ -39,6 +45,7 @@ const Academy = () => {
         />
         <Container maxWidth={false}>
           <AcademyListToolbar
+            onSearch={handleSearch}
             handleOpenAddAcademy={handleOpenAddAcademy}
             open={showAddAcademyDialog}
              />
@@ -55,7 +62,7 @@ const Academy = () => {
                   md={6}
                   xs={12}
                 >
-                  <AcademyCard product={product} />
+                  <AcademyCard product={product || []} />
                 </Grid>
               ))}
             </Grid>

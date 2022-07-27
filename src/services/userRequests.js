@@ -2,31 +2,12 @@ import axios from "axios";
 import useStorage from "src/hooks/useStorage";
 import { MAIN_URL } from "./apiConfig";
 
-//GET USERS DETAILS
-export const getUser = async () => {
-  const { token } = useStorage();
-  if (!token) {
-    return;
-  }
-  try {
-    let res = await axios.get(`${MAIN_URL}/profile`, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
-
-    return res.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
 
 //GET All USERS
 export const getAllUser = async ( params) => {
   const { token } = useStorage();
   try {
-    let res = await axios.get(`${MAIN_URL}/admin/get_all_admins/`, {
+    let res = await axios.get(`${MAIN_URL}/api/user/getallusers/`, {
       params: params,
       headers: {
         Authorization: "Bearer " + token,
@@ -52,6 +33,7 @@ export const updateUser = async (id, data) => {
         Authorization: "Bearer " + token,
       },
     });
+    return res.data
   } catch (error) {
     console.log(error);
     throw error;
@@ -59,20 +41,20 @@ export const updateUser = async (id, data) => {
 };
 
 //UPDATE USER DETAILS
-export const addUser = async (data) => {
-  const { token } = useStorage();
-  try {
-    const res = await axios.post(`${MAIN_URL}/admin/create_admin/`, data, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
-    return res.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
+// export const addUser = async (data) => {
+//   const { token } = useStorage();
+//   try {
+//     const res = await axios.post(`${MAIN_URL}/admin/create_admin/`, data, {
+//       headers: {
+//         Authorization: "Bearer " + token,
+//       },
+//     });
+//     return res.data;
+//   } catch (error) {
+//     console.log(error);
+//     throw error;
+//   }
+// };
 
 //DELETE USER
 export const deleteUser = async (id) => {
@@ -92,8 +74,8 @@ export const deleteUser = async (id) => {
   }
 };
 
-//RESET USER PASSWORD
-export const resetUserPassword = async (id, data) => {
+//Change USER PASSWORD
+export const cangeUserPassword = async (id, data) => {
   const { token } = useStorage();
   try {
     const res = await axios.post(`${MAIN_URL}/admin/${id}/reset_password/`, data, {

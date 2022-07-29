@@ -6,14 +6,19 @@ import { DashboardLayout } from '../components/dashboard-layout';
 import { AddAcademyDialog } from 'src/components/academy/add-academy-dialog';
 import { useState, useEffect } from 'react';
 import { getAllacademy } from 'src/services/academyRequest';
+import { AcademyDetailsDialog } from 'src/components/academy/academy-details/academy-details-dialog';
 
 const Academy = () => {
   const [showAddAcademyDialog, setShowAddAcademyDialog] = useState(false);
+  const [showAcademyDetailsDialog, setShowAcademyDetailsDialog] = useState(false);
   const [academy, setAcademy] = useState([])
   const [params, setParams] = useState({})
   
   const handleOpenAddAcademy = () => setShowAddAcademyDialog(true);
   const handleCloseAddAcademy = () => setShowAddAcademyDialog(false);
+  
+  const handleOpenAcademyDetails = () => setShowAcademyDetailsDialog(true);
+  const handleCloseAcademyDetails = () => setShowAcademyDetailsDialog(false);
   
   const handleSearch = (value) => {
     setParams((p) => ({ ...p, searched_name_pattern: value }))
@@ -43,6 +48,9 @@ const Academy = () => {
           open={showAddAcademyDialog}
           handleClose={handleCloseAddAcademy}
         />
+        <AcademyDetailsDialog open={showAcademyDetailsDialog}
+          handleClose={handleCloseAcademyDetails} ></AcademyDetailsDialog>
+        
         <Container maxWidth={false}>
           <AcademyListToolbar
             onSearch={handleSearch}
@@ -62,7 +70,8 @@ const Academy = () => {
                   md={6}
                   xs={12}
                 >
-                  <AcademyCard product={product || []} />
+                  <AcademyCard handleOpenAcademyDetails={handleOpenAcademyDetails}
+                    product={product || []} />
                 </Grid>
               ))}
             </Grid>

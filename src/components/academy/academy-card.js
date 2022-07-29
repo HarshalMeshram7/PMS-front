@@ -3,7 +3,7 @@ import { Avatar, Box, Button, Card, CardContent, Divider, Grid, Typography } fro
 import { Clock as ClockIcon } from '../../icons/clock';
 import { Download as DownloadIcon } from '../../icons/download';
 
-export const AcademyCard = ({ product, ...rest }) => (
+export const AcademyCard = ({ product, handleOpenAcademyDetails, ...rest }) => (
   <Card
     sx={{
       display: 'flex',
@@ -74,7 +74,7 @@ export const AcademyCard = ({ product, ...rest }) => (
             display: 'flex'
           }}
         >
-          <Button>Details</Button>
+          <Button onClick={handleOpenAcademyDetails}>Details</Button>
           {/* <DownloadIcon color="action" />
           <Typography
             color="textSecondary"

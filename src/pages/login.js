@@ -7,12 +7,12 @@ import { Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Facebook as FacebookIcon } from '../icons/facebook';
 import { Google as GoogleIcon } from '../icons/google';
-// import { PostData } from 'src/apiRequest';
 import { useState } from 'react';
 import useAuth from "src/adapters/authAdapters";
 import { login } from "src/services/authRequests";
 import loginBackground from '../../public/static/images/background/login.jpg';
-
+import LoadingModal from 'src/components/common/loading-modal';
+import LoadingBox from 'src/components/common/loading-box';
 const Login = () => {
   const router = useRouter();
 
@@ -52,7 +52,9 @@ const Login = () => {
             setError(res.message);
           }
         });
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 3000);
       } catch (error) {
         setLoading(false);
         setError("Login Failed !");
@@ -66,6 +68,7 @@ const Login = () => {
       <Head>
         <title>Login | PMS</title>
       </Head>
+      {loading && <LoadingModal />}
       <Box
         component="main"
         style={{ background: `url("${loginBackground.src}")center center,linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5))`, backgroundBlendMode: "overlay",backgroundSize:"cover" }}

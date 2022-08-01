@@ -11,13 +11,17 @@ import { AcademyDetailsDialog } from 'src/components/academy/academy-details/aca
 const Academy = () => {
   const [showAddAcademyDialog, setShowAddAcademyDialog] = useState(false);
   const [showAcademyDetailsDialog, setShowAcademyDetailsDialog] = useState(false);
+  const [academies, setAcademies] = useState([])
   const [academy, setAcademy] = useState([])
   const [params, setParams] = useState({})
   
   const handleOpenAddAcademy = () => setShowAddAcademyDialog(true);
   const handleCloseAddAcademy = () => setShowAddAcademyDialog(false);
   
-  const handleOpenAcademyDetails = () => setShowAcademyDetailsDialog(true);
+  const handleOpenAcademyDetails = (e) => {
+    setAcademy(JSON.parse(e.target.id))
+    setShowAcademyDetailsDialog(true)
+  };
   const handleCloseAcademyDetails = () => setShowAcademyDetailsDialog(false);
   
   const handleSearch = (value) => {
@@ -26,7 +30,7 @@ const Academy = () => {
   
   useEffect(() => {
     getAllacademy(params).then((res) => {
-      setAcademy(res);
+      setAcademies(res);
     })
   }, [params])
 
@@ -48,7 +52,8 @@ const Academy = () => {
           open={showAddAcademyDialog}
           handleClose={handleCloseAddAcademy}
         />
-        <AcademyDetailsDialog open={showAcademyDetailsDialog}
+        <AcademyDetailsDialog academy={academy}
+          open={showAcademyDetailsDialog}
           handleClose={handleCloseAcademyDetails} ></AcademyDetailsDialog>
         
         <Container maxWidth={false}>
@@ -62,7 +67,7 @@ const Academy = () => {
               container
               spacing={3}
             >
-              {academy.map((product) => (
+              {academies.map((product) => (
                 <Grid
                   item
                   key={product.id}
@@ -70,7 +75,8 @@ const Academy = () => {
                   md={6}
                   xs={12}
                 >
-                  <AcademyCard handleOpenAcademyDetails={handleOpenAcademyDetails}
+                  <AcademyCard
+                    handleOpenAcademyDetails={handleOpenAcademyDetails}
                     product={product || []} />
                 </Grid>
               ))}

@@ -26,6 +26,7 @@ import TourIcon from '@mui/icons-material/Tour';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import SecurityIcon from '@mui/icons-material/Security';
+import EuroSymbolIcon from '@mui/icons-material/EuroSymbol';
 
 import { NavItem } from './nav-item';
 import { useState } from 'react';
@@ -49,24 +50,33 @@ const items = [
   {
     href: '/academy',
     icon: (<SchoolIcon fontSize="small" />),
-    title: 'Acadamy',
+    title: 'Academies',
+    role: '1',
+  },
+  {
+    href: '/academyfinance',
+    icon: (<EuroSymbolIcon fontSize="small" />),
+    title: 'Acadamy Finance',
     role: '1'
   },
-
   {
     href: '/clubs',
     icon: (<SecurityIcon fontSize="small" />),
     title: 'Clubs',
     role: '3'
   },
-
+  {
+    href: '/clubfinance',
+    icon: (<EuroSymbolIcon fontSize="small" />),
+    title: 'Club Finance',
+    role: '1'
+  },
   {
     href: '/team',
     icon: (<GroupsIcon fontSize="small" />),
     title: 'Team',
     role: '1'
   },
-
   {
     href: '/players',
     icon: (<UsersIcon fontSize="small" />),
@@ -87,7 +97,6 @@ const items = [
     title: 'Staff Registration',
     role: '3'
   },
-
   {
     href: '/referee-registration',
     icon: (<SportsIcon fontSize="small" />),

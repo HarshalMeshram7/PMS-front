@@ -39,3 +39,21 @@ export const getAllacademy = async (params) => {
         throw error;
     }
 };
+
+export const deleteAcademy = async (data) => {
+    const { token} = useStorage();
+    if (!token) {
+        throw "No Token";
+    }
+    try {
+        const res = await axios.post(`${MAIN_URL}/api/academy/deleteacademy/`, data, {
+                headers: {
+                Authorization: "Bearer " + token,
+            },
+        });
+        return res.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};

@@ -6,7 +6,7 @@ import { DashboardLayout } from '../components/dashboard-layout';
 import { AddAcademyDialog } from 'src/components/academy/add-academy-dialog';
 import { useState, useEffect } from 'react';
 import { getAllacademy } from 'src/services/academyRequest';
-import { AcademyDetailsDialog } from 'src/components/academy/academy-details/academy-details-dialog';
+import { AcademyDetailsDialog } from 'src/components/academy/academy-details-dialog';
 
 const Academy = () => {
   const [showAddAcademyDialog, setShowAddAcademyDialog] = useState(false);

@@ -142,9 +142,29 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy }) => {
     });
 
     const handleDelete = (data) => {
-        deleteAcademy(data).then((response)=> {
-            console.log(response)
-        });
+        
+        setLoading(true);
+        try {
+            
+            deleteAcademy(data).then((response)=> {
+                console.log(response)
+                if(response.status == "success"){
+                    handleClose();
+                    enqueueSnackbar("Academy Deleted Succesfully Please Refresh", { variant: "success" });
+                    setLoading(false);
+                }
+                else{
+                    handleClose();
+                    enqueueSnackbar(`Error : ${response.message}`, { variant: "failed" });
+                    setLoading(false);
+                }
+            });
+            } catch (error) {
+                console.log(error);
+                setLoading(false);
+            }
+
+
     }
 
 

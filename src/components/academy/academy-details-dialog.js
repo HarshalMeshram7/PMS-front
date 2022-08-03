@@ -141,12 +141,10 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy }) => {
         },
     });
 
-    const handleDelete = (e) => {
-        // deleteAcademy().then((response)=> {
-        //     console.log(response)
-        // });
-        console.log(e);
-
+    const handleDelete = (data) => {
+        deleteAcademy(data).then((response)=> {
+            console.log(response)
+        });
     }
 
 
@@ -165,8 +163,8 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy }) => {
         >
 
             {loading && <LoadingBox />}
-                <DialogContent style={{ margin: 0, padding: 0 }} >
-            <form onSubmit={formik.handleSubmit}>
+            <DialogContent style={{ margin: 0, padding: 0 }} >
+                <form onSubmit={formik.handleSubmit}>
                     <Box
                         component="main"
                         sx={{
@@ -232,7 +230,8 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy }) => {
                                         </CardContent>
                                         <Divider />
 
-                                        <Grid container spacing={8} >
+                                        <Grid container
+                                            spacing={8} >
 
                                             <Grid
                                                 item
@@ -545,17 +544,25 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy }) => {
                                         </CardContent>
                                         <Divider />
 
-                                        
+
 
                                         <CardActions>
-                                            <Grid container spacing={8} style={{ textAlign: 'center' }} >
+                                            <Grid container
+                                                spacing={8}
+                                                style={{ textAlign: 'center' }} >
                                                 <Grid
                                                     item
                                                     lg={6}
                                                     md={6}
                                                     xs={6}
                                                 >
-                                                    <Button variant="contained" style={{ backgroundColor: 'red' }} onClick={handleDelete}>Delete</Button>
+                                                    <Button
+                                                        variant="contained"
+                                                        style={{ backgroundColor: 'red' }}
+                                                        onClick={() => {
+                                                           
+                                                            handleDelete(academy.email)
+                                                        }}>Delete</Button>
                                                 </Grid>
                                                 <Grid
                                                     item
@@ -563,7 +570,8 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy }) => {
                                                     md={6}
                                                     xs={6}
                                                 >
-                                                    <Button type="submit" variant="contained">Save Details</Button>
+                                                    <Button type="submit"
+                                                        variant="contained">Save Details</Button>
                                                 </Grid>
                                             </Grid>
                                         </CardActions>
@@ -580,11 +588,11 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy }) => {
 
                         </Container>
                     </Box>
-            </form>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Close</Button>
-                </DialogActions>
+                </form>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleClose}>Close</Button>
+            </DialogActions>
         </Dialog>
 
     );

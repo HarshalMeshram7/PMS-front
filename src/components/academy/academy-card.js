@@ -78,8 +78,8 @@ export const AcademyCard = ({ product, handleOpenAcademyDetails, ...rest }) => {
           >
             <Button
 
-              id={JSON.stringify(product)}
-              onClick={handleOpenAcademyDetails}>Details</Button>
+              id={product.title}
+              onClick={() => { handleOpenAcademyDetails(product)}}>Details</Button>
             {/* <DownloadIcon color="action" />
           <Typography
             color="textSecondary"

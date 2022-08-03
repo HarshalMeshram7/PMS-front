@@ -18,8 +18,8 @@ const Academy = () => {
   const handleOpenAddAcademy = () => setShowAddAcademyDialog(true);
   const handleCloseAddAcademy = () => setShowAddAcademyDialog(false);
   
-  const handleOpenAcademyDetails = (e) => {
-    setAcademy(JSON.parse(e.target.id))
+  const handleOpenAcademyDetails = (academy) => {
+    setAcademy(academy)
     setShowAcademyDetailsDialog(true)
   };
   const handleCloseAcademyDetails = () => setShowAcademyDetailsDialog(false);

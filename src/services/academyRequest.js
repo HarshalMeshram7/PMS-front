@@ -4,7 +4,7 @@ import { MAIN_URL } from "./apiConfig";
 
 // Add Academy
 export const addAcademy = async (data) => {
-    const { token} = useStorage();
+    const { token } = useStorage();
     if (!token) {
         throw "No Token";
     }
@@ -22,13 +22,13 @@ export const addAcademy = async (data) => {
 };
 // Get All Academy
 export const getAllacademy = async (params) => {
-    const { token} = useStorage();
+    const { token } = useStorage();
     if (!token) {
         throw "No Token";
     }
     try {
         const res = await axios.get(`${MAIN_URL}/api/academy/getallacademy/`, {
-            params:params,
+            params: params,
             headers: {
                 Authorization: "Bearer " + token,
             },
@@ -40,14 +40,15 @@ export const getAllacademy = async (params) => {
     }
 };
 
-export const deleteAcademy = async (data) => {
-    const { token} = useStorage();
+export const deleteAcademy = async (email) => {
+    const { token } = useStorage();
     if (!token) {
         throw "No Token";
     }
     try {
-        const res = await axios.post(`${MAIN_URL}/api/academy/deleteacademy/`, data, {
-                headers: {
+
+        const res = await axios.post(`${MAIN_URL}/api/academy/deleteacademy/`,{email:email}, {
+            headers: {
                 Authorization: "Bearer " + token,
             },
         });

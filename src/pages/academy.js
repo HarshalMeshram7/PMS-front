@@ -5,13 +5,12 @@ import { AcademyListToolbar } from 'src/components/academy/academy-list-toolbar'
 import { DashboardLayout } from '../components/dashboard-layout';
 import { AddAcademyDialog } from 'src/components/academy/add-academy-dialog';
 import { useState, useEffect } from 'react';
-import { getAllacademy } from 'src/services/academyRequest';
 import { AcademyDetailsDialog } from 'src/components/academy/academy-details-dialog';
+import { useAllAcademies } from 'src/adapters/academyAdapter';
 
 const Academy = () => {
   const [showAddAcademyDialog, setShowAddAcademyDialog] = useState(false);
   const [showAcademyDetailsDialog, setShowAcademyDetailsDialog] = useState(false);
-  const [academies, setAcademies] = useState([])
   const [academy, setAcademy] = useState([])
   const [params, setParams] = useState({})
   
@@ -28,11 +27,7 @@ const Academy = () => {
     setParams((p) => ({ ...p, searched_name_pattern: value }))
   };
   
-  useEffect(() => {
-    getAllacademy(params).then((res) => {
-      setAcademies(res);
-    })
-  }, [params])
+  const { academies, loading, error, mutate } = useAllAcademies({ ...params});
 
   return (
     <>
@@ -49,10 +44,12 @@ const Academy = () => {
         }}
       >
         <AddAcademyDialog
+          mutate={mutate}
           open={showAddAcademyDialog}
           handleClose={handleCloseAddAcademy}
         />
         <AcademyDetailsDialog academy={academy}
+          mutate={mutate}
           open={showAcademyDetailsDialog}
           handleClose={handleCloseAcademyDetails} ></AcademyDetailsDialog>
         
@@ -67,7 +64,7 @@ const Academy = () => {
               container
               spacing={3}
             >
-              {academies.map((product) => (
+              {academies?.map((product) => (
                 <Grid
                   item
                   key={product.id}

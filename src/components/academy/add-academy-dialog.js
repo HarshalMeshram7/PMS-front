@@ -20,7 +20,7 @@ import * as Yup from "yup";
 import { addAcademy } from "src/services/academyRequest";
 import LoadingBox from "src/components/common/loading-box";
 
-export const AddAcademyDialog = ({ open, handleClose }) => {
+export const AddAcademyDialog = ({ open, handleClose, mutate }) => {
     const { enqueueSnackbar } = useSnackbar();
     const [loading, setLoading] = useState();
 
@@ -93,11 +93,10 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
         onSubmit: async (data) => {
             setLoading(true);
             try {
-                console.log(data);
                 await addAcademy(data);
                 handleClose();
                 enqueueSnackbar("Academy Added Succesfully Please Refresh", { variant: "success" });
-
+                mutate();
                 setLoading(false);
             } catch (error) {
                 setLoading(false);
@@ -154,7 +153,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="address"
                         value={formik.values.address}
                         variant="outlined"
-                        
+
                     />
 
                     <TextField
@@ -169,7 +168,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="tel"
                         value={formik.values.phone}
                         variant="outlined"
-                        
+
                     />
 
                     <TextField
@@ -184,7 +183,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="email"
                         value={formik.values.email}
                         variant="outlined"
-                        
+
                     />
 
                     <TextField
@@ -199,7 +198,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="text"
                         value={formik.values.personName}
                         variant="outlined"
-                        
+
                     />
 
                     <TextField
@@ -214,7 +213,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="text"
                         value={formik.values.accreditation}
                         variant="outlined"
-                        
+
                     />
 
                     <TextField
@@ -229,7 +228,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="text"
                         value={formik.values.facebook}
                         variant="outlined"
-                        
+
                     />
 
                     <TextField
@@ -244,7 +243,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="text"
                         value={formik.values.twitter}
                         variant="outlined"
-                        
+
                     />
 
                     <TextField
@@ -259,7 +258,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="text"
                         value={formik.values.instagram}
                         variant="outlined"
-                        
+
                     />
 
                     {/* <TextField
@@ -306,7 +305,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="password"
                         value={formik.values.password}
                         variant="outlined"
-                        
+
                     />
 
                     <TextField
@@ -321,7 +320,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="password"
                         value={formik.values.cnfpassword}
                         variant="outlined"
-                        
+
                     />
 
                     <TextField style={{ display: 'none' }}
@@ -337,7 +336,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="file"
                         value={formik.values.logo}
                         variant="outlined"
-                        
+
                     />
                     <Button onClick={() => { document.getElementById("uploadLogo").click() }}>Upload Logo</Button>
 
@@ -354,7 +353,7 @@ export const AddAcademyDialog = ({ open, handleClose }) => {
                         type="file"
                         value={formik.values.banner}
                         variant="outlined"
-                        
+
                     />
                     <Button onClick={() => { document.getElementById("uploadBanner").click() }}>Upload Banner</Button>
 

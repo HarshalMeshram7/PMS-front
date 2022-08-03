@@ -30,7 +30,7 @@ import { deleteAcademy } from "src/services/academyRequest.js";
 
 
 
-export const AcademyDetailsDialog = ({ open, handleClose, academy }) => {
+export const AcademyDetailsDialog = ({ open, handleClose, academy , mutate }) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const user = {
@@ -145,17 +145,16 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy }) => {
         
         setLoading(true);
         try {
-            
             deleteAcademy(data).then((response)=> {
-                console.log(response)
                 if(response.status == "success"){
                     handleClose();
                     enqueueSnackbar("Academy Deleted Succesfully Please Refresh", { variant: "success" });
+                    mutate();
                     setLoading(false);
                 }
                 else{
                     handleClose();
-                    enqueueSnackbar(`Error : ${response.message}`, { variant: "failed" });
+                    enqueueSnackbar(`Error : ${response.message}`, { variant: "error" });
                     setLoading(false);
                 }
             });

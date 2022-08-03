@@ -21,7 +21,7 @@ export const addAcademy = async (data) => {
     }
 };
 // Get All Academy
-export const getAllacademy = async (params) => {
+export const getAllAcademies = async (params) => {
     const { token } = useStorage();
     if (!token) {
         throw "No Token";

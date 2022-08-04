@@ -25,57 +25,36 @@ import { players } from "../../__mocks__/players.js";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSnackbar } from "notistack";
-import { red } from "@mui/material/colors";
 import { deleteAcademy } from "src/services/academyRequest.js";
+import banner from '../../../public/static/images/background/register.jpg';
 
 
-
-export const AcademyDetailsDialog = ({ open, handleClose, academy , mutate }) => {
+export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => {
     const { enqueueSnackbar } = useSnackbar();
-
     const user = {
         avatar: academy.logo,
-        city: 'Los Angeles',
+        city: academy.address,
         country: 'USA',
         jobTitle: 'Senior Developer',
         name: academy.academyName,
         timezone: 'GTM-7'
     };
     const [loading, setLoading] = useState();
-    const [values, setValues] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        state: '',
-        country: '',
-        password: '',
-        confirm: ''
-    });
-
-    const handleChange = (event) => {
-        setValues({
-            ...values,
-            [event.target.name]: event.target.value
-        });
-    };
 
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
-            academyName: "Academy1",
-            address: "Address",
-            phone: "8208793805",
-            email: "",
-            personName: "Person name",
+            academyName: academy.academyName,
+            address: academy.address,
+            phone: academy.phone,
+            personName: academy.personName,
             logo: "",
             banner: "",
-            accreditation: "accreditation",
-            facebook: "fb",
-            twitter: "tw",
-            instagram: "ins",
+            accreditation: academy.accreditation,
+            facebook: academy.facebook,
+            twitter: academy.twitter,
+            instagram: academy.instagram,
             sportsList: [],
-            password: "Monish@1995",
-            cnfpassword: "Monish@1995"
         },
         validationSchema: Yup.object({
             academyName: Yup
@@ -90,12 +69,6 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy , mutate }) =>
                 .length(10)
                 .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
             // .required("Phone number is required")
-            ,
-            email: Yup
-                .string()
-                .email("Must be a valid Email")
-                .max(255)
-            // .required("Email is required")
             ,
             personName: Yup
                 .string()
@@ -117,22 +90,17 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy , mutate }) =>
             instagram: Yup
                 .string()
                 .max(100),
-            password: Yup
-                .string()
-                .max(255)
-                .required('Password is required'),
-            cnfpassword: Yup
-                .string()
-                .oneOf([Yup.ref('password'), null], 'Passwords must match')
+
 
         }),
         onSubmit: async (data) => {
             setLoading(true);
             try {
                 console.log(data);
-                // await addAcademy(data);
-                // handleClose();
+                // await updateAcademy(data);
+                handleClose();
                 enqueueSnackbar("Academy Updated Succesfully Please Refresh", { variant: "success" });
+                mutate();
                 setLoading(false);
             } catch (error) {
                 console.log(error);
@@ -142,33 +110,29 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy , mutate }) =>
     });
 
     const handleDelete = (data) => {
-        
+
         setLoading(true);
         try {
-            deleteAcademy(data).then((response)=> {
-                if(response.status == "success"){
+            deleteAcademy(data).then((response) => {
+                if (response.status == "success") {
                     handleClose();
                     enqueueSnackbar("Academy Deleted Succesfully Please Refresh", { variant: "success" });
                     mutate();
                     setLoading(false);
                 }
-                else{
+                else {
                     handleClose();
                     enqueueSnackbar(`Error : ${response.message}`, { variant: "error" });
                     setLoading(false);
                 }
             });
-            } catch (error) {
-                console.log(error);
-                setLoading(false);
-            }
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+        }
 
 
     }
-
-
-
-
 
     return (
         <Dialog
@@ -194,7 +158,7 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy , mutate }) =>
                             width: "100%",
                             height: "200px",
                             marginBottom: "-100px",
-                            background: "url(https://img.freepik.com/free-vector/abstract-banner-background-with-red-shapes_1361-3348.jpg?w=2000)",
+                            background: `url(${banner.src})center center`,
                         }}></div>
 
                         <Container maxWidth="lg">
@@ -237,14 +201,20 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy , mutate }) =>
                                                     color="textSecondary"
                                                     variant="body2"
                                                 >
-                                                    {`${user.city} ${user.country}`}
+                                                    {academy.email}
                                                 </Typography>
                                                 <Typography
                                                     color="textSecondary"
                                                     variant="body2"
                                                 >
-                                                    {user.timezone}
+                                                    {`${user.city}`}
                                                 </Typography>
+                                                {/* <Typography
+                                                    color="textSecondary"
+                                                    variant="body2"
+                                                >
+                                                    {user.timezone}
+                                                </Typography> */}
                                             </Box>
                                         </CardContent>
                                         <Divider />
@@ -378,27 +348,6 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy , mutate }) =>
                                                         variant="outlined"
                                                     />
                                                 </Grid>
-
-                                                <Grid
-                                                    item
-                                                    md={6}
-                                                    xs={12}>
-                                                    <TextField
-                                                        error={Boolean(formik.touched.email && formik.errors.email)}
-                                                        fullWidth
-                                                        helperText={formik.touched.email && formik.errors.email}
-                                                        label="Email"
-                                                        margin="dense"
-                                                        name="email"
-                                                        onBlur={formik.handleBlur}
-                                                        onChange={formik.handleChange}
-                                                        type="email"
-                                                        value={formik.values.email}
-                                                        variant="outlined"
-
-                                                    />
-                                                </Grid>
-
                                                 <Grid
                                                     item
                                                     md={6}
@@ -520,44 +469,6 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy , mutate }) =>
                                                     </FormControl>
                                                 </Grid>
 
-                                                <Grid
-                                                    item
-                                                    md={6}
-                                                    xs={12}>
-                                                    <TextField
-                                                        error={Boolean(formik.touched.password && formik.errors.password)}
-                                                        fullWidth
-                                                        helperText={formik.touched.password && formik.errors.password}
-                                                        label="Create Password"
-                                                        margin="dense"
-                                                        name="password"
-                                                        onBlur={formik.handleBlur}
-                                                        onChange={formik.handleChange}
-                                                        type="password"
-                                                        value={formik.values.password}
-                                                        variant="outlined"
-
-                                                    />
-                                                </Grid>
-
-                                                <Grid
-                                                    item
-                                                    md={6}
-                                                    xs={12}>
-                                                    <TextField
-                                                        error={Boolean(formik.touched.cnfpassword && formik.errors.cnfpassword)}
-                                                        fullWidth
-                                                        helperText={formik.touched.cnfpassword && formik.errors.cnfpassword}
-                                                        label="Confirm Password"
-                                                        margin="dense"
-                                                        name="cnfpassword"
-                                                        onBlur={formik.handleBlur}
-                                                        onChange={formik.handleChange}
-                                                        type="password"
-                                                        value={formik.values.cnfpassword}
-                                                        variant="outlined"
-                                                    />
-                                                </Grid>
 
                                             </Grid>
                                         </CardContent>
@@ -579,7 +490,7 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy , mutate }) =>
                                                         variant="contained"
                                                         style={{ backgroundColor: 'red' }}
                                                         onClick={() => {
-                                                           
+
                                                             handleDelete(academy.email)
                                                         }}>Delete</Button>
                                                 </Grid>

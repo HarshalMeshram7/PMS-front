@@ -17,9 +17,7 @@ import {
   FormControl,
   Select,
 } from '@mui/material';
-import { Grid } from '@material-ui/core';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import RegisterBackground from '../../public/static/images/background/register.jpg';
 import loginBackground from '../../public/static/images/background/login.jpg';
 
 

@@ -1,13 +1,18 @@
-import React from 'react'
-import { DashboardLayout } from 'src/components/dashboard-layout'
+import React from "react";
+import { DashboardLayout } from "src/components/dashboard-layout";
 
-export default function Clubfinance() {
-  return (
-    <div>clubfinance</div>
-  )
+const Clubfinance = () => {
+    return(
+        <>
+        <h1>Club Finance Page</h1>
+        </>
+    )
 }
+
 Clubfinance.getLayout = (page) => (
     <DashboardLayout>
-        {page}
+      {page}
     </DashboardLayout>
-);
+  );
+
+export default Clubfinance;

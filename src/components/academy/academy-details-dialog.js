@@ -99,7 +99,7 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => 
                 console.log(data);
                 // await updateAcademy(data);
                 handleClose();
-                enqueueSnackbar("Academy Updated Succesfully Please Refresh", { variant: "success" });
+                enqueueSnackbar("Academy Updated Succesfully", { variant: "success" });
                 mutate();
                 setLoading(false);
             } catch (error) {
@@ -116,7 +116,7 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => 
             deleteAcademy(data).then((response) => {
                 if (response.status == "success") {
                     handleClose();
-                    enqueueSnackbar("Academy Deleted Succesfully Please Refresh", { variant: "success" });
+                    enqueueSnackbar("Academy Deleted Succesfully", { variant: "success" });
                     mutate();
                     setLoading(false);
                 }

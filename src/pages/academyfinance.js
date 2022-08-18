@@ -1,14 +1,18 @@
-import React from 'react'
-import { DashboardLayout } from 'src/components/dashboard-layout';
+import React from "react";
+import { DashboardLayout } from "src/components/dashboard-layout";
 
-export default function Academyfinance() {
-  return (
-    <div>academyfinance</div>
-  )
+const Academyfinance = () => {
+    return(
+        <>
+        <h1>Academy Finance Page</h1>
+        </>
+    )
 }
 
 Academyfinance.getLayout = (page) => (
     <DashboardLayout>
-        {page}
+      {page}
     </DashboardLayout>
-);
+  );
+
+export default Academyfinance;

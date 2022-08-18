@@ -133,6 +133,12 @@ const items = [
   },
 
   {
+    href: '/profile',
+    icon: (<ManageAccountsIcon fontSize="small" />),
+    title: 'Profile',
+    role: '4'
+  },
+  {
     href: '/user',
     icon: (<ManageAccountsIcon fontSize="small" />),
     title: 'User',

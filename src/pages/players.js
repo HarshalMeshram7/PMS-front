@@ -1,11 +1,11 @@
 import Head from 'next/head';
 import { Box, Container } from '@mui/material';
+import { AddPlayerDialog } from 'src/components/player/add-player-dialog';
 import { PlayerListResults } from '../components/player/player-list-results';
 import { PlayerListToolbar } from '../components/player/player-list-toolbar';
 import { DashboardLayout } from '../components/dashboard-layout';
 import { players } from '../__mocks__/players';
 import { useState } from 'react';
-import { AddPlayerDialog } from 'src/components/player/add-player-dialog';
 
 const Players = () => {
   const [showAddPlayerDialog, setShowAddPlayerDialog] = useState(false);

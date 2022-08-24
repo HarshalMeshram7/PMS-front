@@ -41,6 +41,12 @@ const access = [{
 
 const items = [
   {
+    href: '/useraccess',
+    icon: (<SchoolIcon fontSize="small" />),
+    title: 'User Access',
+    role: '1',
+  },
+  {
     href: '/',
     icon: (<ChartBarIcon fontSize="small" />),
     title: 'Dashboard',

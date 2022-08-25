@@ -17,6 +17,7 @@ import {
     Card,
     Divider,
     Container,
+    Autocomplete
 } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
@@ -24,6 +25,37 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { addAcademy } from "src/services/academyRequest";
 import LoadingBox from "src/components/common/loading-box";
+
+const userRole = [
+    {
+        value: "clubAdmin",
+        label: "Club Admin"
+    },
+    {
+        value: "federationAdmin",
+        label: "Federation Admin"
+    }
+];
+
+const federationClubAccess = [
+    {
+        value: "club1",
+        label: "Club 1"
+    },
+    {
+        value: "club2",
+        label: "Club 2"
+    },
+    {
+        value: "federation1",
+        label: "Federation 1"
+    },
+    {
+        value: "federation2",
+        label: "Federation 2"
+    }
+
+]
 
 export const AddUserAccessDialog = ({ open, handleClose }) => {
     const { enqueueSnackbar } = useSnackbar();
@@ -86,22 +118,7 @@ export const AddUserAccessDialog = ({ open, handleClose }) => {
             setLoading(true);
 
             try {
-                // const data = {
-                //     academyName,
-                //     address,
-                //     phone,
-                //     email,
-                //     personName,
-                //     logo,
-                //     banner,
-                //     accreditation,
-                //     facebook,
-                //     twitter,
-                //     instagram,
-                //     sportsList,
-                //     password,
-                //     cnfpassword,
-                // };
+
                 console.log("**********");
                 console.log(data);
                 // await addAcademy(data);
@@ -146,7 +163,6 @@ export const AddUserAccessDialog = ({ open, handleClose }) => {
                         container
                         spacing={3}
                     >
-
                         <Grid
                             item
                             md={6}
@@ -286,15 +302,12 @@ export const AddUserAccessDialog = ({ open, handleClose }) => {
                                 variant="outlined"
                             />
                         </Grid>
-
                     </Grid>
-
                 </DialogContent>
 
                 <Divider></Divider>
 
                 <DialogContent>
-
                     <Grid
                         container
                         spacing={3}
@@ -304,20 +317,12 @@ export const AddUserAccessDialog = ({ open, handleClose }) => {
                             md={6}
                             xs={12}
                         >
-                            <FormControl fullWidth>
-                                <InputLabel id="userRole">User Role</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-helper-label"
-                                    id="userRole"
-                                    value={formik.values.userRole}
-                                    label="User Role"
-                                    name="userRole"
-                                    onChange={formik.handleChange}
-                                >
-                                    <MenuItem value="Club Admin">Club Admin</MenuItem>
-                                    <MenuItem value="Federation Admin">Federation Admin</MenuItem>
-                                </Select>
-                            </FormControl>
+                            <Autocomplete
+                                disablePortal
+                                id="combo-box-demo"
+                                options={userRole}
+                                renderInput={(params) => <TextField {...params} label="User Role" />}
+                            />
                         </Grid>
 
                         <Grid
@@ -325,35 +330,29 @@ export const AddUserAccessDialog = ({ open, handleClose }) => {
                             md={6}
                             xs={12}
                         >
-                            <FormControl fullWidth>
-                                <InputLabel id="fedClubAccess">Federation / Club Access</InputLabel>
-                                <Select
-                                    multiple
-                                    labelId="demo-simple-select-helper-label"
-                                    id="fedClubAccess"
-                                    value={formik.values.federationClubAccess}
-                                    label="Federation / Club Access"
-                                    name="federationClubAccess"
-                                    onChange={formik.handleChange}
-                                >
-                                    <MenuItem value="Club 1">Club 1</MenuItem>
-                                    <MenuItem value="Club 2">Club 2</MenuItem>
-                                    <MenuItem value="Club 3">Club 3</MenuItem>
-                                    <MenuItem value="Federation 1">Federation 1</MenuItem>
-                                    <MenuItem value="Federation 2">Federation 2</MenuItem>
-                                    <MenuItem value="Federation 3">Federation 3</MenuItem>
-                                </Select>
-                            </FormControl>
+                            <Autocomplete
+                                multiple
+                                id="tags-outlined"
+                                options={federationClubAccess}
+                                getOptionLabel={(option) => option.label}
+                                filterSelectedOptions
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        label="Federation / Club Access"
+                                        placeholder="Federation / Club Access"
+                                    />
+                                )}
+                            />
                         </Grid>
-
                     </Grid>
-
                 </DialogContent>
 
                 <DialogActions>
                     <Button onClick={handleClose} >Cancel</Button>
                     <Button type="submit" variant="contained">Add</Button>
                 </DialogActions>
+
             </form>
         </Dialog>
     );

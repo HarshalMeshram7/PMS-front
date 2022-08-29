@@ -105,7 +105,7 @@ export const DashboardNavbar = (props) => {
               "aria-labelledby": "basic-button",
             }}
           >
-            <MenuItem onClick={() => router.push("/user")}>My account</MenuItem>
+            <MenuItem onClick={() => router.push("/profile")}>My account</MenuItem>
             <MenuItem
               onClick={() => {
                 logout();

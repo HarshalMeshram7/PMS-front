@@ -54,7 +54,6 @@ const federationClubAccess = [
         value: "federation2",
         label: "Federation 2"
     }
-
 ]
 
 export const AddUserAccessDialog = ({ open, handleClose }) => {
@@ -72,8 +71,8 @@ export const AddUserAccessDialog = ({ open, handleClose }) => {
             phone: "",
             userRole: [],
             federationClubAccess: [],
-
         },
+
         validationSchema: Yup.object({
             userName: Yup
                 .string()
@@ -112,8 +111,8 @@ export const AddUserAccessDialog = ({ open, handleClose }) => {
                 .string()
                 .max(100)
                 .required("Federation / Club is required"),
-
         }),
+        
         onSubmit: async (data) => {
             setLoading(true);
 

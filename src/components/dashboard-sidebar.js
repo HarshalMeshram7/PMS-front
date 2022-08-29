@@ -40,17 +40,19 @@ const access = [{
 }]
 
 const items = [
-  {
-    href: '/useraccess',
-    icon: (<SchoolIcon fontSize="small" />),
-    title: 'User Access',
-    role: '1',
-  },
+  
   {
     href: '/',
     icon: (<ChartBarIcon fontSize="small" />),
     title: 'Dashboard',
     role: '1'
+  },
+
+  {
+    href: '/useraccess',
+    icon: (<ManageAccountsIcon fontSize="small" />),
+    title: 'User Access',
+    role: '1',
   },
 
   {
@@ -144,12 +146,12 @@ const items = [
     title: 'Profile',
     role: '4'
   },
-  {
-    href: '/user',
-    icon: (<ManageAccountsIcon fontSize="small" />),
-    title: 'User',
-    role: '4'
-  },
+  // {
+  //   href: '/user',
+  //   icon: (<ManageAccountsIcon fontSize="small" />),
+  //   title: 'User',
+  //   role: '4'
+  // },
 
   // {
   //   href: '/settings',

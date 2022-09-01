@@ -7,7 +7,7 @@ import { AddAcademyDialog } from 'src/components/academy/add-academy-dialog';
 import { useState, useEffect } from 'react';
 import { AcademyDetailsDialog } from 'src/components/academy/academy-details-dialog';
 import { useAllAcademies } from 'src/adapters/academyAdapter';
-import { AcademyFinanceDialog } from 'src/components/academy/academy-finance-dialog copy';
+import { AcademyFinanceDialog } from 'src/components/academy/academy-finance-dialog';
 
 const Academy = () => {
   const [showAddAcademyDialog, setShowAddAcademyDialog] = useState(false);

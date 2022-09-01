@@ -56,6 +56,12 @@ const items = [
   },
 
   {
+    href: '/federation',
+    icon: (<SchoolIcon fontSize="small" />),
+    title: 'Federation',
+    role: '1',
+  },
+  {
     href: '/academy',
     icon: (<SchoolIcon fontSize="small" />),
     title: 'Academies',

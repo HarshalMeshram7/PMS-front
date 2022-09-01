@@ -44,7 +44,7 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
-            academyName: academy.academyName,
+            federationName: academy.academyName,
             address: academy.address,
             phone: academy.phone,
             personName: academy.personName,
@@ -57,7 +57,7 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
             sportsList: [],
         },
         validationSchema: Yup.object({
-            academyName: Yup
+            federationName: Yup
                 .string()
                 .max(100)
                 .required("Academy Name is required"),
@@ -90,16 +90,15 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
             instagram: Yup
                 .string()
                 .max(100),
-
-
         }),
+
         onSubmit: async (data) => {
             setLoading(true);
             try {
                 console.log(data);
                 // await updateAcademy(data);
                 handleClose();
-                enqueueSnackbar("Academy Updated Succesfully", { variant: "success" });
+                enqueueSnackbar("Federation Updated Succesfully", { variant: "success" });
                 mutate();
                 setLoading(false);
             } catch (error) {
@@ -116,7 +115,7 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
             deleteAcademy(data).then((response) => {
                 if (response.status == "success") {
                     handleClose();
-                    enqueueSnackbar("Academy Deleted Succesfully", { variant: "success" });
+                    enqueueSnackbar("Federation Deleted Succesfully", { variant: "success" });
                     mutate();
                     setLoading(false);
                 }
@@ -130,8 +129,6 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
             console.log(error);
             setLoading(false);
         }
-
-
     }
 
     return (
@@ -144,7 +141,6 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                 style: { backgroundColor: "#121212dd" },
             }}
         >
-
             {loading && <LoadingBox />}
             <DialogContent style={{ margin: 0, padding: 0 }} >
                 <form onSubmit={formik.handleSubmit}>
@@ -234,7 +230,7 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                                                         fullWidth
                                                         helperText={formik.touched.logo && formik.errors.logo}
                                                         label="Logo"
-                                                        id="uploadAcademyLogo"
+                                                        id="uploadFederationLogo"
                                                         margin="dense"
                                                         name="logo"
                                                         onBlur={formik.handleBlur}
@@ -243,7 +239,7 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                                                         value={formik.values.logo}
                                                         variant="outlined"
                                                     />
-                                                    <Button onClick={() => { document.getElementById("uploadAcademyLogo").click() }}>Upload Logo</Button>
+                                                    <Button onClick={() => { document.getElementById("uploadFederationLogo").click() }}>Upload Logo</Button>
                                                 </CardActions>
                                             </Grid>
                                             <Grid
@@ -258,7 +254,7 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                                                         fullWidth
                                                         helperText={formik.touched.banner && formik.errors.banner}
                                                         label="Banner"
-                                                        id="uploadAcademyBanner"
+                                                        id="uploadFederationBanner"
                                                         margin="dense"
                                                         name="banner"
                                                         onBlur={formik.handleBlur}
@@ -267,7 +263,7 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                                                         value={formik.values.banner}
                                                         variant="outlined"
                                                     />
-                                                    <Button onClick={() => { document.getElementById("uploadAcademyBanner").click() }}>Upload Banner</Button>
+                                                    <Button onClick={() => { document.getElementById("uploadFederationBanner").click() }}>Upload Banner</Button>
                                                 </CardActions>
                                             </Grid>
                                         </Grid>
@@ -288,23 +284,22 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                                                 container
                                                 spacing={3}
                                             >
-
                                                 <Grid
                                                     item
                                                     md={6}
                                                     xs={12}
                                                 >
                                                     <TextField
-                                                        error={Boolean(formik.touched.academyName && formik.errors.academyName)}
+                                                        error={Boolean(formik.touched.federationName && formik.errors.federationName)}
                                                         fullWidth
-                                                        helperText={formik.touched.academyName && formik.errors.academyName}
+                                                        helperText={formik.touched.federationName && formik.errors.federationName}
                                                         label="Name"
                                                         margin="dense"
-                                                        name="academyName"
+                                                        name="federationName"
                                                         onBlur={formik.handleBlur}
                                                         onChange={formik.handleChange}
                                                         type="text"
-                                                        value={formik.values.academyName}
+                                                        value={formik.values.federationName}
                                                         variant="outlined"
                                                     />
                                                 </Grid>
@@ -348,6 +343,7 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                                                         variant="outlined"
                                                     />
                                                 </Grid>
+                                                
                                                 <Grid
                                                     item
                                                     md={6}
@@ -364,7 +360,6 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                                                         type="text"
                                                         value={formik.values.personName}
                                                         variant="outlined"
-
                                                     />
                                                 </Grid>
 
@@ -384,7 +379,6 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                                                         type="text"
                                                         value={formik.values.accreditation}
                                                         variant="outlined"
-
                                                     />
                                                 </Grid>
 
@@ -404,7 +398,6 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                                                         type="text"
                                                         value={formik.values.facebook}
                                                         variant="outlined"
-
                                                     />
                                                 </Grid>
 
@@ -424,7 +417,6 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                                                         type="text"
                                                         value={formik.values.twitter}
                                                         variant="outlined"
-
                                                     />
                                                 </Grid>
 
@@ -469,12 +461,9 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                                                     </FormControl>
                                                 </Grid>
 
-
                                             </Grid>
                                         </CardContent>
                                         <Divider />
-
-
 
                                         <CardActions>
                                             <Grid container
@@ -511,7 +500,7 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                                 </Grid>
                             </Grid>
                             {/* Teams List */}
-                            <Typography>Academy1 - Teams </Typography>
+                            <Typography>Federations - Teams </Typography>
                             <Box sx={{ mt: 3 }}>
                                 <PlayerListResults players={players} />
                             </Box>
@@ -524,6 +513,5 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                 <Button onClick={handleClose}>Close</Button>
             </DialogActions>
         </Dialog>
-
     );
 };

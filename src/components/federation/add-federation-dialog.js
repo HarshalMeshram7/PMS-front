@@ -47,7 +47,7 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
 
     const formik = useFormik({
         initialValues: {
-            academyName: "Academy1",
+            federationName: "Academy12",
             address: "Address",
             phone: "8208793805",
             email: "@gmail.com",
@@ -63,7 +63,7 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
             cnfpassword: "Monish@1995"
         },
         validationSchema: Yup.object({
-            academyName: Yup
+            federationName: Yup
                 .string()
                 .max(100)
                 .required("Academy Name is required"),
@@ -117,13 +117,13 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
                 await addAcademy(data).then((resp) => {
                     if (resp.status === "success") {
                         handleClose();
-                        enqueueSnackbar("Academy Added Succesfully", { variant: "success" });
+                        enqueueSnackbar("Club Added Succesfully", { variant: "success" });
                         mutate();
                         setLoading(false);
                     }
                     if (resp.status === "failed") {
                         handleClose();
-                        enqueueSnackbar("Academy Not Added", { variant: "failed" });
+                        enqueueSnackbar("Club Not Added", { variant: "failed" });
                         setLoading(false);
                     }
                 })
@@ -151,10 +151,10 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
         >
             {loading && <LoadingBox />}
             <form onSubmit={formik.handleSubmit}>
-                <DialogTitle>Add New Academy</DialogTitle>
+                <DialogTitle>Add New Club</DialogTitle>
                 <DialogContent>
                     <DialogContentText sx={{ marginBottom: 2 }}>
-                        Enter the required basic details of the Academy below.
+                        Enter the required basic details of the Club below.
                     </DialogContentText>
 
                     <Grid
@@ -167,16 +167,16 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
                             xs={12}
                         >
                             <TextField
-                                error={Boolean(formik.touched.academyName && formik.errors.academyName)}
+                                error={Boolean(formik.touched.federationName && formik.errors.federationName)}
                                 fullWidth
-                                helperText={formik.touched.academyName && formik.errors.academyName}
+                                helperText={formik.touched.federationName && formik.errors.federationName}
                                 label="Name"
                                 margin="dense"
-                                name="academyName"
+                                name="federationName"
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
                                 type="text"
-                                value={formik.values.academyName}
+                                value={formik.values.federationName}
                                 variant="outlined"
                             />
                         </Grid>
@@ -415,7 +415,7 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
                                 fullWidth
                                 helperText={formik.touched.logo && formik.errors.logo}
                                 label="Logo"
-                                id="uploadLogo"
+                                id="uploadFederationLogo"
                                 margin="dense"
                                 name="logo"
                                 onBlur={formik.handleBlur}
@@ -424,7 +424,7 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
                                 value={formik.values.logo}
                                 variant="outlined"
                             />
-                            <Button onClick={() => { document.getElementById("uploadLogo").click() }}>Upload Logo</Button>
+                            <Button onClick={() => { document.getElementById("uploadFederationLogo").click() }}>Upload Logo</Button>
                         </Grid>
 
                         <Grid
@@ -437,7 +437,7 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
                                 fullWidth
                                 helperText={formik.touched.banner && formik.errors.banner}
                                 label="Banner"
-                                id="uploadBanner"
+                                id="uploadFederationBanner"
                                 margin="dense"
                                 name="banner"
                                 onBlur={formik.handleBlur}
@@ -446,7 +446,7 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
                                 value={formik.values.banner}
                                 variant="outlined"
                             />
-                            <Button onClick={() => { document.getElementById("uploadBanner").click() }}>Upload Banner</Button>
+                            <Button onClick={() => { document.getElementById("uploadFederationBanner").click() }}>Upload Banner</Button>
                         </Grid>
                         <Grid />
                     </Grid>

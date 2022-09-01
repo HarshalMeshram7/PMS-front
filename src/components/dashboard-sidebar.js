@@ -62,22 +62,10 @@ const items = [
     role: '1',
   },
   {
-    href: '/academyfinance',
-    icon: (<EuroSymbolIcon fontSize="small" />),
-    title: 'Acadamy Finance',
-    role: '1'
-  },
-  {
     href: '/clubs',
     icon: (<SecurityIcon fontSize="small" />),
     title: 'Clubs',
     role: '3'
-  },
-  {
-    href: '/clubfinance',
-    icon: (<EuroSymbolIcon fontSize="small" />),
-    title: 'Club Finance',
-    role: '1'
   },
   {
     href: '/team',
@@ -146,13 +134,6 @@ const items = [
     title: 'Profile',
     role: '4'
   },
-  // {
-  //   href: '/user',
-  //   icon: (<ManageAccountsIcon fontSize="small" />),
-  //   title: 'User',
-  //   role: '4'
-  // },
-
   // {
   //   href: '/settings',
   //   icon: (<CogIcon fontSize="small" />),

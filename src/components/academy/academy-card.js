@@ -3,7 +3,7 @@ import { Avatar, Box, Button, Card, CardContent, Divider, Grid, Typography } fro
 import { Clock as ClockIcon } from '../../icons/clock';
 import { Download as DownloadIcon } from '../../icons/download';
 
-export const AcademyCard = ({ product, handleOpenAcademyDetails, ...rest }) => {
+export const AcademyCard = ({ product, handleOpenAcademyDetails, handleOpenAcademyFinance, ...rest }) => {
   
   return (
     <Card
@@ -76,6 +76,10 @@ export const AcademyCard = ({ product, handleOpenAcademyDetails, ...rest }) => {
               display: 'flex'
             }}
           >
+            <Button
+
+              id={product.title}
+              onClick={() => { handleOpenAcademyFinance(product)}}>Finance</Button>
             <Button
 
               id={product.title}

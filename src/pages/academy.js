@@ -7,10 +7,12 @@ import { AddAcademyDialog } from 'src/components/academy/add-academy-dialog';
 import { useState, useEffect } from 'react';
 import { AcademyDetailsDialog } from 'src/components/academy/academy-details-dialog';
 import { useAllAcademies } from 'src/adapters/academyAdapter';
+import { AcademyFinanceDialog } from 'src/components/academy/academy-finance-dialog copy';
 
 const Academy = () => {
   const [showAddAcademyDialog, setShowAddAcademyDialog] = useState(false);
   const [showAcademyDetailsDialog, setShowAcademyDetailsDialog] = useState(false);
+  const [showAcademyFinanceDialog, setShowAcademyFinanceDialog] = useState(false);
   const [academy, setAcademy] = useState([])
   const [params, setParams] = useState({})
   
@@ -22,6 +24,12 @@ const Academy = () => {
     setShowAcademyDetailsDialog(true)
   };
   const handleCloseAcademyDetails = () => setShowAcademyDetailsDialog(false);
+  
+  const handleOpenAcademyFinance = (academy) => {
+    setAcademy(academy)
+    setShowAcademyFinanceDialog(true)
+  };
+  const handleCloseAcademyFinance = () => setShowAcademyFinanceDialog(false);
   
   const handleSearch = (value) => {
     setParams((p) => ({ ...p, searched_name_pattern: value }))
@@ -53,6 +61,13 @@ const Academy = () => {
           open={showAcademyDetailsDialog}
           handleClose={handleCloseAcademyDetails} ></AcademyDetailsDialog>
         
+        <AcademyFinanceDialog
+          academy={academy}
+          mutate={mutate}
+          open={showAcademyFinanceDialog}
+          handleClose={handleCloseAcademyFinance}
+        ></AcademyFinanceDialog>
+
         <Container maxWidth={false}>
           <AcademyListToolbar
             onSearch={handleSearch}
@@ -73,6 +88,7 @@ const Academy = () => {
                   xs={12}
                 >
                   <AcademyCard
+                    handleOpenAcademyFinance={handleOpenAcademyFinance}
                     handleOpenAcademyDetails={handleOpenAcademyDetails}
                     product={product || []} />
                 </Grid>

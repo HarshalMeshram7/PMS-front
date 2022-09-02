@@ -5,14 +5,17 @@ import {
     DialogActions,
     DialogContent,
     DialogContentText,
+    Autocomplete,
     DialogTitle,
     TextField,
     FormControl,
     InputLabel,
+    Grid,
     Select,
+    Container,
     MenuItem,
     Box,
-    Grid
+    Snackbar,
 } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
@@ -20,20 +23,25 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { addAcademy } from "src/services/academyRequest";
 import LoadingBox from "src/components/common/loading-box";
+import { parseWithOptions } from "date-fns/fp";
+import { OnlinePredictionSharp } from "@mui/icons-material";
 
-export const AddClubDialog = ({ open, handleClose }) => {
+export const AddClubDialog = ({ open, handleClose, mutate }) => {
     const { enqueueSnackbar } = useSnackbar();
     const [loading, setLoading] = useState();
 
     const formik = useFormik({
         initialValues: {
-            clubName: "",
-            address: "",
-            phone: "",
-            email: "",
-            personName: "",
-            password: "",
-            cnfpassword: ""
+            clubName: "Academy12",
+            address: "Address",
+            phone: "8208793805",
+            email: "@gmail.com",
+            personName: "Person name",
+            logo: "",
+            banner: "",
+            accreditation: "accreditation",
+            password: "Monish@1995",
+            cnfpassword: "Monish@1995"
         },
         validationSchema: Yup.object({
             clubName: Yup
@@ -60,36 +68,34 @@ export const AddClubDialog = ({ open, handleClose }) => {
                 .max(100)
             // .required("Person Name is required")
             ,
+            accreditation: Yup
+                .string()
+                .max(100),
             password: Yup
                 .string()
                 .max(255)
-                .required('Password is required')
-            ,
+                .required('Password is required'),
             cnfpassword: Yup
                 .string()
                 .oneOf([Yup.ref('password'), null], 'Passwords must match')
-
         }),
+
         onSubmit: async (data) => {
             setLoading(true);
-
             try {
-                // const data = {
-                //     clubName,
-                //     address,
-                //     phone,
-                //     email,
-                //     personName,
-                //     password,
-                //     cnfpassword,
-                // };
-                console.log("********");
-                console.log(data);
-                // await addAcademy(data);
-                handleClose();
-                enqueueSnackbar("Club Added Succesfully", { variant: "success" });
-
-                setLoading(false);
+                await addAcademy(data).then((resp) => {
+                    if (resp.status === "success") {
+                        handleClose();
+                        enqueueSnackbar("Club Added Succesfully", { variant: "success" });
+                        mutate();
+                        setLoading(false);
+                    }
+                    if (resp.status === "failed") {
+                        handleClose();
+                        enqueueSnackbar("Club Not Added", { variant: "failed" });
+                        setLoading(false);
+                    }
+                })
             } catch (error) {
                 setLoading(false);
             }
@@ -117,7 +123,7 @@ export const AddClubDialog = ({ open, handleClose }) => {
                 <DialogTitle>Add New Club</DialogTitle>
                 <DialogContent>
                     <DialogContentText sx={{ marginBottom: 2 }}>
-                        Enter the required basic details of the Academy below.
+                        Enter the required basic details of the Club below.
                     </DialogContentText>
 
                     <Grid
@@ -130,9 +136,9 @@ export const AddClubDialog = ({ open, handleClose }) => {
                             xs={12}
                         >
                             <TextField
-                                error={Boolean(formik.touched.academyName && formik.errors.academyName)}
+                                error={Boolean(formik.touched.clubName && formik.errors.clubName)}
                                 fullWidth
-                                helperText={formik.touched.academyName && formik.errors.academyName}
+                                helperText={formik.touched.clubName && formik.errors.clubName}
                                 label="Name"
                                 margin="dense"
                                 name="clubName"
@@ -141,7 +147,6 @@ export const AddClubDialog = ({ open, handleClose }) => {
                                 type="text"
                                 value={formik.values.clubName}
                                 variant="outlined"
-                                required
                             />
                         </Grid>
 
@@ -162,7 +167,6 @@ export const AddClubDialog = ({ open, handleClose }) => {
                                 type="address"
                                 value={formik.values.address}
                                 variant="outlined"
-                                required
                             />
                         </Grid>
 
@@ -183,7 +187,6 @@ export const AddClubDialog = ({ open, handleClose }) => {
                                 type="tel"
                                 value={formik.values.phone}
                                 variant="outlined"
-                                required
                             />
                         </Grid>
 
@@ -204,7 +207,6 @@ export const AddClubDialog = ({ open, handleClose }) => {
                                 type="email"
                                 value={formik.values.email}
                                 variant="outlined"
-                                required
                             />
                         </Grid>
 
@@ -225,7 +227,6 @@ export const AddClubDialog = ({ open, handleClose }) => {
                                 type="text"
                                 value={formik.values.personName}
                                 variant="outlined"
-                                required
                             />
                         </Grid>
 
@@ -249,7 +250,7 @@ export const AddClubDialog = ({ open, handleClose }) => {
                             />
                         </Grid>
 
-                        <Grid
+                                                <Grid
                             item
                             md={6}
                             xs={12}
@@ -266,7 +267,6 @@ export const AddClubDialog = ({ open, handleClose }) => {
                                 type="password"
                                 value={formik.values.password}
                                 variant="outlined"
-                                required
                             />
                         </Grid>
 
@@ -287,7 +287,6 @@ export const AddClubDialog = ({ open, handleClose }) => {
                                 type="password"
                                 value={formik.values.cnfpassword}
                                 variant="outlined"
-                                required
                             />
                         </Grid>
 
@@ -301,7 +300,7 @@ export const AddClubDialog = ({ open, handleClose }) => {
                                 fullWidth
                                 helperText={formik.touched.logo && formik.errors.logo}
                                 label="Logo"
-                                id="uploadLogo"
+                                id="uploadClubLogo"
                                 margin="dense"
                                 name="logo"
                                 onBlur={formik.handleBlur}
@@ -309,9 +308,8 @@ export const AddClubDialog = ({ open, handleClose }) => {
                                 type="file"
                                 value={formik.values.logo}
                                 variant="outlined"
-                            // required
                             />
-                            <Button onClick={() => { document.getElementById("uploadLogo").click() }}>Upload Logo</Button>
+                            <Button onClick={() => { document.getElementById("uploadClubLogo").click() }}>Upload Logo</Button>
                         </Grid>
 
                         <Grid
@@ -324,7 +322,7 @@ export const AddClubDialog = ({ open, handleClose }) => {
                                 fullWidth
                                 helperText={formik.touched.banner && formik.errors.banner}
                                 label="Banner"
-                                id="uploadBanner"
+                                id="uploadClubBanner"
                                 margin="dense"
                                 name="banner"
                                 onBlur={formik.handleBlur}
@@ -332,12 +330,13 @@ export const AddClubDialog = ({ open, handleClose }) => {
                                 type="file"
                                 value={formik.values.banner}
                                 variant="outlined"
-                            // required
                             />
-                            <Button onClick={() => { document.getElementById("uploadBanner").click() }}>Upload Banner</Button>
+                            <Button onClick={() => { document.getElementById("uploadClubBanner").click() }}>Upload Banner</Button>
                         </Grid>
+                        <Grid />
                     </Grid>
                 </DialogContent>
+
                 <DialogActions>
                     <Button onClick={handleClose} >Cancel</Button>
                     <Button type="submit" variant="contained">Add</Button>

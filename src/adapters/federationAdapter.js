@@ -1,4 +1,4 @@
-import { getAllFederations } from "src/services/academyRequest";
+import { getAllFederations } from "src/services/federationRequest";
 import useSWR from "swr";
 import { swrConfigs } from "./swrConfigs";
 

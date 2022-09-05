@@ -29,14 +29,14 @@ import { deleteAcademy } from "src/services/academyRequest.js";
 import banner from '../../../public/static/images/background/register.jpg';
 
 
-export const ClubDetailsDialog = ({ open, handleClose, academy, mutate }) => {
+export const ClubDetailsDialog = ({ open, handleClose, club, mutate }) => {
     const { enqueueSnackbar } = useSnackbar();
     const user = {
-        avatar: academy.logo,
-        city: academy.address,
+        avatar: club.logo,
+        city: club.address,
         country: 'USA',
         jobTitle: 'Senior Developer',
-        name: academy.academyName,
+        name: club.academyName,
         timezone: 'GTM-7'
     };
     const [loading, setLoading] = useState();
@@ -44,23 +44,23 @@ export const ClubDetailsDialog = ({ open, handleClose, academy, mutate }) => {
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
-            clubName: academy.academyName,
-            address: academy.address,
-            phone: academy.phone,
-            personName: academy.personName,
+            clubName: club.academyName,
+            address: club.address,
+            phone: club.phone,
+            personName: club.personName,
             logo: "",
             banner: "",
-            accreditation: academy.accreditation,
-            facebook: academy.facebook,
-            twitter: academy.twitter,
-            instagram: academy.instagram,
+            accreditation: club.accreditation,
+            facebook: club.facebook,
+            twitter: club.twitter,
+            instagram: club.instagram,
             sportsList: [],
         },
         validationSchema: Yup.object({
             clubName: Yup
                 .string()
                 .max(100)
-                .required("Academy Name is required"),
+                .required("Club Name is required"),
             address: Yup
                 .string()
             // .required('Required')
@@ -197,7 +197,7 @@ export const ClubDetailsDialog = ({ open, handleClose, academy, mutate }) => {
                                                     color="textSecondary"
                                                     variant="body2"
                                                 >
-                                                    {academy.email}
+                                                    {club.email}
                                                 </Typography>
                                                 <Typography
                                                     color="textSecondary"
@@ -480,7 +480,7 @@ export const ClubDetailsDialog = ({ open, handleClose, academy, mutate }) => {
                                                         style={{ backgroundColor: 'red' }}
                                                         onClick={() => {
 
-                                                            handleDelete(academy.email)
+                                                            handleDelete(club.email)
                                                         }}>Delete</Button>
                                                 </Grid>
                                                 <Grid

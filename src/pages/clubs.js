@@ -1,32 +1,33 @@
 import Head from 'next/head';
 import { Box, Container, Grid, Pagination } from '@mui/material';
-import { ClubCard } from 'src/components/newclub/club-card';
-import { ClubListToolbar } from 'src/components/newclub/club-list-toolbar';
+import { ClubCard } from 'src/components/club/club-card';
+import { ClubListToolbar } from 'src/components/club/club-list-toolbar';
 import { DashboardLayout } from '../components/dashboard-layout';
-import { AddClubDialog } from 'src/components/newclub/add-club-dialog';
+import { AddClubDialog } from 'src/components/club/add-club-dialog';
 import { useState, useEffect } from 'react';
-import { ClubDetailsDialog } from 'src/components/newclub/club-details-dialog';
+import { ClubDetailsDialog } from 'src/components/club/club-details-dialog';
 import { useAllAcademies } from 'src/adapters/academyAdapter';
-import { ClubFinanceDialog } from 'src/components/newclub/club-finance-dialog';
+import { useAllClubs } from 'src/adapters/clubAdapter';
+import { ClubFinanceDialog } from 'src/components/club/club-finance-dialog';
 
 const Clubs = () => {
     const [showAddClubDialog, setShowAddClubDialog] = useState(false);
     const [showClubDetailsDialog, setShowClubDetailsDialog] = useState(false);
     const [showClubFinanceDialog, setShowClubFinanceDialog] = useState(false);
-    const [academy, setAcademy] = useState([])
+    const [club, setClub] = useState([])
     const [params, setParams] = useState({})
 
     const handleOpenAddClub = () => setShowAddClubDialog(true);
     const handleCloseAddClub = () => setShowAddClubDialog(false);
 
-    const handleOpenClubDetails = (academy) => {
-        setAcademy(academy)
+    const handleOpenClubDetails = (club) => {
+        setClub(club)
         setShowClubDetailsDialog(true)
     };
     const handleCloseClubDetails = () => setShowClubDetailsDialog(false);
 
-    const handleOpenClubFinance = (academy) => {
-        setAcademy(academy)
+    const handleOpenClubFinance = (club) => {
+        setClub(club)
         setShowClubFinanceDialog(true)
     };
     const handleCloseClubFinance = () => setShowClubFinanceDialog(false);
@@ -36,6 +37,7 @@ const Clubs = () => {
     };
 
     const { academies, loading, error, mutate } = useAllAcademies({ ...params });
+    // const { clubs, loading, error, mutate } = useAllClubs({ ...params });
 
     return (
         <>
@@ -56,13 +58,13 @@ const Clubs = () => {
                     open={showAddClubDialog}
                     handleClose={handleCloseAddClub}
                 />
-                <ClubDetailsDialog academy={academy}
+                <ClubDetailsDialog club={club}
                     mutate={mutate}
                     open={showClubDetailsDialog}
                     handleClose={handleCloseClubDetails} />
 
                 <ClubFinanceDialog
-                    academy={academy}
+                    club={club}
                     mutate={mutate}
                     open={showClubFinanceDialog}
                     handleClose={handleCloseClubFinance}

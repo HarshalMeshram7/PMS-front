@@ -3,7 +3,7 @@ import { Avatar, Box, Button, Card, CardContent, Divider, Grid, Typography } fro
 import { Clock as ClockIcon } from '../../icons/clock';
 import { Download as DownloadIcon } from '../../icons/download';
 
-export const TeamCard = ({ product, ...rest }) => (
+export const TeamCard = ({ product, handleOpenTeamDetails, handleOpenTeamFinance, ...rest }) => (
   <Card
     sx={{
       display: 'flex',
@@ -22,7 +22,7 @@ export const TeamCard = ({ product, ...rest }) => (
       >
         <Avatar
           alt="Product"
-          src={product.media}
+          src={product.logo}
           variant="square"
         />
       </Box>
@@ -32,7 +32,7 @@ export const TeamCard = ({ product, ...rest }) => (
         gutterBottom
         variant="h5"
       >
-        {product.title}
+        {product.academyName}
       </Typography>
       <Typography
         align="center"
@@ -74,7 +74,15 @@ export const TeamCard = ({ product, ...rest }) => (
             display: 'flex'
           }}
         >
-          <Button>Details</Button>
+          <Button
+
+            id={product.title}
+            onClick={() => { handleOpenTeamFinance(product) }}>Finance</Button>
+          <Button
+
+            id={product.title}
+            onClick={() => { handleOpenTeamDetails(product) }}>Details</Button>
+
           {/* <DownloadIcon color="action" />
           <Typography
             color="textSecondary"

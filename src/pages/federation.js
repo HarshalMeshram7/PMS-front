@@ -22,13 +22,12 @@ const Federation = () => {
     const [showFederationFinanceDialog, setShowFederationFinanceDialog] = useState(false);
     
     //to store single federation data which is clicked from detail detail or finance button
-    const [academy, setAcademy] = useState([])
     const [federation, setFederation] = useState([])
     
     //to store parameters required to send with get req
     const [params, setParams] = useState({})
 
-    //
+    //to show hide add federation dialog
     const handleOpenAddFederation = () => setShowAddFederationDialog(true);
     const handleCloseAddFederation = () => setShowAddFederationDialog(false);
 

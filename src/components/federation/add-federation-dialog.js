@@ -416,7 +416,7 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
                                 fullWidth
                                 helperText={formik.touched.logo && formik.errors.logo}
                                 label="Logo"
-                                id="uploadLogo"
+                                id="uploadFederationLogo"
                                 margin="dense"
                                 name="logo"
                                 onBlur={formik.handleBlur}
@@ -425,7 +425,7 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
                                 value={formik.values.logo}
                                 variant="outlined"
                             />
-                            <Button onClick={() => { document.getElementById("uploadLogo").click() }}>Upload Logo</Button>
+                            <Button onClick={() => { document.getElementById("uploadFederationLogo").click() }}>Upload Logo</Button>
                         </Grid>
 
                         <Grid
@@ -438,7 +438,7 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
                                 fullWidth
                                 helperText={formik.touched.banner && formik.errors.banner}
                                 label="Banner"
-                                id="uploadBanner"
+                                id="uploadFederationBanner"
                                 margin="dense"
                                 name="banner"
                                 onBlur={formik.handleBlur}
@@ -447,7 +447,7 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
                                 value={formik.values.banner}
                                 variant="outlined"
                             />
-                            <Button onClick={() => { document.getElementById("uploadBanner").click() }}>Upload Banner</Button>
+                            <Button onClick={() => { document.getElementById("uploadFederationBanner").click() }}>Upload Banner</Button>
                         </Grid>
                         <Grid />
                     </Grid>

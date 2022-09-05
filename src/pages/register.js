@@ -293,8 +293,11 @@ const Register = () => {
                     label="Role"
                     onChange={formik.handleChange}
                   >
-                    {Role.map((option) => (
-                      <MenuItem value={option.label}>{option.label}</MenuItem>
+                    {Role?.map((option , key) => (
+                      <MenuItem key={key}
+                        value={option.label}>
+                        {option.label}
+                      </MenuItem>
                     ))}
                   </Select>
                 </FormControl>

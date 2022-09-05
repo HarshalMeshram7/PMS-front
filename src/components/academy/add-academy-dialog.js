@@ -357,8 +357,11 @@ export const AddAcademyDialog = ({ open, handleClose, mutate }) => {
                                     name="sportsList"
                                     onChange={formik.handleChange}
                                 >
-                                    {sportsList.map((option) => (
-                                        <MenuItem value={option.label}>{option.label}</MenuItem>
+                                    {sportsList?.map((option , key) => (
+                                        <MenuItem key={key}
+                                            value={option.label}>
+                                            {option.label}
+                                        </MenuItem>
                                     ))}
                                 </Select>
                             </FormControl>

@@ -10,7 +10,7 @@ import LoadingBox from "src/components/common/loading-box";
 import { useSnackbar } from "notistack";
 
 
-export const FederationFinanceDialog = ({ open, handleClose, academy, mutate }) => {
+export const FederationFinanceDialog = ({ open, handleClose, federation, mutate }) => {
     const { enqueueSnackbar } = useSnackbar();
     
     const [loading, setLoading] = useState();
@@ -31,7 +31,7 @@ export const FederationFinanceDialog = ({ open, handleClose, academy, mutate }) 
 
             {loading && <LoadingBox />}
             <DialogContent style={{ margin: 0, padding: 0 }} >
-                <Typography>{academy.academyName} Finance</Typography>
+                <Typography>{federation.academyName} Finance</Typography>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Close</Button>

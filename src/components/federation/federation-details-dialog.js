@@ -25,18 +25,17 @@ import { players } from "../../__mocks__/players.js";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSnackbar } from "notistack";
-import { deleteAcademy } from "src/services/academyRequest.js";
 import banner from '../../../public/static/images/background/register.jpg';
 
 
-export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) => {
+export const FederationDetailsDialog = ({ open, handleClose, federation, mutate }) => {
     const { enqueueSnackbar } = useSnackbar();
     const user = {
-        avatar: academy.logo,
-        city: academy.address,
+        avatar: federation.logo,
+        city: federation.address,
         country: 'USA',
         jobTitle: 'Senior Developer',
-        name: academy.academyName,
+        name: federation.academyName,
         timezone: 'GTM-7'
     };
     const [loading, setLoading] = useState();
@@ -44,23 +43,23 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
-            academyName: academy.academyName,
-            address: academy.address,
-            phone: academy.phone,
-            personName: academy.personName,
+            federationName: federation.academyName,
+            address: federation.address,
+            phone: federation.phone,
+            personName: federation.personName,
             logo: "",
             banner: "",
-            accreditation: academy.accreditation,
-            facebook: academy.facebook,
-            twitter: academy.twitter,
-            instagram: academy.instagram,
+            accreditation: federation.accreditation,
+            facebook: federation.facebook,
+            twitter: federation.twitter,
+            instagram: federation.instagram,
             sportsList: [],
         },
         validationSchema: Yup.object({
-            academyName: Yup
+            federationName: Yup
                 .string()
                 .max(100)
-                .required("Academy Name is required"),
+                .required("federation Name is required"),
             address: Yup
                 .string()
             // .required('Required')
@@ -75,9 +74,6 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                 .max(100)
             // .required("Person Name is required")
             ,
-            accreditation: Yup
-                .string()
-                .max(100),
             accreditation: Yup
                 .string()
                 .max(100),
@@ -97,9 +93,9 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
             setLoading(true);
             try {
                 console.log(data);
-                // await updateAcademy(data);
+                // await updatefederation(data);
                 handleClose();
-                enqueueSnackbar("Academy Updated Succesfully", { variant: "success" });
+                enqueueSnackbar("Federation Updated Succesfully", { variant: "success" });
                 mutate();
                 setLoading(false);
             } catch (error) {
@@ -113,19 +109,20 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
 
         setLoading(true);
         try {
-            deleteAcademy(data).then((response) => {
-                if (response.status == "success") {
+            console.log(data);
+            // deletefederation(data).then((response) => {
+            //     if (response.status == "success") {
                     handleClose();
-                    enqueueSnackbar("Academy Deleted Succesfully", { variant: "success" });
-                    mutate();
+                    enqueueSnackbar("federation Deleted Succesfully", { variant: "success" });
+            //         mutate();
                     setLoading(false);
-                }
-                else {
-                    handleClose();
-                    enqueueSnackbar(`Error : ${response.message}`, { variant: "error" });
-                    setLoading(false);
-                }
-            });
+            //     }
+            //     else {
+            //         handleClose();
+            //         enqueueSnackbar(`Error : ${response.message}`, { variant: "error" });
+            //         setLoading(false);
+            //     }
+            // });
         } catch (error) {
             console.log(error);
             setLoading(false);
@@ -201,7 +198,7 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                                                     color="textSecondary"
                                                     variant="body2"
                                                 >
-                                                    {academy.email}
+                                                    {federation.email}
                                                 </Typography>
                                                 <Typography
                                                     color="textSecondary"
@@ -234,7 +231,7 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                                                         fullWidth
                                                         helperText={formik.touched.logo && formik.errors.logo}
                                                         label="Logo"
-                                                        id="uploadAcademyLogo"
+                                                        id="uploadfederationLogo"
                                                         margin="dense"
                                                         name="logo"
                                                         onBlur={formik.handleBlur}
@@ -243,7 +240,7 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                                                         value={formik.values.logo}
                                                         variant="outlined"
                                                     />
-                                                    <Button onClick={() => { document.getElementById("uploadAcademyLogo").click() }}>Upload Logo</Button>
+                                                    <Button onClick={() => { document.getElementById("uploadfederationLogo").click() }}>Upload Logo</Button>
                                                 </CardActions>
                                             </Grid>
                                             <Grid
@@ -258,7 +255,7 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                                                         fullWidth
                                                         helperText={formik.touched.banner && formik.errors.banner}
                                                         label="Banner"
-                                                        id="uploadAcademyBanner"
+                                                        id="uploadfederationBanner"
                                                         margin="dense"
                                                         name="banner"
                                                         onBlur={formik.handleBlur}
@@ -267,7 +264,7 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                                                         value={formik.values.banner}
                                                         variant="outlined"
                                                     />
-                                                    <Button onClick={() => { document.getElementById("uploadAcademyBanner").click() }}>Upload Banner</Button>
+                                                    <Button onClick={() => { document.getElementById("uploadfederationBanner").click() }}>Upload Banner</Button>
                                                 </CardActions>
                                             </Grid>
                                         </Grid>
@@ -295,16 +292,16 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                                                     xs={12}
                                                 >
                                                     <TextField
-                                                        error={Boolean(formik.touched.academyName && formik.errors.academyName)}
+                                                        error={Boolean(formik.touched.federationName && formik.errors.federationName)}
                                                         fullWidth
-                                                        helperText={formik.touched.academyName && formik.errors.academyName}
+                                                        helperText={formik.touched.federationName && formik.errors.federationName}
                                                         label="Name"
                                                         margin="dense"
-                                                        name="academyName"
+                                                        name="federationName"
                                                         onBlur={formik.handleBlur}
                                                         onChange={formik.handleChange}
                                                         type="text"
-                                                        value={formik.values.academyName}
+                                                        value={formik.values.federationName}
                                                         variant="outlined"
                                                     />
                                                 </Grid>
@@ -491,7 +488,7 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                                                         style={{ backgroundColor: 'red' }}
                                                         onClick={() => {
 
-                                                            handleDelete(academy.email)
+                                                            handleDelete(federation.email)
                                                         }}>Delete</Button>
                                                 </Grid>
                                                 <Grid
@@ -511,7 +508,7 @@ export const FederationDetailsDialog = ({ open, handleClose, academy, mutate }) 
                                 </Grid>
                             </Grid>
                             {/* Teams List */}
-                            <Typography>Academy1 - Teams </Typography>
+                            <Typography>federation1 - Teams </Typography>
                             <Box sx={{ mt: 3 }}>
                                 <PlayerListResults players={players} />
                             </Box>

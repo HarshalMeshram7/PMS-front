@@ -47,7 +47,7 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
 
     const formik = useFormik({
         initialValues: {
-            academyName: "Academy1",
+            federationName: "Federation1",
             address: "Address",
             phone: "8208793805",
             email: "@gmail.com",
@@ -63,10 +63,10 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
             cnfpassword: "Monish@1995"
         },
         validationSchema: Yup.object({
-            academyName: Yup
+            federationName: Yup
                 .string()
                 .max(100)
-                .required("Academy Name is required"),
+                .required("Federation Name is required"),
             address: Yup
                 .string()
             // .required('Required')
@@ -114,19 +114,20 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
         onSubmit: async (data) => {
             setLoading(true);
             try {
-                await addAcademy(data).then((resp) => {
-                    if (resp.status === "success") {
+                console.log(data);
+                // await addAcademy(data).then((resp) => {
+                //     if (resp.status === "success") {
                         handleClose();
-                        enqueueSnackbar("Academy Added Succesfully", { variant: "success" });
-                        mutate();
-                        setLoading(false);
-                    }
-                    if (resp.status === "failed") {
-                        handleClose();
-                        enqueueSnackbar("Academy Not Added", { variant: "failed" });
-                        setLoading(false);
-                    }
-                })
+                        enqueueSnackbar("Feferation Added Succesfully", { variant: "success" });
+                //         mutate();
+                //         setLoading(false);
+                //     }
+                //     if (resp.status === "failed") {
+                //         handleClose();
+                //         enqueueSnackbar("Feferation Not Added", { variant: "failed" });
+                //         setLoading(false);
+                //     }
+                // })
             } catch (error) {
                 setLoading(false);
             }
@@ -151,10 +152,10 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
         >
             {loading && <LoadingBox />}
             <form onSubmit={formik.handleSubmit}>
-                <DialogTitle>Add New Academy</DialogTitle>
+                <DialogTitle>Add New Federation</DialogTitle>
                 <DialogContent>
                     <DialogContentText sx={{ marginBottom: 2 }}>
-                        Enter the required basic details of the Academy below.
+                        Enter the required basic details of the Federation below.
                     </DialogContentText>
 
                     <Grid
@@ -167,16 +168,16 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
                             xs={12}
                         >
                             <TextField
-                                error={Boolean(formik.touched.academyName && formik.errors.academyName)}
+                                error={Boolean(formik.touched.federationName && formik.errors.federationName)}
                                 fullWidth
-                                helperText={formik.touched.academyName && formik.errors.academyName}
+                                helperText={formik.touched.federationName && formik.errors.federationName}
                                 label="Name"
                                 margin="dense"
-                                name="academyName"
+                                name="federationName"
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
                                 type="text"
-                                value={formik.values.academyName}
+                                value={formik.values.federationName}
                                 variant="outlined"
                             />
                         </Grid>

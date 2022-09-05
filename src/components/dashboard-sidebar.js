@@ -27,6 +27,8 @@ import HowToRegIcon from '@mui/icons-material/HowToReg';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import SecurityIcon from '@mui/icons-material/Security';
 import EuroSymbolIcon from '@mui/icons-material/EuroSymbol';
+import SportsScoreIcon from '@mui/icons-material/SportsScore';
+
 
 import { NavItem } from './nav-item';
 import { useState } from 'react';
@@ -57,7 +59,7 @@ const items = [
 
   {
     href: '/federation',
-    icon: (<SchoolIcon fontSize="small" />),
+    icon: (<SportsScoreIcon fontSize="small" />),
     title: 'Federation',
     role: '1',
   },

@@ -7,35 +7,49 @@ import { AddFederationDialog } from 'src/components/federation/add-federation-di
 import { useState, useEffect } from 'react';
 import { FederationDetailsDialog } from 'src/components/federation/federation-details-dialog';
 import { useAllAcademies } from 'src/adapters/academyAdapter';
+import { useAllFederations } from 'src/adapters/federationAdapter';
 import { FederationFinanceDialog } from 'src/components/federation/federation-finance-dialog';
 
-const Federation = () => {
+const Federation = () => {   
+   
+    //to show hide add federation dialog
     const [showAddFederationDialog, setShowAddFederationDialog] = useState(false);
+   
+    // to show hide details federation dialogue
     const [showFederationDetailsDialog, setShowFederationDetailsDialog] = useState(false);
+   
+    //to show hide federation finance dialogue
     const [showFederationFinanceDialog, setShowFederationFinanceDialog] = useState(false);
+    
+    //to store single federation data which is clicked from detail detail or finance button
     const [academy, setAcademy] = useState([])
+    const [federation, setFederation] = useState([])
+    
+    //to store parameters required to send with get req
     const [params, setParams] = useState({})
 
+    //
     const handleOpenAddFederation = () => setShowAddFederationDialog(true);
     const handleCloseAddFederation = () => setShowAddFederationDialog(false);
 
-    const handleOpenAcademyDetails = (academy) => {
-        setAcademy(academy)
+    const handleOpenFederationDetails = (federation) => {
+        setFederation(federation)
         setShowFederationDetailsDialog(true)
     };
-    const handleCloseAcademyDetails = () => setShowFederationDetailsDialog(false);
+    const handleCloseFederationDetails = () => setShowFederationDetailsDialog(false);
 
-    const handleOpenAcademyFinance = (academy) => {
-        setAcademy(academy)
+    const handleOpenFederationFinance = (federation) => {
+        setFederation(federation)
         setShowFederationFinanceDialog(true)
     };
-    const handleCloseAcademyFinance = () => setShowFederationFinanceDialog(false);
+    const handleCloseFederationFinance = () => setShowFederationFinanceDialog(false);
 
     const handleSearch = (value) => {
         setParams((p) => ({ ...p, searched_name_pattern: value }))
     };
 
     const { academies, loading, error, mutate } = useAllAcademies({ ...params });
+    // const { federations, loading, error, mutate } = useAllFederations({ ...params });
 
     return (
         <>
@@ -56,16 +70,16 @@ const Federation = () => {
                     open={showAddFederationDialog}
                     handleClose={handleCloseAddFederation}
                 />
-                <FederationDetailsDialog academy={academy}
+                <FederationDetailsDialog federation={federation}
                     mutate={mutate}
                     open={showFederationDetailsDialog}
-                    handleClose={handleCloseAcademyDetails} />
+                    handleClose={handleCloseFederationDetails} />
 
                 <FederationFinanceDialog
-                    academy={academy}
+                    federation={federation}
                     mutate={mutate}
                     open={showFederationFinanceDialog}
-                    handleClose={handleCloseAcademyFinance}
+                    handleClose={handleCloseFederationFinance}
                 />
 
                 <Container maxWidth={false}>
@@ -88,8 +102,8 @@ const Federation = () => {
                                     xs={12}
                                 >
                                     <FederationCard
-                                        handleOpenAcademyFinance={handleOpenAcademyFinance}
-                                        handleOpenAcademyDetails={handleOpenAcademyDetails}
+                                        handleOpenFederationFinance={handleOpenFederationFinance}
+                                        handleOpenFederationDetails={handleOpenFederationDetails}
                                         product={product || []} />
                                 </Grid>
                             ))}

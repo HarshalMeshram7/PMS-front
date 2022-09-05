@@ -3,7 +3,7 @@ import { Avatar, Box, Button, Card, CardContent, Divider, Grid, Typography } fro
 import { Clock as ClockIcon } from '../../icons/clock';
 import { Download as DownloadIcon } from '../../icons/download';
 
-export const FederationCard = ({ product, handleOpenAcademyDetails, handleOpenAcademyFinance, ...rest }) => {
+export const FederationCard = ({ product, handleOpenFederationDetails, handleOpenFederationFinance, ...rest }) => {
   
   return (
     <Card
@@ -79,11 +79,11 @@ export const FederationCard = ({ product, handleOpenAcademyDetails, handleOpenAc
             <Button
 
               id={product.title}
-              onClick={() => { handleOpenAcademyFinance(product)}}>Finance</Button>
+              onClick={() => { handleOpenFederationFinance(product)}}>Finance</Button>
             <Button
 
               id={product.title}
-              onClick={() => { handleOpenAcademyDetails(product)}}>Details</Button>
+              onClick={() => { handleOpenFederationDetails(product)}}>Details</Button>
             {/* <DownloadIcon color="action" />
           <Typography
             color="textSecondary"

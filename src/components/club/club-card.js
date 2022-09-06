@@ -24,7 +24,7 @@ export const ClubCard = ({ product, handleOpenClubDetails, handleOpenClubFinance
         >
           <Avatar
             alt="Product"
-            src={product.logo}
+            src={product.Logo}
             variant="square"
           />
         </Box>
@@ -34,7 +34,7 @@ export const ClubCard = ({ product, handleOpenClubDetails, handleOpenClubFinance
           gutterBottom
           variant="h5"
         >
-          {product.academyName}
+          {product.Club}
         </Typography>
         <Typography
           align="center"

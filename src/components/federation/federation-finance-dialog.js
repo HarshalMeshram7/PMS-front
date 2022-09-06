@@ -31,7 +31,7 @@ export const FederationFinanceDialog = ({ open, handleClose, federation, mutate 
 
             {loading && <LoadingBox />}
             <DialogContent style={{ margin: 0, padding: 0 }} >
-                <Typography>{federation.academyName} Finance</Typography>
+                <Typography>{federation.Federation} Finance</Typography>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Close</Button>

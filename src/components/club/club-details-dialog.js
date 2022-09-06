@@ -32,11 +32,11 @@ import banner from '../../../public/static/images/background/register.jpg';
 export const ClubDetailsDialog = ({ open, handleClose, club, mutate }) => {
     const { enqueueSnackbar } = useSnackbar();
     const user = {
-        avatar: club.logo,
+        avatar: club.Logo,
         city: club.address,
         country: 'USA',
         jobTitle: 'Senior Developer',
-        name: club.academyName,
+        name: club.Club,
         timezone: 'GTM-7'
     };
     const [loading, setLoading] = useState();
@@ -44,16 +44,16 @@ export const ClubDetailsDialog = ({ open, handleClose, club, mutate }) => {
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
-            clubName: club.academyName,
-            address: club.address,
-            phone: club.phone,
-            personName: club.personName,
+            clubName: club.Club,
+            address: club.Address,
+            phone: club.Phone,
+            personName: club.ContactPersonName,
             logo: "",
             banner: "",
-            accreditation: club.accreditation,
-            facebook: club.facebook,
-            twitter: club.twitter,
-            instagram: club.instagram,
+            accreditation: club.Accreditation,
+            facebook: club.Facebook,
+            twitter: club.Twitter,
+            instagram: club.Instagram,
             sportsList: [],
         },
         validationSchema: Yup.object({
@@ -75,9 +75,6 @@ export const ClubDetailsDialog = ({ open, handleClose, club, mutate }) => {
                 .max(100)
             // .required("Person Name is required")
             ,
-            accreditation: Yup
-                .string()
-                .max(100),
             accreditation: Yup
                 .string()
                 .max(100),
@@ -154,7 +151,7 @@ export const ClubDetailsDialog = ({ open, handleClose, club, mutate }) => {
                             width: "100%",
                             height: "200px",
                             marginBottom: "-100px",
-                            background: `url(${banner.src})center center`,
+                            background: `url(${club.Banner})center center`,
                         }}></div>
 
                         <Container maxWidth="lg">

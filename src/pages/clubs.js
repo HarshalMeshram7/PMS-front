@@ -39,7 +39,19 @@ const Clubs = () => {
     const { academies, loading, error, mutate } = useAllAcademies({ ...params });
     // const { clubs, loading, error, mutate } = useAllClubs({ ...params });
 
-    let clubsLocal = [{ "_id": "62de8df69fda862707152867", "academyName": "club2", "address": "Address", "phone": 8208793805, "email": "club2@pixonix.tech", "personName": "Person name", "logo": "/static/images/products/product_2.png", "banner": "../../../public/static/images/background/register.jpg", "accreditation": "accreditation", "facebook": "fb", "twitter": "tw", "instagram": "ins", "sportsList": ["Football", "Cricket", "Tennis"], "__v": 0 }, { "_id": "62de96aeba11e272e5e1db81", "academyName": "Fed3", "address": "Address", "phone": 8208793805, "email": "Federation3@pixonix.tech", "personName": "Person name", "logo": "/static/images/products/product_3.png", "banner": "../../../public/static/images/background/register.jpg", "accreditation": "accreditation", "facebook": "fb", "twitter": "tw", "instagram": "ins", "sportsList": ["Football", "Cricket", "Tennis"], "__v": 0 }, { "_id": "62de978fba11e272e5e1db93", "academyName": "Club4", "address": "Address", "phone": 8208793805, "email": "Federation4@pixonix.tech", "personName": "Person name", "logo": "/static/images/products/product_4.png", "banner": "../../../public/static/images/background/register.jpg", "accreditation": "accreditation", "facebook": "fb", "twitter": "tw", "instagram": "ins", "sportsList": ["Cricket"], "__v": 0 }, { "_id": "62ea72328d25391153e4cfe7", "academyName": "Club1", "address": "Address", "phone": 8208793805, "email": "Federation@pixonix.tech", "personName": "Person name", "logo": "/static/images/products/product_1.png", "banner": "../../../public/static/images/background/register.jpg", "accreditation": "accreditation", "facebook": "fb", "twitter": "tw", "instagram": "ins", "sportsList": [], "__v": 0 }]
+    let clubsLocal = [{ "_id": "62de8df69fda862707152867", 
+    "Club": "club2", 
+    "Address": "Address", 
+    "Phone": 8208793805, 
+    "Email": "club2@pixonix.tech", 
+    "ContactPersonName": "Person name", 
+    "Logo": "/static/images/products/product_2.png", 
+    "Banner": "../../../public/static/images/background/register.jpg", 
+    "Accreditation": "accreditation", 
+    "Facebook": "fb", 
+    "Twitter": "tw", 
+    "Instagram": "ins", 
+    "sportsList": ["Football", "Cricket", "Tennis"], "__v": 0 } ]
 
     return (
         <>

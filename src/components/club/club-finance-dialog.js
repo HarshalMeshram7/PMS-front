@@ -31,7 +31,7 @@ export const ClubFinanceDialog = ({ open, handleClose, club, mutate }) => {
 
             {loading && <LoadingBox />}
             <DialogContent style={{ margin: 0, padding: 0 }} >
-                <Typography>{club.academyName} Finance</Typography>
+                <Typography>{club.Club} Finance</Typography>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Close</Button>

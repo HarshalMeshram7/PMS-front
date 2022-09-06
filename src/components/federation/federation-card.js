@@ -24,7 +24,7 @@ export const FederationCard = ({ product, handleOpenFederationDetails, handleOpe
         >
           <Avatar
             alt="Product"
-            src={product.logo}
+            src={product.Logo}
             variant="square"
           />
         </Box>
@@ -34,7 +34,7 @@ export const FederationCard = ({ product, handleOpenFederationDetails, handleOpe
           gutterBottom
           variant="h5"
         >
-          {product.academyName}
+          {product.Federation}
         </Typography>
         <Typography
           align="center"

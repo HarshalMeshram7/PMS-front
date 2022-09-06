@@ -25,17 +25,16 @@ import { players } from "../../__mocks__/players.js";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSnackbar } from "notistack";
-import banner from '../../../public/static/images/background/register.jpg';
 
 
 export const FederationDetailsDialog = ({ open, handleClose, federation, mutate }) => {
     const { enqueueSnackbar } = useSnackbar();
     const user = {
-        avatar: federation.logo,
-        city: federation.address,
+        avatar: federation.Logo,
+        city: federation.Address,
         country: 'USA',
         jobTitle: 'Senior Developer',
-        name: federation.academyName,
+        name: federation.Federation,
         timezone: 'GTM-7'
     };
     const [loading, setLoading] = useState();
@@ -43,16 +42,16 @@ export const FederationDetailsDialog = ({ open, handleClose, federation, mutate 
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
-            federationName: federation.academyName,
-            address: federation.address,
-            phone: federation.phone,
-            personName: federation.personName,
+            federationName: federation.Federation,
+            address: federation.Address,
+            phone: federation.Phone,
+            personName: federation.ContactPersonName,
             logo: "",
             banner: "",
-            accreditation: federation.accreditation,
-            facebook: federation.facebook,
-            twitter: federation.twitter,
-            instagram: federation.instagram,
+            accreditation: federation.Accreditation,
+            facebook: federation.Facebook,
+            twitter: federation.Twitter,
+            instagram: federation.Instagram,
             sportsList: [],
         },
         validationSchema: Yup.object({
@@ -151,7 +150,7 @@ export const FederationDetailsDialog = ({ open, handleClose, federation, mutate 
                             width: "100%",
                             height: "200px",
                             marginBottom: "-100px",
-                            background: `url(${banner.src})center center`,
+                            background: `url(${federation.Banner})center center`,
                         }}></div>
 
                         <Container maxWidth="lg">
@@ -194,7 +193,7 @@ export const FederationDetailsDialog = ({ open, handleClose, federation, mutate 
                                                     color="textSecondary"
                                                     variant="body2"
                                                 >
-                                                    {federation.email}
+                                                    {federation.Email}
                                                 </Typography>
                                                 <Typography
                                                     color="textSecondary"
@@ -477,7 +476,7 @@ export const FederationDetailsDialog = ({ open, handleClose, federation, mutate 
                                                         style={{ backgroundColor: 'red' }}
                                                         onClick={() => {
 
-                                                            handleDelete(federation.email)
+                                                            handleDelete(federation.Email)
                                                         }}>Delete</Button>
                                                 </Grid>
                                                 <Grid

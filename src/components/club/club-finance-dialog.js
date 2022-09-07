@@ -8,13 +8,16 @@ import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import ClubFinance from "./finance-component/club-finance";
+import ClubEccomerce from "./finance-component/club-eccomerce";
+import ClubEarning from "./finance-component/club-earnings";
+import ClubBudget from "./finance-component/club-budget";
 
 export const ClubFinanceDialog = ({ open, handleClose, club, mutate }) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const [loading, setLoading] = useState();
 
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState("0");
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -65,10 +68,10 @@ export const ClubFinanceDialog = ({ open, handleClose, club, mutate }) => {
             </Grid>
             <Container maxWidth="md">
                         {value == "0" && <ClubFinance/>}
-                        {value == "1" && <>Ecommerse</>}
-                        {value == "2" && <>Club Earning</>}
+                        {value == "1" && <ClubEccomerce/>}
+                        {value == "2" && <ClubEarning/>}
                         {value == "3" && <>Club Expenses</>}
-                        {value == "4" && <>Club Budget</>}
+                        {value == "4" && <ClubBudget/>}
                         {value == "5" && <>Club Event</>}
                         {value == "6" && <>Club Organization</>}
                         {value == "7" && <>Club Statistic</>}

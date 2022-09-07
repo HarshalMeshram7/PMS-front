@@ -11,6 +11,10 @@ import ClubFinance from "./finance-component/club-finance";
 import ClubEccomerce from "./finance-component/club-eccomerce";
 import ClubEarning from "./finance-component/club-earnings";
 import ClubBudget from "./finance-component/club-budget";
+import ClubStatistic from "./finance-component/club-statistic";
+import ClubOrganization from "./finance-component/club-organization";
+import ClubEvents from "./finance-component/club-event";
+import ClubExpenses from "./finance-component/club-expenses";
 
 export const ClubFinanceDialog = ({ open, handleClose, club, mutate }) => {
     const { enqueueSnackbar } = useSnackbar();
@@ -70,11 +74,11 @@ export const ClubFinanceDialog = ({ open, handleClose, club, mutate }) => {
                         {value == "0" && <ClubFinance/>}
                         {value == "1" && <ClubEccomerce/>}
                         {value == "2" && <ClubEarning/>}
-                        {value == "3" && <>Club Expenses</>}
+                        {value == "3" && <ClubExpenses/>}
                         {value == "4" && <ClubBudget/>}
-                        {value == "5" && <>Club Event</>}
-                        {value == "6" && <>Club Organization</>}
-                        {value == "7" && <>Club Statistic</>}
+                        {value == "5" && <ClubEvents/>}
+                        {value == "6" && <ClubOrganization/>}
+                        {value == "7" && <ClubStatistic/>}
             </Container>
             </DialogContent>
             <DialogActions>

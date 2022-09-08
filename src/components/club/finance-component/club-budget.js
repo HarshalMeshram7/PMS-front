@@ -32,38 +32,42 @@ export default function ClubBudget() {
   });
 
   return (
-    <Card>
-      <CardContent>
-        <Grid container spacing={3}>
-          <Grid item md={6} xs={12}>
-            <Typography>Approved by Members of The Committee : </Typography>
-          </Grid>
+    <>
+      <form onSubmit={formik.handleSubmit}>
+        <Card>
+          <CardContent>
+            <Grid container spacing={3}>
+              <Grid item md={6} xs={12}>
+                <Typography>Approved by Members of The Committee : </Typography>
+              </Grid>
 
-          <Grid item md={6} xs={12}>
-            <FormGroup>
-              <FormControlLabel control={<Switch defaultChecked />} label="" />
-            </FormGroup>
-          </Grid>
+              <Grid item md={6} xs={12}>
+                <FormGroup>
+                  <FormControlLabel control={<Switch defaultChecked />} label="" />
+                </FormGroup>
+              </Grid>
 
-          <Grid item md={6} xs={12}>
-            <Typography>Budget Details : </Typography>
-          </Grid>
+              <Grid item md={6} xs={12}>
+                <Typography>Budget Details : </Typography>
+              </Grid>
 
-          <Grid item md={6} xs={12}>
-            <TextareaAutosize
-              minRows={6}
-              style={{ width: 200 }}
-            />
-          </Grid>
+              <Grid item md={6} xs={12}>
+                <TextareaAutosize
+                  minRows={6}
+                  style={{ width: 200 }}
+                />
+              </Grid>
 
-          <Grid item md={12} xs={12} textAlign="center">
-            <Button variant="outlined" color="primary">
-              Save
-            </Button>
-          </Grid>
-          <Grid />
-        </Grid>
-      </CardContent>
-    </Card>
+              <Grid item md={12} xs={12} textAlign="center">
+                <Button variant="outlined" color="primary">
+                  Save
+                </Button>
+              </Grid>
+              <Grid />
+            </Grid>
+          </CardContent>
+        </Card>
+      </form>
+    </>
   );
 }

@@ -5,16 +5,18 @@ import LoadingBox from "src/components/common/loading-box";
 import { useSnackbar } from "notistack";
 
 import Box from "@mui/material/Box";
-import Tabs from "@mui/material/Tabs";
+import Tabs, { tabsClasses } from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import ClubFinance from "./finance-component/club-finance";
-import ClubEccomerce from "./finance-component/club-eccomerce";
+import ClubEccomerce from "./finance-component/club-ecommerce";
 import ClubEarning from "./finance-component/club-earnings";
 import ClubBudget from "./finance-component/club-budget";
 import ClubStatistic from "./finance-component/club-statistic";
 import ClubOrganization from "./finance-component/club-organization";
 import ClubEvents from "./finance-component/club-event";
 import ClubExpenses from "./finance-component/club-expenses";
+import ClubEcommerce from "./finance-component/club-ecommerce";
+
 
 export const ClubFinanceDialog = ({ open, handleClose, club, mutate }) => {
     const { enqueueSnackbar } = useSnackbar();
@@ -51,35 +53,48 @@ export const ClubFinanceDialog = ({ open, handleClose, club, mutate }) => {
         >
             {loading && <LoadingBox />}
 
-            <DialogContent style={{height:'600px'}}>
+            <DialogContent style={{ height: '600px' }}>
                 <Typography align="center" variant="h4">
                     Club Finance
                 </Typography>
-            
-            <Grid>
-                <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
-                    <Tabs value={value} onChange={handleChange} centered>
-                        <LinkTab value="0" label="Club Finance" />
-                        <LinkTab value="1" label="Ecommerse Site" />
-                        <LinkTab value="2" label="Club Earning" />
-                        <LinkTab value="3" label="Club Expenses" />
-                        <LinkTab value="4" label="Club Budget" />
-                        <LinkTab value="5" label="Club Event" />
-                        <LinkTab value="6" label="Club Organization" />
-                        <LinkTab value="7" label="Club Statistic" />
-                    </Tabs>
-                </Box>
-            </Grid>
-            <Container maxWidth="md">
-                        {value == "0" && <ClubFinance/>}
-                        {value == "1" && <ClubEccomerce/>}
-                        {value == "2" && <ClubEarning/>}
-                        {value == "3" && <ClubExpenses/>}
-                        {value == "4" && <ClubBudget/>}
-                        {value == "5" && <ClubEvents/>}
-                        {value == "6" && <ClubOrganization/>}
-                        {value == "7" && <ClubStatistic/>}
-            </Container>
+
+                <Grid>
+                    <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
+                        <Tabs
+                            value={value}
+                            onChange={handleChange}
+                            centered
+                            // variant="scrollable"
+                            // scrollButtons
+                            // aria-label="visible arrows tabs example"
+                            // sx={{
+                            //     [`& .${tabsClasses.scrollButtons}`]: {
+                            //         '&.Mui-disabled': { opacity: 0.3 },
+                            //     },
+                            // }}
+
+                        >
+                            <LinkTab value="0" label="Club Finance" />
+                            <LinkTab value="1" label="Ecommerse Site" />
+                            <LinkTab value="2" label="Club Earning" />
+                            <LinkTab value="3" label="Club Expenses" />
+                            <LinkTab value="4" label="Club Budget" />
+                            <LinkTab value="5" label="Club Event" />
+                            <LinkTab value="6" label="Club Organization" />
+                            <LinkTab value="7" label="Club Statistic" />
+                        </Tabs>
+                    </Box>
+                </Grid>
+                <Container maxWidth="md">
+                    {value == "0" && <ClubFinance />}
+                    {value == "1" && <ClubEcommerce />}
+                    {value == "2" && <ClubEarning />}
+                    {value == "3" && <ClubExpenses />}
+                    {value == "4" && <ClubBudget />}
+                    {value == "5" && <ClubEvents />}
+                    {value == "6" && <ClubOrganization />}
+                    {value == "7" && <ClubStatistic />}
+                </Container>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Close</Button>

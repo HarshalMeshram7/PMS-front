@@ -27,6 +27,8 @@ export default function ClubEarning() {
   });
 
   return (
+    <>
+    <form onSubmit={formik.handleSubmit}>
     <Card>
       <CardContent>
         <Grid container spacing={3}>
@@ -72,7 +74,7 @@ export default function ClubEarning() {
               name="ShareValueIncome"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              type="text"
+              type="number"
               value={formik.values.ShareValueIncome}
               variant="outlined"
             />
@@ -83,12 +85,12 @@ export default function ClubEarning() {
               error={Boolean(formik.touched.LogoTrademarkBrandingIncome && formik.errors.LogoTrademarkBrandingIncome)}
               fullWidth
               helperText={formik.touched.LogoTrademarkBrandingIncome && formik.errors.LogoTrademarkBrandingIncome}
-              label="Logo/Trademark/Branding Income"
+              label="Logo / Trademark / Branding Income"
               margin="dense"
-              name="email"
+              name="LogoTrademarkBrandingIncome"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              type="text"
+              type="number"
               value={formik.values.LogoTrademarkBrandingIncome}
               variant="outlined"
             />
@@ -104,7 +106,7 @@ export default function ClubEarning() {
               name="PlayersTransferIncome"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              type="text"
+              type="number"
               value={formik.values.PlayersTransferIncome}
               variant="outlined"
             />
@@ -119,7 +121,7 @@ export default function ClubEarning() {
               name="IncomeFromRent"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              type="text"
+              type="number"
               value={formik.values.IncomeFromRent}
               variant="outlined"
             />
@@ -134,7 +136,7 @@ export default function ClubEarning() {
               name="PriceMoneyFromTheCompetition"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              type="text"
+              type="number"
               value={formik.values.PriceMoneyFromTheCompetition}
               variant="outlined"
             />
@@ -144,7 +146,7 @@ export default function ClubEarning() {
               error={Boolean(formik.touched.TvMediaOttRights && formik.errors.TvMediaOttRights)}
               fullWidth
               helperText={formik.touched.TvMediaOttRights && formik.errors.TvMediaOttRights}
-              label="TV/Media/OTT Rights"
+              label="TV / Media / OTT Rights"
               margin="dense"
               name="TvMediaOttRights"
               onBlur={formik.handleBlur}
@@ -156,7 +158,7 @@ export default function ClubEarning() {
           </Grid>
 
           <Grid item md={12} xs={12} textAlign="center">
-            <Button variant="outlined" color="primary">
+            <Button type="submit" variant="outlined" color="primary">
               Save
             </Button>
           </Grid>
@@ -164,5 +166,7 @@ export default function ClubEarning() {
         </Grid>
       </CardContent>
     </Card>
+    </form>
+    </>
   );
 }

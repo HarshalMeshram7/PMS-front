@@ -24,6 +24,8 @@ export default function ClubExpenses() {
   });
 
   return (
+    <>
+    <form onSubmit={formik.handleSubmit}>
     <Card>
       <CardContent>
         <Grid container spacing={3}>
@@ -37,7 +39,7 @@ export default function ClubExpenses() {
               name="PlayersSalary"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              type="text"
+              type="number"
               value={formik.values.PlayersSalary}
               variant="outlined"
             />
@@ -53,7 +55,7 @@ export default function ClubExpenses() {
               name="RunningExpenses"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              type="text"
+              type="number"
               value={formik.values.RunningExpenses}
               variant="outlined"
             />
@@ -101,7 +103,7 @@ export default function ClubExpenses() {
               name="StaffExpenses"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              type="text"
+              type="number"
               value={formik.values.StaffExpenses}
               variant="outlined"
             />
@@ -114,7 +116,7 @@ export default function ClubExpenses() {
           </Grid>
 
           <Grid item md={12} xs={12} textAlign="center">
-            <Button variant="outlined" color="primary">
+            <Button type="submit" variant="outlined" color="primary">
               Save
             </Button>
           </Grid>
@@ -122,5 +124,7 @@ export default function ClubExpenses() {
         </Grid>
       </CardContent>
     </Card>
+    </form>
+    </>
   );
 }

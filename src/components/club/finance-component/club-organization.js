@@ -6,10 +6,10 @@ import { Grid, TextField, Button, Card, CardContent } from "@mui/material";
 export default function ClubOrganization() {
   const formik = useFormik({
     initialValues: {
-    AssociateFederationOrganization:"",
-    IncludeTeamTournament:"",
-    CreateFixturesTournament:"",
-    SelectVenuesTournament:"",
+      AssociateFederationOrganization: "",
+      IncludeTeamTournament: "",
+      CreateFixturesTournament: "",
+      SelectVenuesTournament: "",
     },
     validationSchema: Yup.object({}),
 
@@ -23,87 +23,91 @@ export default function ClubOrganization() {
   });
 
   return (
-    <Card>
-      <CardContent>
-        <Grid container spacing={3}>
-          <Grid item md={6} xs={12}>
-            <TextField
-              error={Boolean(formik.touched.AssociateFederationOrganization && formik.errors.AssociateFederationOrganization)}
-              fullWidth
-              helperText={formik.touched.AssociateFederationOrganization && formik.errors.AssociateFederationOrganization}
-              label="Associate / Federation Organization"
-              margin="dense"
-              name="AssociateFederationOrganization"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              type="text"
-              value={formik.values.AssociateFederationOrganization}
-              variant="outlined"
-            />
-          </Grid>
+    <>
+      <form onSubmit={formik.handleSubmit}>
+        <Card>
+          <CardContent>
+            <Grid container spacing={3}>
+              <Grid item md={6} xs={12}>
+                <TextField
+                  error={Boolean(formik.touched.AssociateFederationOrganization && formik.errors.AssociateFederationOrganization)}
+                  fullWidth
+                  helperText={formik.touched.AssociateFederationOrganization && formik.errors.AssociateFederationOrganization}
+                  label="Associate / Federation Organization"
+                  margin="dense"
+                  name="AssociateFederationOrganization"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="text"
+                  value={formik.values.AssociateFederationOrganization}
+                  variant="outlined"
+                />
+              </Grid>
 
-          <Grid item md={6} xs={12}>
-            <TextField
-              error={Boolean(formik.touched.IncludeTeamTournament && formik.errors.IncludeTeamTournament)}
-              fullWidth
-              helperText={formik.touched.IncludeTeamTournament && formik.errors.IncludeTeamTournament}
-              label="Include Team For Tournament"
-              margin="dense"
-              name="IncludeTeamTournament"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              type="text"
-              value={formik.values.IncludeTeamTournament}
-              variant="outlined"
-            />
-          </Grid>
+              <Grid item md={6} xs={12}>
+                <TextField
+                  error={Boolean(formik.touched.IncludeTeamTournament && formik.errors.IncludeTeamTournament)}
+                  fullWidth
+                  helperText={formik.touched.IncludeTeamTournament && formik.errors.IncludeTeamTournament}
+                  label="Include Team For Tournament"
+                  margin="dense"
+                  name="IncludeTeamTournament"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="text"
+                  value={formik.values.IncludeTeamTournament}
+                  variant="outlined"
+                />
+              </Grid>
 
-          <Grid item md={6} xs={12}>
-            <TextField
-              error={Boolean(formik.touched.CreateFixturesTournament && formik.errors.CreateFixturesTournament)}
-              fullWidth
-              helperText={formik.touched.CreateFixturesTournament && formik.errors.CreateFixturesTournament}
-              label="Create Fixtures For Tournament"
-              margin="dense"
-              name="CreateFixturesTournament"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              type="text"
-              value={formik.values.CreateFixturesTournament}
-              variant="outlined"
-            />
-          </Grid>
+              <Grid item md={6} xs={12}>
+                <TextField
+                  error={Boolean(formik.touched.CreateFixturesTournament && formik.errors.CreateFixturesTournament)}
+                  fullWidth
+                  helperText={formik.touched.CreateFixturesTournament && formik.errors.CreateFixturesTournament}
+                  label="Create Fixtures For Tournament"
+                  margin="dense"
+                  name="CreateFixturesTournament"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="text"
+                  value={formik.values.CreateFixturesTournament}
+                  variant="outlined"
+                />
+              </Grid>
 
-          <Grid item md={6} xs={12}>
-            <TextField
-              error={Boolean(formik.touched.SelectVenuesTournament && formik.errors.SelectVenuesTournament)}
-              fullWidth
-              helperText={formik.touched.SelectVenuesTournament && formik.errors.SelectVenuesTournament}
-              label="Select Venues For Tournament"
-              margin="dense"
-              name="Select Venues For Tournament"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              type="text"
-              value={formik.values.SelectVenuesTournament}
-              variant="outlined"
-            />
-          </Grid>
+              <Grid item md={6} xs={12}>
+                <TextField
+                  error={Boolean(formik.touched.SelectVenuesTournament && formik.errors.SelectVenuesTournament)}
+                  fullWidth
+                  helperText={formik.touched.SelectVenuesTournament && formik.errors.SelectVenuesTournament}
+                  label="Select Venues For Tournament"
+                  margin="dense"
+                  name="SelectVenuesTournament"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="text"
+                  value={formik.values.SelectVenuesTournament}
+                  variant="outlined"
+                />
+              </Grid>
 
-          <Grid item md={6} xs={12}>  
-          </Grid>
+              <Grid item md={6} xs={12}>
+              </Grid>
 
-              <Grid item md={6} xs={12}>        
-          </Grid>
+              <Grid item md={6} xs={12}>
+              </Grid>
 
-          <Grid item md={12} xs={12} textAlign="center">
-            <Button variant="outlined" color="primary">
-              Save
-            </Button>
-          </Grid>
-          <Grid />
-        </Grid>
-      </CardContent>
-    </Card>
+              <Grid item md={12} xs={12} textAlign="center">
+                <Button type="submit" variant="outlined" color="primary">
+                  Save
+                </Button>
+              </Grid>
+              <Grid />
+            </Grid>
+          </CardContent>
+        </Card>
+      </form>
+    </>
   );
 }

@@ -84,14 +84,14 @@ export const AcademyFinanceDialog = ({ open, handleClose, academy, mutate }) => 
                             // }}
 
                         >
-                            <LinkTab value="0" label="Academy Finance" />
+                            <LinkTab value="0" label="Finance" />
                             <LinkTab value="1" label="Ecommerse Site" />
-                            <LinkTab value="2" label="Academy Earning" />
-                            <LinkTab value="3" label="Academy Expenses" />
-                            <LinkTab value="4" label="Academy Budget" />
-                            <LinkTab value="5" label="Academy Event" />
-                            <LinkTab value="6" label="Academy Organization" />
-                            <LinkTab value="7" label="Academy Statistic" />
+                            <LinkTab value="2" label="Earning" />
+                            <LinkTab value="3" label="Expenses" />
+                            <LinkTab value="4" label="Budget" />
+                            <LinkTab value="5" label="Event" />
+                            <LinkTab value="6" label="Organization" />
+                            <LinkTab value="7" label="Statistic" />
                         </Tabs>
                     </Box>
                 </Grid>

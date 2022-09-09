@@ -74,14 +74,14 @@ export const ClubFinanceDialog = ({ open, handleClose, club, mutate }) => {
                             // }}
 
                         >
-                            <LinkTab value="0" label="Club Finance" />
+                            <LinkTab value="0" label="Finance" />
                             <LinkTab value="1" label="Ecommerse Site" />
-                            <LinkTab value="2" label="Club Earning" />
-                            <LinkTab value="3" label="Club Expenses" />
-                            <LinkTab value="4" label="Club Budget" />
-                            <LinkTab value="5" label="Club Event" />
-                            <LinkTab value="6" label="Club Organization" />
-                            <LinkTab value="7" label="Club Statistic" />
+                            <LinkTab value="2" label="Earning" />
+                            <LinkTab value="3" label="Expenses" />
+                            <LinkTab value="4" label="Budget" />
+                            <LinkTab value="5" label="Event" />
+                            <LinkTab value="6" label="Organization" />
+                            <LinkTab value="7" label="Statistic" />
                         </Tabs>
                     </Box>
                 </Grid>

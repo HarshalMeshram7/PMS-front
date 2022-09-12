@@ -1,7 +1,7 @@
 import axios from "axios";
 import useStorage from "src/hooks/useStorage";
 import jwtDecode from "src/utils/jwt-decode";
-import { MAIN_URL } from "./apiConfig";
+import { MAIN_URL,MAIN_URL2 } from "./apiConfig";
 
 //ADMIN LOGIN
 export const login = async ({ email, password }) => {

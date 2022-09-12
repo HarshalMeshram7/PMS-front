@@ -19,7 +19,7 @@ import { getInitials } from '../../utils/get-initials';
 
 
 
-export const UserAccessListResults = ({ userAccess, ...rest }) => {
+export const UserAccessListResults = ({ userAccess,handleOpenUserAccessDetails, ...rest }) => {
   const [selectedUserAccessIds, setSelectedUserAccessIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -91,16 +91,16 @@ export const UserAccessListResults = ({ userAccess, ...rest }) => {
                 {/* <TableCell>
                 Password
                 </TableCell> */}
-                <TableCell>
+                {/* <TableCell>
                   Address
-                </TableCell>
+                </TableCell> */}
                 <TableCell>
                 Email
                 </TableCell>
                 <TableCell>
                   Mobile No
                 </TableCell>
-                <TableCell>
+                {/* <TableCell>
                   UserRole
                 </TableCell>
                 <TableCell>
@@ -108,15 +108,18 @@ export const UserAccessListResults = ({ userAccess, ...rest }) => {
                 </TableCell>
                 <TableCell>
                   Action
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
-              {userAccess.slice(0, limit).map((users) => (
+              {userAccess?.slice(0, limit).map((users) => (
                 <TableRow
+                  onClick={()=>{
+                    handleOpenUserAccessDetails(users)
+                  }}
                   hover
-                  key={users.id}
-                  selected={selectedUserAccessIds.indexOf(users.id) !== -1}
+                  key={users.ID}
+                  // selected={selectedUserAccessIds.indexOf(users.ID) !== -1}
                 >
                   {/* <TableCell padding="checkbox">
                     <Checkbox
@@ -136,38 +139,38 @@ export const UserAccessListResults = ({ userAccess, ...rest }) => {
                         src={users.avatarUrl}
                         sx={{ mr: 2 }}
                       >
-                        {getInitials(users.fullName)}
+                        {getInitials(users.FullName)}
                       </Avatar>
                       <Typography
                         color="textPrimary"
                         variant="body1"
                       >
-                        {users.fullName}
+                        {users.FullName}
                       </Typography>
                     </Box>
                   </TableCell>
 
                   <TableCell>
-                    {users.userName}
+                    {users.UserName}
                   </TableCell>
 
                   {/* <TableCell>
                     {users.password}
                   </TableCell> */}
                   
-                  <TableCell>
+                  {/* <TableCell>
                     {`${users.address.street}, ${users.address.city}`}
-                  </TableCell>
+                  </TableCell> */}
                   
                   <TableCell>
-                    {users.email}
+                    {users.EMail}
                   </TableCell>
 
                   <TableCell>
-                    {users.mobile}
+                    {users.MobileNo}
                   </TableCell>
 
-                  <TableCell>
+                  {/* <TableCell>
                     {users.userRole}
                   </TableCell>
 
@@ -177,7 +180,7 @@ export const UserAccessListResults = ({ userAccess, ...rest }) => {
 
                   <TableCell>
                     {users.action}
-                  </TableCell>
+                  </TableCell> */}
                   
                   {/* <TableCell>
                     {format(users.createdAt, 'dd/MM/yyyy')}

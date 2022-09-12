@@ -1,4 +1,4 @@
-import { getCookie, setCookies, removeCookies } from "cookies-next";
+import { getCookie, setCookie, deleteCookie } from "cookies-next";
 const EXPIRY_TIME = 86400;
 const useStorage = () => {
   const token = getCookie("token");
@@ -10,41 +10,41 @@ const useStorage = () => {
   const userProfile = getCookie("userProfile");
 
   const setToken = (token) => {
-    setCookies("token", token);
+    setCookie("token", token);
   };
 
   const setUserId = (id) => {
-    setCookies("user_id", id);
+    setCookie("user_id", id);
   };
   const setRole = (r) => {
-    setCookies("role", r);
+    setCookie("role", r);
   };
 
   const setEmail = (email) => {
-    setCookies("email", email);
+    setCookie("email", email);
   };
   const setFname = (fname) => {
-    setCookies("fname", fname);
+    setCookie("fname", fname);
   };
   const setLname = (lname) => {
-    setCookies("lname", lname);
+    setCookie("lname", lname);
   };
   const setUserProfile = (userProfile) => {
-    setCookies("userProfile", userProfile);
+    setCookie("userProfile", userProfile);
   };
 
   const removeToken = () => {
-    removeCookies("token");
+    deleteCookie("token");
   };
 
   const clearAll = () => {
-    removeCookies("token");
-    removeCookies("email");
-    removeCookies("fname");
-    removeCookies("lname");
-    removeCookies("userProfile");
-    removeCookies("user_id");
-    removeCookies("role");
+    deleteCookie("token");
+    deleteCookie("email");
+    deleteCookie("fname");
+    deleteCookie("lname");
+    deleteCookie("userProfile");
+    deleteCookie("user_id");
+    deleteCookie("role");
   };
 
   return {

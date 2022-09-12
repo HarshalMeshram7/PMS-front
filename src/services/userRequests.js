@@ -1,22 +1,42 @@
 import axios from "axios";
 import useStorage from "src/hooks/useStorage";
-import { MAIN_URL } from "./apiConfig";
+import { MAIN_URL , MAIN_URL2 } from "./apiConfig";
 
 
 //GET All USERS
-export const getAllUser = async ( params) => {
+export const getAllUser2 = async ( params) => {
   const { token } = useStorage();
   try {
-    let res = await axios.get(`${MAIN_URL}/api/user/getallusers/`, {
+    let res = await axios.get(`${MAIN_URL2}/getUserList/`, {
       params: params,
       headers: {
         Authorization: "Bearer " + token,
       },
     });
-
-    return res.data.response_data;
+    return res.data.result;
   } catch (error) {
     console.log(error);
+    throw error;
+  }
+};
+
+//GET USER DETAILS
+export const getUserDetails = async (params) => {
+  const { token  } = useStorage();
+  if (!token) {
+    throw new Error("No token");
+  }
+  try {
+    let res = await axios.get(`${MAIN_URL2}/getUser`, {
+      params: params,
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+
     throw error;
   }
 };
@@ -75,7 +95,7 @@ export const deleteUser = async (id) => {
 };
 
 //Change USER PASSWORD
-export const cangeUserPassword = async (id, data) => {
+export const changeUserPassword = async (id, data) => {
   const { token } = useStorage();
   try {
     const res = await axios.post(`${MAIN_URL}/admin/${id}/reset_password/`, data, {

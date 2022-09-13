@@ -1,6 +1,6 @@
 import axios from "axios";
 import useStorage from "src/hooks/useStorage";
-import { MAIN_URL } from "./apiConfig";
+import { MAIN_URL , MAIN_URL2 } from "./apiConfig";
 
 // Add Federation
 export const addFederation = async (data) => {
@@ -27,13 +27,33 @@ export const getAllFederations = async (params) => {
         throw "No Token";
     }
     try {
-        const res = await axios.get(`${MAIN_URL}/api/federation/getallfederation/`, {
+        const res = await axios.get(`${MAIN_URL2}/getfederationList`, {
             params: params,
             headers: {
                 Authorization: "Bearer " + token,
             },
         });
-        return res.data;
+        // console.log(res.data.result);
+        return res?.data?.result;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};
+// Get Federation Detailsgit 
+export const getFederation = async (params) => {
+    const { token } = useStorage();
+    if (!token) {
+        throw "No Token";
+    }
+    try {
+        const res = await axios.get(`${MAIN_URL2}/getfederation`, {
+            params: params,
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        });
+        return res?.data?.result[0];
     } catch (error) {
         console.log(error);
         throw error;

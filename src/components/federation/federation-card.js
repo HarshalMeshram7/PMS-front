@@ -24,7 +24,7 @@ export const FederationCard = ({ product, handleOpenFederationDetails, handleOpe
         >
           <Avatar
             alt="Product"
-            src={product.Logo}
+            // src={product.Logo}
             variant="square"
           />
         </Box>
@@ -34,15 +34,15 @@ export const FederationCard = ({ product, handleOpenFederationDetails, handleOpe
           gutterBottom
           variant="h5"
         >
-          {product.Federation}
+          {product.name}
         </Typography>
-        <Typography
+        {/* <Typography
           align="center"
           color="textPrimary"
           variant="body1"
         >
-          {product.description}
-        </Typography>
+          {product.name}
+        </Typography> */}
       </CardContent>
       <Box sx={{ flexGrow: 1 }} />
       <Divider />
@@ -78,11 +78,11 @@ export const FederationCard = ({ product, handleOpenFederationDetails, handleOpe
           >
             <Button
 
-              id={product.title}
+              id={product.name}
               onClick={() => { handleOpenFederationFinance(product)}}>Finance</Button>
             <Button
 
-              id={product.title}
+              id={product.name}
               onClick={() => { handleOpenFederationDetails(product)}}>Details</Button>
             {/* <DownloadIcon color="action" />
           <Typography

@@ -9,6 +9,7 @@ import { FederationDetailsDialog } from 'src/components/federation/federation-de
 import { useAllAcademies } from 'src/adapters/academyAdapter';
 import { useAllFederations } from 'src/adapters/federationAdapter';
 import { FederationFinanceDialog } from 'src/components/federation/federation-finance-dialog';
+import { getFederation } from 'src/services/federationRequest';
 
 const Federation = () => {   
    
@@ -32,40 +33,25 @@ const Federation = () => {
     const handleCloseAddFederation = () => setShowAddFederationDialog(false);
 
     const handleOpenFederationDetails = (federation) => {
-        setFederation(federation)
-        setShowFederationDetailsDialog(true)
+        getFederation({id:federation.ID}).then((res)=>{
+            setFederation(res)
+            setShowFederationDetailsDialog(true)
+        })
     };
     const handleCloseFederationDetails = () => setShowFederationDetailsDialog(false);
 
     const handleOpenFederationFinance = (federation) => {
-        setFederation(federation)
-        setShowFederationFinanceDialog(true)
+        getFederation({id:federation.ID}).then((res)=>{
+            setFederation(res)
+            setShowFederationFinanceDialog(true)
+        })
     };
     const handleCloseFederationFinance = () => setShowFederationFinanceDialog(false);
-
     const handleSearch = (value) => {
         setParams((p) => ({ ...p, searched_name_pattern: value }))
     };
 
-    const { academies, loading, error, mutate } = useAllAcademies({ ...params });
-    // const { federations, loading, error, mutate } = useAllFederations({ ...params });
-
-    let federationsLocal = [{ 
-        "_id": "62de8df69fda862707152867", 
-        "Federation": "fed2", 
-        "Address": "Address", 
-        "Phone": 8208793805, 
-        "Email": "fed2@pixonix.tech", 
-        "ContactPersonName": "Person name", 
-        "Logo": "/static/images/products/product_2.png", 
-        "Banner": "../../../public/static/images/background/register.jpg", 
-        "Accreditation": "accreditation", 
-        "Facebook": "fb", 
-        "Twitter": "tw", 
-        "Instagram": "ins", 
-        "sportsList": ["Football", "Cricket", "Tennis"], 
-        "__v": 0 
-    }]
+    const { federations, loading, error, mutate } = useAllFederations({ ...params });
 
     return (
         <>
@@ -109,7 +95,21 @@ const Federation = () => {
                             container
                             spacing={3}
                         >
-                            {federationsLocal?.map((product,key) => (
+                            {/* {federationsLocal?.map((product,key) => (
+                                <Grid
+                                    item
+                                    key={key}
+                                    lg={4}
+                                    md={6}
+                                    xs={12}
+                                >
+                                    <FederationCard
+                                        handleOpenFederationFinance={handleOpenFederationFinance}
+                                        handleOpenFederationDetails={handleOpenFederationDetails}
+                                        product={product || []} />
+                                </Grid>
+                            ))} */}
+                            {federations?.map((product,key) => (
                                 <Grid
                                     item
                                     key={key}

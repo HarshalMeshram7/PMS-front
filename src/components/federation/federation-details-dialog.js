@@ -51,8 +51,7 @@ export const FederationDetailsDialog = ({ open, handleClose, federation, mutate 
             accreditation: federation.Accreditation,
             facebook: federation.Facebook,
             twitter: federation.Twitter,
-            instagram: federation.Instagram,
-            sportsList: [],
+            instagram: federation.Instagram
         },
         validationSchema: Yup.object({
             federationName: Yup
@@ -439,7 +438,7 @@ export const FederationDetailsDialog = ({ open, handleClose, federation, mutate 
                                                     item
                                                     md={6}
                                                     xs={12}>
-                                                    <FormControl fullWidth>
+                                                    {/* <FormControl fullWidth>
                                                         <InputLabel id="demo-simple-select-helper-label">Sports List</InputLabel>
                                                         <Select
                                                             multiple
@@ -454,7 +453,7 @@ export const FederationDetailsDialog = ({ open, handleClose, federation, mutate 
                                                             <MenuItem value="Cricket">Cricket</MenuItem>
                                                             <MenuItem value="Tennis">Tennis</MenuItem>
                                                         </Select>
-                                                    </FormControl>
+                                                    </FormControl> */}
                                                 </Grid>
 
                                             </Grid>

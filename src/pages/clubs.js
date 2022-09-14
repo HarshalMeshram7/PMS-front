@@ -9,6 +9,7 @@ import { ClubDetailsDialog } from 'src/components/club/club-details-dialog';
 import { useAllAcademies } from 'src/adapters/academyAdapter';
 import { useAllClubs } from 'src/adapters/clubAdapter';
 import { ClubFinanceDialog } from 'src/components/club/club-finance-dialog';
+import { getClub } from 'src/services/clubRequest';
 
 const Clubs = () => {
     const [showAddClubDialog, setShowAddClubDialog] = useState(false);
@@ -21,14 +22,24 @@ const Clubs = () => {
     const handleCloseAddClub = () => setShowAddClubDialog(false);
 
     const handleOpenClubDetails = (club) => {
-        setClub(club)
-        setShowClubDetailsDialog(true)
+        
+        getClub({id:club.ID}).then((res)=>{
+            console.log(res);
+            setClub(res)
+            setShowClubDetailsDialog(true)
+        })
+
     };
     const handleCloseClubDetails = () => setShowClubDetailsDialog(false);
 
     const handleOpenClubFinance = (club) => {
-        setClub(club)
-        setShowClubFinanceDialog(true)
+        
+        getClub({id:club.ID}).then((res)=>{
+            setClub(club)
+            setShowClubFinanceDialog(true)
+        })
+        
+        
     };
     const handleCloseClubFinance = () => setShowClubFinanceDialog(false);
 
@@ -36,8 +47,8 @@ const Clubs = () => {
         setParams((p) => ({ ...p, searched_name_pattern: value }))
     };
 
-    const { academies, loading, error, mutate } = useAllAcademies({ ...params });
-    // const { clubs, loading, error, mutate } = useAllClubs({ ...params });
+    // const { academies, loading, error, mutate } = useAllAcademies({ ...params });
+    const { clubs, loading, error, mutate } = useAllClubs({ ...params });
 
     let clubsLocal = [{ "_id": "62de8df69fda862707152867", 
     "Club": "club2", 
@@ -86,7 +97,7 @@ const Clubs = () => {
 
                 <Container maxWidth={false}>
                     <ClubListToolbar
-                        onSearch={handleSearch}
+                        search={handleSearch}
                         handleOpenAddClub={handleOpenAddClub}
                         open={showAddClubDialog}
                     />
@@ -95,7 +106,7 @@ const Clubs = () => {
                             container
                             spacing={3}
                         >
-                            {clubsLocal?.map((product,key) => (
+                            {clubs?.map((product,key) => (
                                 <Grid
                                     item
                                     key={key}

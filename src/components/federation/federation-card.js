@@ -24,7 +24,7 @@ export const FederationCard = ({ product, handleOpenFederationDetails, handleOpe
         >
           <Avatar
             alt="Product"
-            // src={product.Logo}
+            src={product.Logo}
             variant="square"
           />
         </Box>

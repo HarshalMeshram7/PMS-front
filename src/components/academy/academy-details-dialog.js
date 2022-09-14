@@ -32,11 +32,11 @@ import banner from '../../../public/static/images/background/register.jpg';
 export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => {
     const { enqueueSnackbar } = useSnackbar();
     const user = {
-        avatar: academy.logo,
-        city: academy.address,
+        avatar: academy.Logo,
+        city: academy.Address,
         country: 'USA',
         jobTitle: 'Senior Developer',
-        name: academy.academyName,
+        name: academy.Academy,
         timezone: 'GTM-7'
     };
     const [loading, setLoading] = useState();
@@ -44,17 +44,16 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => 
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
-            academyName: academy.academyName,
-            address: academy.address,
-            phone: academy.phone,
-            personName: academy.personName,
+            academyName: academy.Academy,
+            address: academy.Address,
+            phone: academy.Phone,
+            personName: academy.ContactPersonName,
             logo: "",
             banner: "",
-            accreditation: academy.accreditation,
-            facebook: academy.facebook,
-            twitter: academy.twitter,
-            instagram: academy.instagram,
-            sportsList: [],
+            accreditation: academy.Accreditation,
+            facebook: academy.Facebook,
+            twitter: academy.Twitter,
+            instagram: academy.Instagram
         },
         validationSchema: Yup.object({
             academyName: Yup
@@ -451,7 +450,7 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => 
                                                     item
                                                     md={6}
                                                     xs={12}>
-                                                    <FormControl fullWidth>
+                                                    {/* <FormControl fullWidth>
                                                         <InputLabel id="demo-simple-select-helper-label">Sports List</InputLabel>
                                                         <Select
                                                             multiple
@@ -466,7 +465,7 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => 
                                                             <MenuItem value="Cricket">Cricket</MenuItem>
                                                             <MenuItem value="Tennis">Tennis</MenuItem>
                                                         </Select>
-                                                    </FormControl>
+                                                    </FormControl> */}
                                                 </Grid>
 
 

@@ -34,15 +34,15 @@ export const ClubCard = ({ product, handleOpenClubDetails, handleOpenClubFinance
           gutterBottom
           variant="h5"
         >
-          {product.Club}
+          {product.name}
         </Typography>
-        <Typography
+        {/* <Typography
           align="center"
           color="textPrimary"
           variant="body1"
         >
-          {product.description}
-        </Typography>
+          {product.name}
+        </Typography> */}
       </CardContent>
       <Box sx={{ flexGrow: 1 }} />
       <Divider />
@@ -78,11 +78,11 @@ export const ClubCard = ({ product, handleOpenClubDetails, handleOpenClubFinance
           >
             <Button
 
-              id={product.title}
+              id={product.name}
               onClick={() => { handleOpenClubFinance(product)}}>Finance</Button>
             <Button
 
-              id={product.title}
+              id={product.name}
               onClick={() => { handleOpenClubDetails(product)}}>Details</Button>
             {/* <DownloadIcon color="action" />
           <Typography

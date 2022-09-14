@@ -33,7 +33,7 @@ export const ClubDetailsDialog = ({ open, handleClose, club, mutate }) => {
     const { enqueueSnackbar } = useSnackbar();
     const user = {
         avatar: club.Logo,
-        city: club.address,
+        city: club.Address,
         country: 'USA',
         jobTitle: 'Senior Developer',
         name: club.Club,

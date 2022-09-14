@@ -58,7 +58,7 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
             facebook: "fb",
             twitter: "tw",
             instagram: "ins",
-            sportsList: [],
+            // sportsList: [],
             password: "Monish@1995",
             cnfpassword: "Monish@1995"
         },
@@ -347,7 +347,7 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
                             md={6}
                             xs={12}
                         >
-                            <FormControl fullWidth>
+                            {/* <FormControl fullWidth>
                                 <InputLabel id="demo-simple-select-helper-label">Sports List</InputLabel>
                                 <Select
                                     multiple
@@ -358,12 +358,12 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
                                     name="sportsList"
                                     onChange={formik.handleChange}
                                 >
-                                    {sportsList.map((option) => (
+                                    {sportsList.map((option ,key ) => (
                                         // eslint-disable-next-line react/jsx-key
-                                        <MenuItem value={option.label}>{option.label}</MenuItem>
+                                        <MenuItem id={key} value={option.label}>{option.label}</MenuItem>
                                     ))}
                                 </Select>
-                            </FormControl>
+                            </FormControl> */}
                         </Grid>
 
                         <Grid

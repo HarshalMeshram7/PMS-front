@@ -24,7 +24,7 @@ export const AcademyCard = ({ product, handleOpenAcademyDetails, handleOpenAcade
         >
           <Avatar
             alt="Product"
-            src={product.logo}
+            // src={product.logo}
             variant="square"
           />
         </Box>
@@ -34,15 +34,15 @@ export const AcademyCard = ({ product, handleOpenAcademyDetails, handleOpenAcade
           gutterBottom
           variant="h5"
         >
-          {product.academyName}
+          {product.name}
         </Typography>
-        <Typography
+        {/* <Typography
           align="center"
           color="textPrimary"
           variant="body1"
         >
-          {product.description}
-        </Typography>
+          {product.name}
+        </Typography> */}
       </CardContent>
       <Box sx={{ flexGrow: 1 }} />
       <Divider />
@@ -78,11 +78,11 @@ export const AcademyCard = ({ product, handleOpenAcademyDetails, handleOpenAcade
           >
             <Button
 
-              id={product.title}
+              id={product.name}
               onClick={() => { handleOpenAcademyFinance(product)}}>Finance</Button>
             <Button
 
-              id={product.title}
+              id={product.name}
               onClick={() => { handleOpenAcademyDetails(product)}}>Details</Button>
             {/* <DownloadIcon color="action" />
           <Typography

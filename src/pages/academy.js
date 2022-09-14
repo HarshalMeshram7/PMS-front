@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 import { AcademyDetailsDialog } from 'src/components/academy/academy-details-dialog';
 import { useAllAcademies } from 'src/adapters/academyAdapter';
 import { AcademyFinanceDialog } from 'src/components/academy/academy-finance-dialog';
+import { getAcademy } from 'src/services/academyRequest';
 
 const Academy = () => {
   const [showAddAcademyDialog, setShowAddAcademyDialog] = useState(false);
@@ -20,15 +21,22 @@ const Academy = () => {
   const handleCloseAddAcademy = () => setShowAddAcademyDialog(false);
   
   const handleOpenAcademyDetails = (academy) => {
-    setAcademy(academy)
-    setShowAcademyDetailsDialog(true)
+
+    getAcademy({id:academy.ID}).then((res)=>{
+      setAcademy(res)
+      setShowAcademyDetailsDialog(true)
+    })
+
   };
   const handleCloseAcademyDetails = () => setShowAcademyDetailsDialog(false);
   
   const handleOpenAcademyFinance = (academy) => {
-    setAcademy(academy)
-    setShowAcademyFinanceDialog(true)
+    getAcademy({id:academy.ID}).then((res)=>{
+      setAcademy(res)
+      setShowAcademyFinanceDialog(true)
+    })
   };
+
   const handleCloseAcademyFinance = () => setShowAcademyFinanceDialog(false);
   
   const handleSearch = (value) => {
@@ -36,7 +44,6 @@ const Academy = () => {
   };
   
   const { academies, loading, error, mutate } = useAllAcademies({ ...params});
-
   return (
     <>
       <Head>
@@ -79,10 +86,10 @@ const Academy = () => {
               container
               spacing={3}
             >
-              {academies?.map((product) => (
+              {academies?.map((product , key) => (
                 <Grid
                   item
-                  key={product.id}
+                  key={key}
                   lg={4}
                   md={6}
                   xs={12}

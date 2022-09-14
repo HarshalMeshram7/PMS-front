@@ -343,7 +343,7 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
                                                         variant="outlined"
                                                     />
                                                 </Grid>
-                                                
+
                                                 <Grid
                                                     item
                                                     md={6}

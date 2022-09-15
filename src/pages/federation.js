@@ -26,7 +26,7 @@ const Federation = () => {
     const [federation, setFederation] = useState([])
     
     //to store parameters required to send with get req
-    const [params, setParams] = useState({})
+    const [params, setParams] = useState({searchpattern: ""})
 
     //to show hide add federation dialog
     const handleOpenAddFederation = () => setShowAddFederationDialog(true);
@@ -48,11 +48,10 @@ const Federation = () => {
     };
     const handleCloseFederationFinance = () => setShowFederationFinanceDialog(false);
     const handleSearch = (value) => {
-        setParams((p) => ({ ...p, searched_name_pattern: value }))
+        setParams((p) => ({ ...p, searchpattern: value }))
     };
 
     const { federations, loading, error, mutate } = useAllFederations({ ...params });
-
     return (
         <>
             <Head>
@@ -86,7 +85,7 @@ const Federation = () => {
 
                 <Container maxWidth={false}>
                     <FederationListToolbar
-                        onSearch={handleSearch}
+                        search={handleSearch}
                         handleOpenAddFederation={handleOpenAddFederation}
                         open={showAddFederationDialog}
                     />
@@ -95,20 +94,6 @@ const Federation = () => {
                             container
                             spacing={3}
                         >
-                            {/* {federationsLocal?.map((product,key) => (
-                                <Grid
-                                    item
-                                    key={key}
-                                    lg={4}
-                                    md={6}
-                                    xs={12}
-                                >
-                                    <FederationCard
-                                        handleOpenFederationFinance={handleOpenFederationFinance}
-                                        handleOpenFederationDetails={handleOpenFederationDetails}
-                                        product={product || []} />
-                                </Grid>
-                            ))} */}
                             {federations?.map((product,key) => (
                                 <Grid
                                     item

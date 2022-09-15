@@ -27,13 +27,12 @@ export const getAllFederations = async (params) => {
         throw "No Token";
     }
     try {
-        const res = await axios.get(`${MAIN_URL2}/getfederationList`, {
+        const res = await axios.get(`${MAIN_URL2}/getfederationbypattern`, {
             params: params,
             headers: {
                 Authorization: "Bearer " + token,
             },
         });
-        // console.log(res.data.result);
         return res?.data?.result;
     } catch (error) {
         console.log(error);

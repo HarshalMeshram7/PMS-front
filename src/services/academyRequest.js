@@ -27,13 +27,13 @@ export const getAllAcademies = async (params) => {
         throw "No Token";
     }
     try {
-        const res = await axios.get(`${MAIN_URL2}/getAcademyList`, {
+        const res = await axios.get(`${MAIN_URL2}/getAcademybypattern`, {
             params: params,
             headers: {
                 Authorization: "Bearer " + token,
             },
         });
-        return res?.data.result;
+        return res?.data?.result;
     } catch (error) {
         console.log(error);
         throw error;

@@ -17,7 +17,7 @@ const Team = () => {
   const [showTeamDetailsDialog, setShowTeamDetailsDialog] = useState(false);
   const [showTeamFinanceDialog, setShowTeamFinanceDialog] = useState(false);
   const [team, setTeam] = useState([])
-  const [params, setParams] = useState({})
+  const [params, setParams] = useState({searchpattern: ""})
 
   const handleOpenAddTeam = () => setShowAddTeamDialog(true);
   const handleCloseAddTeam = () => setShowAddTeamDialog(false);

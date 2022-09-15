@@ -15,7 +15,7 @@ const Academy = () => {
   const [showAcademyDetailsDialog, setShowAcademyDetailsDialog] = useState(false);
   const [showAcademyFinanceDialog, setShowAcademyFinanceDialog] = useState(false);
   const [academy, setAcademy] = useState([])
-  const [params, setParams] = useState({})
+  const [params, setParams] = useState({searchpattern: ""})
   
   const handleOpenAddAcademy = () => setShowAddAcademyDialog(true);
   const handleCloseAddAcademy = () => setShowAddAcademyDialog(false);
@@ -40,7 +40,7 @@ const Academy = () => {
   const handleCloseAcademyFinance = () => setShowAcademyFinanceDialog(false);
   
   const handleSearch = (value) => {
-    setParams((p) => ({ ...p, searched_name_pattern: value }))
+    setParams((p) => ({ ...p, searchpattern: value }))
   };
   
   const { academies, loading, error, mutate } = useAllAcademies({ ...params});

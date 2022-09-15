@@ -27,14 +27,14 @@ export const FederationListToolbar = (props) => {
 
   const handleClear = () => {
     setSearchText("");
-    props.onSearch && props.onSearch("");
+    props.search && props.search("");
   };
 
   const handleSubmitSearch = () => {
     if (searchText.length > 0) {
-      props.onSearch && props.onSearch(searchText);
+      props.search && props.search(searchText);
     } else {
-      props.onSearch && props.onSearch("");
+      props.search && props.search("");
     }
   };
 

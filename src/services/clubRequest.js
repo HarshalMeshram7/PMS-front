@@ -27,7 +27,7 @@ export const getAllClubs = async (params) => {
         throw "No Token";
     }
     try {
-        const res = await axios.get(`${MAIN_URL2}/getCLubList`, {
+        const res = await axios.get(`${MAIN_URL2}/getCLubListbypattern`, {
             params: params,
             headers: {
                 Authorization: "Bearer " + token,

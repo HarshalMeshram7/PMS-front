@@ -77,7 +77,7 @@ export const TeamCard = ({ product, handleOpenTeamDetails, handleOpenTeamFinance
           <Button
 
             id={product.title}
-            onClick={() => { handleOpenTeamFinance(product) }}>Finance</Button>
+            onClick={() => { handleOpenTeamFinance(product) }}>Management</Button>
           <Button
 
             id={product.title}

@@ -17,6 +17,7 @@ import { useState } from "react";
 import LoadingBox from "src/components/common/loading-box";
 import { useSnackbar } from "notistack";
 import MemberCommunication from "./teammanagement-component/member-communication";
+import StaffManagement from "./teammanagement-component/staff-management";
 
 
 export const TeamFinanceDialog = ({ open, handleClose, team, mutate }) => {
@@ -69,16 +70,15 @@ export const TeamFinanceDialog = ({ open, handleClose, team, mutate }) => {
                             onChange={handleChange}
                             centered
                         >
-                            <LinkTab value="0" label="Registration" />
-                            <LinkTab value="1" label="Member Communication" />
-                            <LinkTab value="2" label="Staff Management" />
+                            <LinkTab value="0" label="Member Communication" />
+                            <LinkTab value="1" label="Staff Management" />
                         </Tabs>
                     </Box>
                 </Grid>
                 <Container maxWidth="md">
-                    {value == "0" && <>0</>}
-                    {value == "1" && <MemberCommunication />}
-                    {value == "2" && <>2</>}
+                    {value == "0" && <MemberCommunication />}
+                    {value == "1" && <StaffManagement />}
+                    {/* {value == "1" && <>1</>} */}
                 </Container>
 
 

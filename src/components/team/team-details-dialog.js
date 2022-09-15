@@ -44,50 +44,78 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
-            teamName: team.academyName,
-            address: team.address,
-            phone: team.phone,
-            personName: team.personName,
+            TeamName: "",
+            TeamAddress: "",
+            TeamPhone: "",
+            TeamEmail: "",
+            TeamContactPerson: "",
+            TeamDivisions: "",
+            TeamAdminManager: "",
+            TeamCoordinatorTMS: "",
+            TeamCoordinatorITMS: "",
+            Accreditation: "",
+            Facebook: "",
+            Twitter: "",
+            LinkedIn: "",
             logo: "",
             banner: "",
-            accreditation: team.accreditation,
-            facebook: team.facebook,
-            twitter: team.twitter,
-            instagram: team.instagram,
-            sportsList: [],
+            // sportsList: [],
         },
         validationSchema: Yup.object({
-            teamName: Yup
+            TeamName: Yup
                 .string()
                 .max(100)
                 .required("Team Name is required"),
-            address: Yup
+            TeamAddress: Yup
                 .string()
             // .required('Required')
             ,
-            phone: Yup.string()
+            TeamPhone: Yup.string()
                 .length(10)
                 .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
             // .required("Phone number is required")
             ,
-            personName: Yup
+            TeamEmail: Yup.string()
+                .email()
+            // .length(10)
+            // .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
+            // .required("Phone number is required")
+            ,
+            TeamContactPerson: Yup
                 .string()
                 .max(100)
             // .required("Person Name is required")
             ,
-            accreditation: Yup
+            TeamDivisions: Yup
+                .string()
+                .max(100)
+            // .required("Person Name is required")
+            ,
+            TeamAdminManager: Yup
+                .string()
+                .max(100)
+            // .required("Person Name is required")
+            ,
+            TeamCoordinatorTMS: Yup
+                .string()
+                .max(100)
+            // .required("Person Name is required")
+            ,
+            TeamCoordinatorITMS: Yup
+                .string()
+                .max(100)
+            // .required("Person Name is required")
+            ,
+            Accreditation: Yup
                 .string()
                 .max(100),
-            accreditation: Yup
+            Facebook: Yup
                 .string()
                 .max(100),
-            facebook: Yup
+            Twitter: Yup
                 .string()
                 .max(100),
-            twitter: Yup
-                .string()
-                .max(100),
-            instagram: Yup
+            LinkedIn: Yup
                 .string()
                 .max(100),
         }),
@@ -290,16 +318,16 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
                                                     xs={12}
                                                 >
                                                     <TextField
-                                                        error={Boolean(formik.touched.teamName && formik.errors.teamName)}
+                                                        error={Boolean(formik.touched.TeamName && formik.errors.TeamName)}
                                                         fullWidth
-                                                        helperText={formik.touched.teamName && formik.errors.teamName}
-                                                        label="Name"
+                                                        helperText={formik.touched.TeamName && formik.errors.TeamName}
+                                                        label="Team Name"
                                                         margin="dense"
-                                                        name="teamName"
+                                                        name="TeamName"
                                                         onBlur={formik.handleBlur}
                                                         onChange={formik.handleChange}
                                                         type="text"
-                                                        value={formik.values.teamName}
+                                                        value={formik.values.TeamName}
                                                         variant="outlined"
                                                     />
                                                 </Grid>
@@ -310,16 +338,16 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
                                                     xs={12}
                                                 >
                                                     <TextField
-                                                        error={Boolean(formik.touched.address && formik.errors.address)}
+                                                        error={Boolean(formik.touched.TeamAddress && formik.errors.TeamAddress)}
                                                         fullWidth
-                                                        helperText={formik.touched.address && formik.errors.address}
-                                                        label="Address"
+                                                        helperText={formik.touched.TeamAddress && formik.errors.TeamAddress}
+                                                        label="TeamAddress"
                                                         margin="dense"
-                                                        name="address"
+                                                        name="TeamAddress"
                                                         onBlur={formik.handleBlur}
                                                         onChange={formik.handleChange}
                                                         type="address"
-                                                        value={formik.values.address}
+                                                        value={formik.values.TeamAddress}
                                                         variant="outlined"
                                                     />
                                                 </Grid>
@@ -330,16 +358,36 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
                                                     xs={12}
                                                 >
                                                     <TextField
-                                                        error={Boolean(formik.touched.phone && formik.errors.phone)}
+                                                        error={Boolean(formik.touched.TeamPhone && formik.errors.TeamPhone)}
                                                         fullWidth
-                                                        helperText={formik.touched.phone && formik.errors.phone}
-                                                        label="Phone Number"
+                                                        helperText={formik.touched.TeamPhone && formik.errors.TeamPhone}
+                                                        label="Team Phone Number"
                                                         margin="dense"
-                                                        name="phone"
+                                                        name="TeamPhone"
                                                         onBlur={formik.handleBlur}
                                                         onChange={formik.handleChange}
-                                                        type="tel"
-                                                        value={formik.values.phone}
+                                                        type="number"
+                                                        value={formik.values.TeamPhone}
+                                                        variant="outlined"
+                                                    />
+                                                </Grid>
+
+                                                <Grid
+                                                    item
+                                                    md={6}
+                                                    xs={12}
+                                                >
+                                                    <TextField
+                                                        error={Boolean(formik.touched.TeamEmail && formik.errors.TeamEmail)}
+                                                        fullWidth
+                                                        helperText={formik.touched.TeamEmail && formik.errors.TeamEmail}
+                                                        label="Team Email"
+                                                        margin="dense"
+                                                        name="TeamEmail"
+                                                        onBlur={formik.handleBlur}
+                                                        onChange={formik.handleChange}
+                                                        type="email"
+                                                        value={formik.values.TeamEmail}
                                                         variant="outlined"
                                                     />
                                                 </Grid>
@@ -349,16 +397,56 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
                                                     md={6}
                                                     xs={12}>
                                                     <TextField
-                                                        error={Boolean(formik.touched.personName && formik.errors.personName)}
+                                                        error={Boolean(formik.touched.TeamContactPerson && formik.errors.TeamContactPerson)}
                                                         fullWidth
-                                                        helperText={formik.touched.personName && formik.errors.personName}
-                                                        label="Person Name"
+                                                        helperText={formik.touched.TeamContactPerson && formik.errors.TeamContactPerson}
+                                                        label="Team Contact Person Name"
                                                         margin="dense"
-                                                        name="personName"
+                                                        name="TeamContactPerson"
                                                         onBlur={formik.handleBlur}
                                                         onChange={formik.handleChange}
                                                         type="text"
-                                                        value={formik.values.personName}
+                                                        value={formik.values.TeamContactPerson}
+                                                        variant="outlined"
+                                                    />
+                                                </Grid>
+
+
+                                                <Grid
+                                                    item
+                                                    md={6}
+                                                    xs={12}>
+                                                    <TextField
+                                                        error={Boolean(formik.touched.TeamDivisions && formik.errors.TeamDivisions)}
+                                                        fullWidth
+                                                        helperText={formik.touched.TeamDivisions && formik.errors.TeamDivisions}
+                                                        label="Team Divisions"
+                                                        margin="dense"
+                                                        name="TeamDivisions"
+                                                        onBlur={formik.handleBlur}
+                                                        onChange={formik.handleChange}
+                                                        type="text"
+                                                        value={formik.values.TeamDivisions}
+                                                        variant="outlined"
+                                                    />
+                                                </Grid>
+
+
+                                                <Grid
+                                                    item
+                                                    md={6}
+                                                    xs={12}>
+                                                    <TextField
+                                                        error={Boolean(formik.touched.TeamAdminManager && formik.errors.TeamAdminManager)}
+                                                        fullWidth
+                                                        helperText={formik.touched.TeamAdminManager && formik.errors.TeamAdminManager}
+                                                        label="Team Admin / Manager"
+                                                        margin="dense"
+                                                        name="TeamAdminManager"
+                                                        onBlur={formik.handleBlur}
+                                                        onChange={formik.handleChange}
+                                                        type="text"
+                                                        value={formik.values.TeamAdminManager}
                                                         variant="outlined"
                                                     />
                                                 </Grid>
@@ -368,16 +456,54 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
                                                     md={6}
                                                     xs={12}>
                                                     <TextField
-                                                        error={Boolean(formik.touched.accreditation && formik.errors.accreditation)}
+                                                        error={Boolean(formik.touched.TeamCoordinatorTMS && formik.errors.TeamCoordinatorTMS)}
                                                         fullWidth
-                                                        helperText={formik.touched.accreditation && formik.errors.accreditation}
+                                                        helperText={formik.touched.TeamCoordinatorTMS && formik.errors.TeamCoordinatorTMS}
+                                                        label="Team Coordinator TMS"
+                                                        margin="dense"
+                                                        name="TeamCoordinatorTMS"
+                                                        onBlur={formik.handleBlur}
+                                                        onChange={formik.handleChange}
+                                                        type="text"
+                                                        value={formik.values.TeamCoordinatorTMS}
+                                                        variant="outlined"
+                                                    />
+                                                </Grid>
+
+                                                <Grid
+                                                    item
+                                                    md={6}
+                                                    xs={12}>
+                                                    <TextField
+                                                        error={Boolean(formik.touched.TeamCoordinatorITMS && formik.errors.TeamCoordinatorITMS)}
+                                                        fullWidth
+                                                        helperText={formik.touched.TeamCoordinatorITMS && formik.errors.TeamCoordinatorITMS}
+                                                        label="Team Coordinator ITMS"
+                                                        margin="dense"
+                                                        name="TeamCoordinatorITMS"
+                                                        onBlur={formik.handleBlur}
+                                                        onChange={formik.handleChange}
+                                                        type="text"
+                                                        value={formik.values.TeamCoordinatorITMS}
+                                                        variant="outlined"
+                                                    />
+                                                </Grid>
+
+                                                <Grid
+                                                    item
+                                                    md={6}
+                                                    xs={12}>
+                                                    <TextField
+                                                        error={Boolean(formik.touched.Accreditation && formik.errors.Accreditation)}
+                                                        fullWidth
+                                                        helperText={formik.touched.Accreditation && formik.errors.Accreditation}
                                                         label="Accreditation"
                                                         margin="dense"
-                                                        name="accreditation"
+                                                        name="Accreditation"
                                                         onBlur={formik.handleBlur}
                                                         onChange={formik.handleChange}
                                                         type="text"
-                                                        value={formik.values.accreditation}
+                                                        value={formik.values.Accreditation}
                                                         variant="outlined"
                                                     />
                                                 </Grid>
@@ -387,16 +513,16 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
                                                     md={6}
                                                     xs={12}>
                                                     <TextField
-                                                        error={Boolean(formik.touched.facebook && formik.errors.facebook)}
+                                                        error={Boolean(formik.touched.Facebook && formik.errors.Facebook)}
                                                         fullWidth
-                                                        helperText={formik.touched.facebook && formik.errors.facebook}
+                                                        helperText={formik.touched.Facebook && formik.errors.Facebook}
                                                         label="Facebook"
                                                         margin="dense"
-                                                        name="facebook"
+                                                        name="Facebook"
                                                         onBlur={formik.handleBlur}
                                                         onChange={formik.handleChange}
                                                         type="text"
-                                                        value={formik.values.facebook}
+                                                        value={formik.values.Facebook}
                                                         variant="outlined"
                                                     />
                                                 </Grid>
@@ -406,16 +532,16 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
                                                     md={6}
                                                     xs={12}>
                                                     <TextField
-                                                        error={Boolean(formik.touched.twitter && formik.errors.twitter)}
+                                                        error={Boolean(formik.touched.Twitter && formik.errors.Twitter)}
                                                         fullWidth
-                                                        helperText={formik.touched.twitter && formik.errors.twitter}
+                                                        helperText={formik.touched.Twitter && formik.errors.Twitter}
                                                         label="Twitter"
                                                         margin="dense"
-                                                        name="twitter"
+                                                        name="Twitter"
                                                         onBlur={formik.handleBlur}
                                                         onChange={formik.handleChange}
                                                         type="text"
-                                                        value={formik.values.twitter}
+                                                        value={formik.values.Twitter}
                                                         variant="outlined"
                                                     />
                                                 </Grid>
@@ -425,21 +551,21 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
                                                     md={6}
                                                     xs={12}>
                                                     <TextField
-                                                        error={Boolean(formik.touched.instagram && formik.errors.instagram)}
+                                                        error={Boolean(formik.touched.LinkedIn && formik.errors.LinkedIn)}
                                                         fullWidth
-                                                        helperText={formik.touched.instagram && formik.errors.instagram}
-                                                        label="Instagram"
+                                                        helperText={formik.touched.LinkedIn && formik.errors.LinkedIn}
+                                                        label="LinkedIn"
                                                         margin="dense"
-                                                        name="instagram"
+                                                        name="LinkedIn"
                                                         onBlur={formik.handleBlur}
                                                         onChange={formik.handleChange}
                                                         type="text"
-                                                        value={formik.values.instagram}
+                                                        value={formik.values.LinkedIn}
                                                         variant="outlined"
                                                     />
                                                 </Grid>
 
-                                                <Grid
+                                                {/* <Grid
                                                     item
                                                     md={6}
                                                     xs={12}>
@@ -459,7 +585,7 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
                                                             <MenuItem value="Tennis">Tennis</MenuItem>
                                                         </Select>
                                                     </FormControl>
-                                                </Grid>
+                                                </Grid> */}
 
                                             </Grid>
                                         </CardContent>

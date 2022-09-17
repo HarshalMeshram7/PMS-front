@@ -20,10 +20,10 @@ export const FederationListToolbar = (props) => {
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    if (props.params?.searched_name_pattern) {
-      setSearchText(props.params?.searched_name_pattern);
+    if (props.params?.search) {
+      setSearchText(props.params?.search);
     }
-  }, [props.params?.searched_name_pattern]);
+  }, [props.params?.search]);
 
   const handleClear = () => {
     setSearchText("");

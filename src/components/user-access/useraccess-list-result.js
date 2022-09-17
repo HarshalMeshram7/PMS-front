@@ -114,6 +114,7 @@ export const UserAccessListResults = ({ userAccess,handleOpenUserAccessDetails, 
             <TableBody>
               {userAccess?.slice(0, limit).map((users) => (
                 <TableRow
+                  style={{cursor:"pointer"}}
                   onClick={()=>{
                     handleOpenUserAccessDetails(users)
                   }}

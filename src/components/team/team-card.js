@@ -22,7 +22,7 @@ export const TeamCard = ({ product, handleOpenTeamDetails, handleOpenTeamFinance
       >
         <Avatar
           alt="Product"
-          src={product.logo}
+          src={product.Logo}
           variant="square"
         />
       </Box>
@@ -32,15 +32,15 @@ export const TeamCard = ({ product, handleOpenTeamDetails, handleOpenTeamFinance
         gutterBottom
         variant="h5"
       >
-        {product.academyName}
+        {product.name}
       </Typography>
-      <Typography
+      {/* <Typography
         align="center"
         color="textPrimary"
         variant="body1"
       >
-        {product.description}
-      </Typography>
+        {product.name}
+      </Typography> */}
     </CardContent>
     <Box sx={{ flexGrow: 1 }} />
     <Divider />
@@ -76,11 +76,11 @@ export const TeamCard = ({ product, handleOpenTeamDetails, handleOpenTeamFinance
         >
           <Button
 
-            id={product.title}
+            id={product.name}
             onClick={() => { handleOpenTeamFinance(product) }}>Management</Button>
           <Button
 
-            id={product.title}
+            id={product.name}
             onClick={() => { handleOpenTeamDetails(product) }}>Details</Button>
 
           {/* <DownloadIcon color="action" />

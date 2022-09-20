@@ -107,7 +107,7 @@ const items = [
   },
   
   {
-    href: '/referee-registration',
+    href: '/referee',
     icon: (<SportsIcon fontSize="small" />),
     title: 'Referee Registration',
     role: '3'

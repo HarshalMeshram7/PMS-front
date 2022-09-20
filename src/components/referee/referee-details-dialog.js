@@ -26,14 +26,14 @@ import * as Yup from "yup";
 import LoadingBox from "src/components/common/loading-box";
 
 
-export const UserAccessDetailsDialog = ({ open, handleClose, user }) => {
+export const UserRefreeDialog = ({ open, handleClose, user }) => {
 
     const { enqueueSnackbar } = useSnackbar();
     const [loading, setLoading] = useState();
     const [access, setAccess] = useState([]);
 
 
-  console.log(user);
+//   console.log(user);
   
   const formik = useFormik({
     enableReinitialize: true,
@@ -267,10 +267,7 @@ export const UserAccessDetailsDialog = ({ open, handleClose, user }) => {
               <Autocomplete
                 multiple
                 value={formik.values.userAccess}
-                onChange={(e , value)=>{
-                  console.log(value);
-                  formik.handleChange
-                }}
+                onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 id="userAccess"
                 name="userAccess"

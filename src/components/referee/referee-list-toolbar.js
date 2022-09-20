@@ -11,7 +11,7 @@ import {
   import { Upload as UploadIcon } from '../../icons/upload';
   import { Download as DownloadIcon } from '../../icons/download';
   
-  export const UserRefreeToolbar = (props) => {
+  export const RefereeListToolbar = (props) => {
   
   return(
     <Box {...props}>
@@ -28,7 +28,7 @@ import {
           sx={{ m: 1 }}
           variant="h4"
         >
-          User Access
+          Referee Registration
         </Typography>
         <Box sx={{ m: 1 }}>
           {/* <Button
@@ -46,9 +46,9 @@ import {
           <Button
             color="primary"
             variant="contained"
-            onClick={ props.handleOpenAddUserAccess }
+            onClick={ props.handleOpenAddReferee }
           >
-            Add Refree
+            Add Referee
           </Button>
         </Box>
       </Box>
@@ -70,7 +70,7 @@ import {
                     </InputAdornment>
                   )
                 }}
-                placeholder="Search User"
+                placeholder="Search Referee"
                 variant="outlined"
               />
             </Box>

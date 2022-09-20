@@ -26,42 +26,30 @@ import * as Yup from "yup";
 import LoadingBox from "src/components/common/loading-box";
 
 
-export const UserRefreeDialog = ({ open, handleClose, user }) => {
+export const RefereeDetailsDialog = ({ open, handleClose, referees }) => {
 
-    const { enqueueSnackbar } = useSnackbar();
-    const [loading, setLoading] = useState();
-    const [access, setAccess] = useState([]);
+  const { enqueueSnackbar } = useSnackbar();
+  const [loading, setLoading] = useState();
+  const [referee, setReferee] = useState([]);
 
 
-//   console.log(user);
-  
+  //   console.log(referee);
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      userName: user?.user_info?.userName,
-      password: "Monish@1995",
-      cnfpassword: "Monish@1995",
-      fullName: user?.fullName,
-      address: user?.user_info?.address || "asda",
-      email: user?.user_info?.eMail,
-      phone: user?.user_info?.mobileNo,
-      userRole: user?.userTypes_list || 0,
-      userAccess: [],
+      FirstName: "",
+      LastName: "",
+      Address: "",
+      ContactNo: "",
+      Email: "",
+      DateOfBirth: "1990-12-25",
+      DateOfBirth: "",
+      Gender: "",
     },
 
     validationSchema: Yup.object({
-      userName: Yup.string().max(100).required("User Name is required"),
-      password: Yup.string().max(255).required("Password is required"),
-      cnfpassword: Yup.string().oneOf([Yup.ref("password"), null], "Passwords must match"),
-      fullName: Yup.string().max(100).required("User Name is required"),
-      address: Yup.string(),
-      // .required('Required')
-      email: Yup.string().email("Must be a valid Email").max(255).required("Email is required"),
-      phone: Yup.string()
-        .length(10)
-        .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, "Phone number is not valid")
-        .required("Phone number is required"),
-
+      
     }),
 
     onSubmit: async (data) => {
@@ -79,37 +67,37 @@ export const UserRefreeDialog = ({ open, handleClose, user }) => {
     },
   });
 
- const handleRoleChange = (e , value) =>{
-    if(!value){
-        setAccess([]);
+  const handleRoleChange = (e, value) => {
+    if (!value) {
+      setReferee([]);
     }
-    if(value?.ID === 1 ){
-        setAccess([{"ID":0,"name":"All Access"}]);
+    if (value?.ID === 1) {
+      setReferee([{ "ID": 0, "name": "All Access" }]);
     }
-    if(value?.ID === 2 || value?.ID === 3){
-        setAccess(user?.federation_list);
+    if (value?.ID === 2 || value?.ID === 3) {
+      setReferee(referee?.federation_list);
     }
-    
-    if(value?.ID === 4 || value?.ID === 5){
-        setAccess(user?.club_list);
-    }
-    
-    if(value?.ID === 6 || value?.ID === 7){
-        setAccess(user?.team_list);
-    }
-    
-    if(value?.ID === 8){
-        setAccess(user?.federation_list);
-    }
-    if(value?.ID === 9){
-        setAccess(user?.federation_list);
-    }
-    if(value?.ID === 10){
-        setAccess(user?.federation_list);
-    }
-    
 
- }
+    if (value?.ID === 4 || value?.ID === 5) {
+      setReferee(referee?.club_list);
+    }
+
+    if (value?.ID === 6 || value?.ID === 7) {
+      setReferee(referee?.team_list);
+    }
+
+    if (value?.ID === 8) {
+      setReferee(referee?.federation_list);
+    }
+    if (value?.ID === 9) {
+      setReferee(referee?.federation_list);
+    }
+    if (value?.ID === 10) {
+      setReferee(referee?.federation_list);
+    }
+
+
+  }
 
   useEffect(() => {
     if (!open) {
@@ -129,161 +117,159 @@ export const UserRefreeDialog = ({ open, handleClose, user }) => {
     >
       {loading && <LoadingBox />}
       <form onSubmit={formik.handleSubmit}>
-        <DialogTitle>User Details</DialogTitle>
+        <DialogTitle>Referee Details</DialogTitle>
 
         <DialogContent>
-          <Grid container spacing={3}>
-            <Grid item md={6} xs={12}>
+
+          <Grid
+            container
+            spacing={3}
+          >
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
               <TextField
-                error={Boolean(formik.touched.userName && formik.errors.userName)}
+                error={Boolean(formik.touched.FirstName && formik.errors.FirstName)}
                 fullWidth
-                helperText={formik.touched.userName && formik.errors.userName}
-                label="User Name"
+                helperText={formik.touched.FirstName && formik.errors.FirstName}
+                label="First Name"
                 margin="dense"
-                name="userName"
+                name="FirstName"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
                 type="text"
-                value={formik.values.userName}
+                value={formik.values.FirstName}
                 variant="outlined"
               />
             </Grid>
 
-            <Grid item md={6} xs={12}>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
               <TextField
-                error={Boolean(formik.touched.password && formik.errors.password)}
+                error={Boolean(formik.touched.LastName && formik.errors.LastName)}
                 fullWidth
-                helperText={formik.touched.password && formik.errors.password}
-                label="Create Password"
+                helperText={formik.touched.LastName && formik.errors.LastName}
+                label="Last Name"
                 margin="dense"
-                name="password"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                type="password"
-                value={formik.values.password}
-                variant="outlined"
-              />
-            </Grid>
-
-            <Grid item md={6} xs={12}>
-              <TextField
-                error={Boolean(formik.touched.cnfpassword && formik.errors.cnfpassword)}
-                fullWidth
-                helperText={formik.touched.cnfpassword && formik.errors.cnfpassword}
-                label="Confirm Password"
-                margin="dense"
-                name="cnfpassword"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                type="password"
-                value={formik.values.cnfpassword}
-                variant="outlined"
-              />
-            </Grid>
-
-            <Grid item md={6} xs={12}>
-              <TextField
-                error={Boolean(formik.touched.fullName && formik.errors.fullName)}
-                fullWidth
-                helperText={formik.touched.fullName && formik.errors.fullName}
-                label="Full Name"
-                margin="dense"
-                name="fullName"
+                name="LastName"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
                 type="text"
-                value={formik.values.fullName}
+                value={formik.values.LastName}
                 variant="outlined"
               />
             </Grid>
 
-            <Grid item md={6} xs={12}>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
               <TextField
-                error={Boolean(formik.touched.address && formik.errors.address)}
+                error={Boolean(formik.touched.Address && formik.errors.Address)}
                 fullWidth
-                helperText={formik.touched.address && formik.errors.address}
+                helperText={formik.touched.Address && formik.errors.Address}
                 label="Address"
                 margin="dense"
-                name="address"
+                name="Address"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
-                type="address"
-                value={formik.values.address}
+                type="text"
+                value={formik.values.Address}
                 variant="outlined"
               />
             </Grid>
 
-            <Grid item md={6} xs={12}>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
               <TextField
-                error={Boolean(formik.touched.email && formik.errors.email)}
+                error={Boolean(formik.touched.DateOfBirth && formik.errors.DateOfBirth)}
                 fullWidth
-                helperText={formik.touched.email && formik.errors.email}
+                helperText={formik.touched.DateOfBirth && formik.errors.DateOfBirth}
+                name="DateOfBirth"
+                label="Date of Birth"
+                margin="dense"
+                onBlur={formik.handleBlur}
+                value={formik.values.DateOfBirth}
+                onChange={formik.handleChange}
+                type="date"
+                variant="outlined"
+              />
+            </Grid>
+
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                error={Boolean(formik.touched.Email && formik.errors.Email)}
+                fullWidth
+                helperText={formik.touched.Email && formik.errors.Email}
                 label="Email"
                 margin="dense"
-                name="email"
+                name="Email"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
                 type="email"
-                value={formik.values.email}
+                value={formik.values.Email}
                 variant="outlined"
               />
             </Grid>
 
-            <Grid item md={6} xs={12}>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
               <TextField
-                error={Boolean(formik.touched.phone && formik.errors.phone)}
+                error={Boolean(formik.touched.ContactNo && formik.errors.ContactNo)}
                 fullWidth
-                helperText={formik.touched.phone && formik.errors.phone}
+                helperText={formik.touched.ContactNo && formik.errors.ContactNo}
                 label="Phone Number"
                 margin="dense"
-                name="phone"
+                name="ContactNo"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
-                type="tel"
-                value={formik.values.phone}
+                type="number"
+                value={formik.values.ContactNo}
                 variant="outlined"
               />
             </Grid>
-          </Grid>
-        </DialogContent>
 
-        <Divider></Divider>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
 
-        <DialogContent>
-          <Grid container spacing={3}>
-            <Grid item md={6} xs={12}>
-              <Autocomplete
-                disablePortal
-                name="userRole"
-                id="userRole"
-                onChange={handleRoleChange}
-                options={formik.values.userRole || []}
-                getOptionLabel={(option) => option.Description}
-                renderInput={(params) => <TextField {...params} label="User Role" />}
-              />
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-helper-label">Gender</InputLabel>
+                <Select
+                  labelId="demo-simple-select-helper-label"
+                  id="demo-simple-select-helper"
+                  value={formik.values.Gender}
+                  name="Gender"
+                  label="Gender"
+                  onChange={formik.handleChange}
+                >
+                  <MenuItem value="Male">Male</MenuItem>
+                  <MenuItem value="Female">Female</MenuItem>
+                  <MenuItem value="Other">Other</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
 
-            <Grid item md={6} xs={12}>
-              <Autocomplete
-                multiple
-                value={formik.values.userAccess}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                id="userAccess"
-                name="userAccess"
-                options={access || []}
-                getOptionLabel={(option) => option?.name}
-                filterSelectedOptions
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Access"
-                    placeholder="Access"
-                  />
-                )}
-              />
-            </Grid>
           </Grid>
+
         </DialogContent>
 
         <DialogActions>

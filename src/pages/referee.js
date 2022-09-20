@@ -1,39 +1,42 @@
 import Head from "next/head";
 import { Box, Container } from "@mui/material";
-import { AddUserAccessDialog } from "src/components/user-access/add-useraccess-dialog";
-import { UserAccessListToolbar } from "src/components/user-access/useraccess-list-toolbar";
-import { UserAccessListResults } from "src/components/user-access/useraccess-list-result";
 import { DashboardLayout } from "../components/dashboard-layout";
 import { useState } from "react";
-import { useAllUser2 } from "src/adapters/usersAdapters";
-import { UserAccessDetailsDialog } from "src/components/user-access/useraccess-details-dialog";
-import { getUserDetails } from "src/services/userRequests";
+import { RefereeListToolbar, UserRefereeListToolbar, UserRefereeToolbar } from "src/components/referee/referee-list-toolbar";
+import { AddRefereeDialog } from "src/components/referee/add-referee-dialog";
+import { RefereeDetailsDialog } from "src/components/referee/referee-details-dialog";
+import { RefereeListResults } from "src/components/referee/referee-list-result";
+import { getRefereeDetails } from "src/services/refereeRequest";
+import { useAllReferee } from "src/adapters/refereeAdapter";
 
-const Useraccess = () => {
-  const [showAddUserAccessDialog, setShowAddUserAccessDialog] = useState(false);
-  const [showUserAccessDetailsDialog, setShowUserAccessDetailsDialog] = useState(false);
-  const [user, setUser] = useState({});
+const RefereeRegistration = () => {
+  const [showAddRefereeDialog, setShowAddRefereeDialog] = useState(false);
+  const [showRefereeDetailsDialog, setShowRefereeDetailsDialog] = useState(false);
+  
+  const [referee, setReferee] = useState({});
+
   const [params, setParams] = useState({});
-  const handleOpenAddUserAccess = () => setShowAddUserAccessDialog(true);
-  const handleCloseAddUserAccess = () => setShowAddUserAccessDialog(false);
+  const handleOpenAddReferee = () => setShowAddRefereeDialog(true);
+  const handleCloseAddReferee = () => setShowAddRefereeDialog(false);
+  const handleCloseRefereeDetails = () => setShowRefereeDetailsDialog(false);
 
-  const handleCloseUserAccessDetails = () => setShowUserAccessDetailsDialog(false);
-  const handleOpenUserAccessDetails = (user) => {
-    try{
-      getUserDetails({id:user.ID}).then((res)=>{
-        if(res?.status === "SUCCESS"){
-          let Senduser = {...res.result,fullName:user.FullName}
-          setUser(Senduser);
-          setShowUserAccessDetailsDialog(true)
+  const handleOpenRefereeDetails = (referee) => {
+    try {
+      getRefereeDetails({ id: referee.ID }).then((res) => {
+        if (res?.status === "SUCCESS") {
+          let Sendreferee = { ...res.result, fullName: referee.FullName }
+          setReferee(Sendreferee);
+          setShowRefereeDetailsDialog(true)
         }
       })
     }
-    catch(error){
+    catch (error) {
       console.log(error);
     }
   };
 
-  const { loading, users, mutate } = useAllUser2({ ...params });
+  const { loading, referees, mutate } = useAllReferee({ ...params });
+
 
   return (
     <>
@@ -47,23 +50,26 @@ const Useraccess = () => {
           py: 8,
         }}
       >
-        <AddUserAccessDialog
-          open={showAddUserAccessDialog}
-          handleClose={handleCloseAddUserAccess}
+        <AddRefereeDialog
+          open={showAddRefereeDialog}
+          handleClose={handleCloseAddReferee}
         />
-        <UserAccessDetailsDialog
-          user={user}
-          open={showUserAccessDetailsDialog}
-          handleClose={handleCloseUserAccessDetails}
+        
+        <RefereeDetailsDialog
+          referees={referee}
+          open={showRefereeDetailsDialog}
+          handleClose={handleCloseRefereeDetails}
         />
+        
         <Container maxWidth={false}>
-          <UserAccessListToolbar
-            handleOpenAddUserAccess={handleOpenAddUserAccess}
-            open={showAddUserAccessDialog}
+          <RefereeListToolbar
+            handleOpenAddReferee={handleOpenAddReferee}
+            open={showAddRefereeDialog}
           />
+          
           <Box sx={{ mt: 3 }}>
-            <UserAccessListResults userAccess={users || []} 
-            handleOpenUserAccessDetails={handleOpenUserAccessDetails} />
+            <RefereeListResults referee={referees || []}
+              handleOpenRefereeDetails={handleOpenRefereeDetails} />
           </Box>
         </Container>
       </Box>
@@ -71,6 +77,10 @@ const Useraccess = () => {
   );
 };
 
-Useraccess.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+RefereeRegistration.getLayout = (page) => (
+  <DashboardLayout>
+    {page}
+  </DashboardLayout>
+);
 
-export default Useraccess;
+export default RefereeRegistration;

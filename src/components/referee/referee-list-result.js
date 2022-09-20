@@ -19,41 +19,43 @@ import { getInitials } from '../../utils/get-initials';
 
 
 
-export const UserRefreeResults = ({ userAccess,handleOpenUserAccessDetails, ...rest }) => {
-  const [selectedUserAccessIds, setSelectedUserAccessIds] = useState([]);
+export const RefereeListResults = ({ staffAccess,handleOpenStaffRegistrationDetails, ...rest }) => {
+  const [selectedRefereeIds, setSelectedRefereeIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
-
   const handleSelectAll = (event) => {
-    let newSelectedUserAccessIds;
+
+  
+    let newSelectedRefereeIds;
+
 
     if (event.target.checked) {
-      newSelectedUserAccessIds = userAccess.map((customer) => customer.id);
+      newSelectedRefereeIds = staffAccess.map((customer) => customer.id);
     } else {
-      newSelectedUserAccessIds = [];
+      newSelectedRefereeIds = [];
     }
 
-    setSelectedUserAccessIds(newSelectedUserAccessIds);
+    setSelectedRefereeIds(newSelectedRefereeIds);
   };
 
   const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedUserAccessIds.indexOf(id);
-    let newSelectedUserAccessIds = [];
+    const selectedIndex = selectedRefereeIds.indexOf(id);
+    let newSelectedRefereeIds = [];
 
     if (selectedIndex === -1) {
-      newSelectedUserAccessIds = newSelectedUserAccessIds.concat(selectedUserAccessIds, id);
+      newSelectedRefereeIds = newSelectedRefereeIds.concat(selectedRefereeIds, id);
     } else if (selectedIndex === 0) {
-      newSelectedUserAccessIds = newSelectedUserAccessIds.concat(selectedUserAccessIds.slice(1));
-    } else if (selectedIndex === selectedUserAccessIds.length - 1) {
-      newSelectedUserAccessIds = newSelectedUserAccessIds.concat(selectedUserAccessIds.slice(0, -1));
+      newSelectedRefereeIds = newSelectedRefereeIds.concat(selectedRefereeIds.slice(1));
+    } else if (selectedIndex === selectedRefereeIds.length - 1) {
+      newSelectedRefereeIds = newSelectedRefereeIds.concat(selectedRefereeIds.slice(0, -1));
     } else if (selectedIndex > 0) {
-      newSelectedUserAccessIds = newSelectedUserAccessIds.concat(
-        selectedUserAccessIds.slice(0, selectedIndex),
-        selectedUserAccessIds.slice(selectedIndex + 1)
+      newSelectedRefereeIds = newSelectedRefereeIds.concat(
+        selectedRefereeIds.slice(0, selectedIndex),
+        selectedRefereeIds.slice(selectedIndex + 1)
       );
     }
 
-    setSelectedUserAccessIds(newSelectedUserAccessIds);
+    setSelectedRefereeIds(newSelectedRefereeIds);
   };
 
   const handleLimitChange = (event) => {
@@ -73,11 +75,11 @@ export const UserRefreeResults = ({ userAccess,handleOpenUserAccessDetails, ...r
               <TableRow>
                 {/* <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedUserAccessIds.length === userAccess.length}
+                    checked={selectedRefereeIds.length === staffAccess.length}
                     color="primary"
                     indeterminate={
-                      selectedUserAccessIds.length > 0
-                      && selectedUserAccessIds.length < userAccess.length
+                      selectedRefereeIds.length > 0
+                      && selectedRefereeIds.length < staffAccess.length
                     }
                     onChange={handleSelectAll}
                   />
@@ -112,20 +114,20 @@ export const UserRefreeResults = ({ userAccess,handleOpenUserAccessDetails, ...r
               </TableRow>
             </TableHead>
             <TableBody>
-              {userAccess?.slice(0, limit).map((users) => (
+              {staffAccess?.slice(0, limit).map((staffs) => (
                 <TableRow
                   style={{cursor:"pointer"}}
                   onClick={()=>{
-                    handleOpenUserAccessDetails(users)
+                    handleOpenStaffRegistrationDetails(staffs)
                   }}
                   hover
-                  key={users.ID}
-                  // selected={selectedUserAccessIds.indexOf(users.ID) !== -1}
+                  key={staffs.ID}
+                  // selected={selectedRefereeIds.indexOf(staffs.ID) !== -1}
                 >
                   {/* <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedUserAccessIds.indexOf(users.id) !== -1}
-                      onChange={(event) => handleSelectOne(event, users.id)}
+                      checked={selectedRefereeIds.indexOf(staffs.id) !== -1}
+                      onChange={(event) => handleSelectOne(event, staffs.id)}
                       value="true"
                     />
                   </TableCell> */}
@@ -137,54 +139,54 @@ export const UserRefreeResults = ({ userAccess,handleOpenUserAccessDetails, ...r
                       }}
                     >
                       <Avatar
-                        src={users.avatarUrl}
+                        src={staffs.avatarUrl}
                         sx={{ mr: 2 }}
                       >
-                        {getInitials(users.FullName)}
+                        {getInitials(staffs.FullName)}
                       </Avatar>
                       <Typography
                         color="textPrimary"
                         variant="body1"
                       >
-                        {users.FullName}
+                        {staffs.FullName}
                       </Typography>
                     </Box>
                   </TableCell>
 
                   <TableCell>
-                    {users.UserName}
+                    {staffs.UserName}
                   </TableCell>
 
                   {/* <TableCell>
-                    {users.password}
+                    {staffs.password}
                   </TableCell> */}
                   
                   {/* <TableCell>
-                    {`${users.address.street}, ${users.address.city}`}
+                    {`${staffs.address.street}, ${staffs.address.city}`}
                   </TableCell> */}
                   
                   <TableCell>
-                    {users.EMail}
+                    {staffs.EMail}
                   </TableCell>
 
                   <TableCell>
-                    {users.MobileNo}
+                    {staffs.MobileNo}
                   </TableCell>
 
                   {/* <TableCell>
-                    {users.userRole}
+                    {staffs.staffRole}
                   </TableCell>
 
                   <TableCell>
-                    {users.userAccess}
+                    {staffs.staffAccess}
                   </TableCell>
 
                   <TableCell>
-                    {users.action}
+                    {staffs.action}
                   </TableCell> */}
                   
                   {/* <TableCell>
-                    {format(users.createdAt, 'dd/MM/yyyy')}
+                    {format(staffs.createdAt, 'dd/MM/yyyy')}
                   </TableCell> */}  
         
                 </TableRow>
@@ -195,7 +197,7 @@ export const UserRefreeResults = ({ userAccess,handleOpenUserAccessDetails, ...r
       </PerfectScrollbar>
       {/* <TablePagination
         component="div"
-        count={userAccess.length}
+        count={staffAccess.length}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleLimitChange}
         page={page}
@@ -206,6 +208,6 @@ export const UserRefreeResults = ({ userAccess,handleOpenUserAccessDetails, ...r
   );
 };
 
-UserAccessListResults.propTypes = {
-  userAccess: PropTypes.array.isRequired
+RefereeListResults.propTypes = {
+  staffAccess: PropTypes.array.isRequired
 };

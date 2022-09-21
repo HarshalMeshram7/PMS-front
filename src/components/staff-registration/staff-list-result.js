@@ -20,40 +20,42 @@ import { getInitials } from '../../utils/get-initials';
 
 
 export const StaffRegistrationListResults = ({ staffAccess,handleOpenStaffRegistrationDetails, ...rest }) => {
-  const [selectedUserAccessIds, setSelectedUserAccessIds] = useState([]);
+  const [selectedStaffIds, setSelectedStaffIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
-
   const handleSelectAll = (event) => {
-    let newSelectedUserAccessIds;
-
+    let newSelectedStaffIds;
     if (event.target.checked) {
-      newSelectedUserAccessIds = staffAccess.map((customer) => customer.id);
+  
+
+
+
+      newSelectedStaffIds = staffAccess.map((customer) => customer.id);
     } else {
-      newSelectedUserAccessIds = [];
+      newSelectedStaffIds = [];
     }
 
-    setSelectedUserAccessIds(newSelectedUserAccessIds);
+    setSelectedStaffIds(newSelectedStaffIds);
   };
 
   const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedUserAccessIds.indexOf(id);
-    let newSelectedUserAccessIds = [];
+    const selectedIndex = selectedStaffIds.indexOf(id);
+    let newSelectedStaffIds = [];
 
     if (selectedIndex === -1) {
-      newSelectedUserAccessIds = newSelectedUserAccessIds.concat(selectedUserAccessIds, id);
+      newSelectedStaffIds = newSelectedStaffIds.concat(selectedStaffIds, id);
     } else if (selectedIndex === 0) {
-      newSelectedUserAccessIds = newSelectedUserAccessIds.concat(selectedUserAccessIds.slice(1));
-    } else if (selectedIndex === selectedUserAccessIds.length - 1) {
-      newSelectedUserAccessIds = newSelectedUserAccessIds.concat(selectedUserAccessIds.slice(0, -1));
+      newSelectedStaffIds = newSelectedStaffIds.concat(selectedStaffIds.slice(1));
+    } else if (selectedIndex === selectedStaffIds.length - 1) {
+      newSelectedStaffIds = newSelectedStaffIds.concat(selectedStaffIds.slice(0, -1));
     } else if (selectedIndex > 0) {
-      newSelectedUserAccessIds = newSelectedUserAccessIds.concat(
-        selectedUserAccessIds.slice(0, selectedIndex),
-        selectedUserAccessIds.slice(selectedIndex + 1)
+      newSelectedStaffIds = newSelectedStaffIds.concat(
+        selectedStaffIds.slice(0, selectedIndex),
+        selectedStaffIds.slice(selectedIndex + 1)
       );
     }
 
-    setSelectedUserAccessIds(newSelectedUserAccessIds);
+    setSelectedStaffIds(newSelectedStaffIds);
   };
 
   const handleLimitChange = (event) => {
@@ -73,11 +75,11 @@ export const StaffRegistrationListResults = ({ staffAccess,handleOpenStaffRegist
               <TableRow>
                 {/* <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedUserAccessIds.length === staffAccess.length}
+                    checked={selectedStaffIds.length === staffAccess.length}
                     color="primary"
                     indeterminate={
-                      selectedUserAccessIds.length > 0
-                      && selectedUserAccessIds.length < staffAccess.length
+                      selectedStaffIds.length > 0
+                      && selectedStaffIds.length < staffAccess.length
                     }
                     onChange={handleSelectAll}
                   />
@@ -120,11 +122,11 @@ export const StaffRegistrationListResults = ({ staffAccess,handleOpenStaffRegist
                   }}
                   hover
                   key={staffs.ID}
-                  // selected={selectedUserAccessIds.indexOf(staffs.ID) !== -1}
+                  // selected={selectedStaffIds.indexOf(staffs.ID) !== -1}
                 >
                   {/* <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedUserAccessIds.indexOf(staffs.id) !== -1}
+                      checked={selectedStaffIds.indexOf(staffs.id) !== -1}
                       onChange={(event) => handleSelectOne(event, staffs.id)}
                       value="true"
                     />

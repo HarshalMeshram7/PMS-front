@@ -19,6 +19,20 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import LoadingBox from "src/components/common/loading-box";
 
+const Gender = [
+    {
+        value: "Male",
+        label: "Male"
+    },
+    {
+        value: "Female",
+        label: "Female"
+    },
+    {
+        value: "Other",
+        label: "Other"
+    }
+];
 
 export const AddStaffRegistrationDialog = ({ open, handleClose }) => {
     const { enqueueSnackbar } = useSnackbar();
@@ -224,9 +238,12 @@ export const AddStaffRegistrationDialog = ({ open, handleClose }) => {
                                     label="Gender"
                                     onChange={formik.handleChange}
                                 >
-                                    <MenuItem value="Male">Male</MenuItem>
-                                    <MenuItem value="Female">Female</MenuItem>
-                                    <MenuItem value="Other">Other</MenuItem>
+                                    {Gender?.map((option , key) => (
+                                        <MenuItem key={key}
+                                            value={option.label}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
                                 </Select>
                             </FormControl>
                         </Grid>

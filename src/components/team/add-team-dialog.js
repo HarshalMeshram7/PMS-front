@@ -21,6 +21,21 @@ import * as Yup from "yup";
 import { addAcademy } from "src/services/academyRequest";
 import LoadingBox from "src/components/common/loading-box";
 
+const sportsList = [
+    {
+        value: "football",
+        label: "Football"
+    },
+    {
+        value: "cricket",
+        label: "Cricket"
+    },
+    {
+        value: "tennis",
+        label: "Tennis"
+    }
+];
+
 export const AddTeamDialog = ({ open, handleClose }) => {
     const { enqueueSnackbar } = useSnackbar();
     const [loading, setLoading] = useState();
@@ -368,9 +383,12 @@ export const AddTeamDialog = ({ open, handleClose }) => {
                                     name="sportsList"
                                     onChange={formik.handleChange}
                                 >
-                                    <MenuItem value="Football">Football</MenuItem>
-                                    <MenuItem value="Cricket">Cricket</MenuItem>
-                                    <MenuItem value="Tennis">Tennis</MenuItem>
+                                    {sportsList?.map((option , key) => (
+                                        <MenuItem key={key}
+                                            value={option.label}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
                                 </Select>
                             </FormControl>
                         </Grid>

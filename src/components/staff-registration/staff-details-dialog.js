@@ -117,7 +117,7 @@ export const StaffRegistrationDetailsDialog = ({ open, handleClose, staff }) => 
     >
       {loading && <LoadingBox />}
       <form onSubmit={formik.handleSubmit}>
-        <DialogTitle>User Details</DialogTitle>
+        <DialogTitle>Staff Details</DialogTitle>
 
         <DialogContent>
 

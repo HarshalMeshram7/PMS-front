@@ -32,8 +32,6 @@ export const UserAccessDetailsDialog = ({ open, handleClose, user }) => {
     const [loading, setLoading] = useState();
     const [access, setAccess] = useState([]);
 
-
-  console.log(user);
   
   const formik = useFormik({
     enableReinitialize: true,
@@ -45,7 +43,7 @@ export const UserAccessDetailsDialog = ({ open, handleClose, user }) => {
       address: user?.user_info?.address || "asda",
       email: user?.user_info?.eMail,
       phone: user?.user_info?.mobileNo,
-      userRole: user?.userTypes_list || 0,
+      userRole: [],
       userAccess: [],
     },
 
@@ -80,31 +78,32 @@ export const UserAccessDetailsDialog = ({ open, handleClose, user }) => {
   });
 
  const handleRoleChange = (e , value) =>{
-    if(!value){
+
+    if(!e.target.value){
         setAccess([]);
     }
-    if(value?.ID === 1 ){
+    if(e.target.value === 1 ){
         setAccess([{"ID":0,"name":"All Access"}]);
     }
-    if(value?.ID === 2 || value?.ID === 3){
+    if(e.target.value === 2 || e.target.value === 3){
         setAccess(user?.federation_list);
     }
     
-    if(value?.ID === 4 || value?.ID === 5){
+    if(e.target.value === 4 || e.target.value === 5){
         setAccess(user?.club_list);
     }
     
-    if(value?.ID === 6 || value?.ID === 7){
+    if(e.target.value === 6 || e.target.value === 7){
         setAccess(user?.team_list);
     }
     
-    if(value?.ID === 8){
+    if(e.target.value === 8){
         setAccess(user?.federation_list);
     }
-    if(value?.ID === 9){
+    if(e.target.value === 9){
         setAccess(user?.federation_list);
     }
-    if(value?.ID === 10){
+    if(e.target.value === 10){
         setAccess(user?.federation_list);
     }
     
@@ -252,7 +251,7 @@ export const UserAccessDetailsDialog = ({ open, handleClose, user }) => {
         <DialogContent>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
-              <Autocomplete
+              {/* <Autocomplete
                 disablePortal
                 name="userRole"
                 id="userRole"
@@ -260,17 +259,36 @@ export const UserAccessDetailsDialog = ({ open, handleClose, user }) => {
                 options={formik.values.userRole || []}
                 getOptionLabel={(option) => option.Description}
                 renderInput={(params) => <TextField {...params} label="User Role" />}
-              />
+              /> */}
+              <FormControl fullWidth>
+                  <InputLabel id="userRole">User Role</InputLabel>
+                  <Select
+                    labelId="userRole"
+                    id="userRole"
+                    value={formik.values.userRole}
+                    name="userRole"
+                    label="userRole"
+                    onChange={
+                      (e , value)=>{
+                        handleRoleChange(e , value);
+                        formik.handleChange(e);
+                      }
+                    }
+                  >
+                    {user?.userTypes_list?.map((item , key)=>(
+                    
+                    <MenuItem key={key} value={item.ID}>{item.Description}</MenuItem>
+                    
+                    ))}
+                  </Select>
+                </FormControl>
             </Grid>
 
             <Grid item md={6} xs={12}>
-              <Autocomplete
+              {/* <Autocomplete
                 multiple
                 value={formik.values.userAccess}
-                onChange={(e , value)=>{
-                  console.log(value);
-                  formik.handleChange
-                }}
+                onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 id="userAccess"
                 name="userAccess"
@@ -284,7 +302,27 @@ export const UserAccessDetailsDialog = ({ open, handleClose, user }) => {
                     placeholder="Access"
                   />
                 )}
-              />
+              /> */}
+              <FormControl fullWidth>
+                  <InputLabel id="userAccess">User Access</InputLabel>
+                  <Select
+                    multiple
+                    labelId="userAccess"
+                    id="userAccess"
+                    value={formik.values.userAccess}
+                    name="userAccess"
+                    label="userAccess"
+                    onChange={
+                      (e , value)=>{
+                        formik.handleChange(e);
+                      }
+                    }
+                  >
+                    {access?.map((item , key)=>(
+                    <MenuItem key={key} value={item.ID}>{item.name}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
             </Grid>
           </Grid>
         </DialogContent>

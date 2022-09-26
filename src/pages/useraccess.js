@@ -14,7 +14,19 @@ const Useraccess = () => {
   const [showUserAccessDetailsDialog, setShowUserAccessDetailsDialog] = useState(false);
   const [user, setUser] = useState({});
   const [params, setParams] = useState({});
-  const handleOpenAddUserAccess = () => setShowAddUserAccessDialog(true);
+  const handleOpenAddUserAccess = () => {
+    try{
+      getUserDetails({id:"1"}).then((res)=>{
+        if(res?.status === "SUCCESS"){
+          setUser(res.result);
+          setShowAddUserAccessDialog(true)
+        }
+      })
+    }
+    catch(error){
+      console.log(error);
+    }
+  };
   const handleCloseAddUserAccess = () => setShowAddUserAccessDialog(false);
 
   const handleCloseUserAccessDetails = () => setShowUserAccessDetailsDialog(false);
@@ -33,6 +45,7 @@ const Useraccess = () => {
     }
   };
 
+
   const { loading, users, mutate } = useAllUser2({ ...params });
 
   return (
@@ -48,6 +61,7 @@ const Useraccess = () => {
         }}
       >
         <AddUserAccessDialog
+          user={user}
           open={showAddUserAccessDialog}
           handleClose={handleCloseAddUserAccess}
         />

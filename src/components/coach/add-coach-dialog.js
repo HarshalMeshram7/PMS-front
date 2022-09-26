@@ -34,7 +34,7 @@ const Gender = [
     }
 ];
 
-export const AddStaffRegistrationDialog = ({ open, handleClose }) => {
+export const AddCoachDialog = ({ open, handleClose }) => {
     const { enqueueSnackbar } = useSnackbar();
     const [loading, setLoading] = useState();
 
@@ -63,7 +63,7 @@ export const AddStaffRegistrationDialog = ({ open, handleClose }) => {
                 console.log(data);
                 // await addAcademy(data);
                 handleClose();
-                enqueueSnackbar("Staff Registered Succesfully", { variant: "success" });
+                enqueueSnackbar("Coach Registered Succesfully", { variant: "success" });
 
                 setLoading(false);
             } catch (error) {
@@ -91,12 +91,12 @@ export const AddStaffRegistrationDialog = ({ open, handleClose }) => {
             {loading && <LoadingBox />}
             <form onSubmit={formik.handleSubmit}>
 
-                <DialogTitle>Add New Staff</DialogTitle>
+                <DialogTitle>Add New Coach</DialogTitle>
 
                 <DialogContent>
 
                     <DialogContentText sx={{ marginBottom: 2 }}>
-                        Enter the required basic details of the Staff below.
+                        Enter the required basic details of the Coach below.
                     </DialogContentText>
 
                     <Grid

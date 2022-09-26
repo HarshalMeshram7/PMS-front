@@ -114,6 +114,8 @@ export const AddAcademyDialog = ({ open, handleClose, mutate }) => {
         onSubmit: async (data) => {
             setLoading(true);
             try {
+                console.log("**********");
+                console.log(data);
                 await addAcademy(data).then((resp) => {
                     if (resp.status === "success") {
                         handleClose();

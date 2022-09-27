@@ -19,7 +19,7 @@ import { getInitials } from '../../utils/get-initials';
 
 
 
-export const PlayerListResults = ({ players, ...rest }) => {
+export const PlayerListResults = ({ players,handleOpenPlayerDetails, ...rest }) => {
   const [selectedPlayerIds, setSelectedPlayerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -71,7 +71,7 @@ export const PlayerListResults = ({ players, ...rest }) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
+                {/* <TableCell padding="checkbox">
                   <Checkbox
                     checked={selectedPlayerIds.length === players.length}
                     color="primary"
@@ -81,7 +81,7 @@ export const PlayerListResults = ({ players, ...rest }) => {
                     }
                     onChange={handleSelectAll}
                   />
-                </TableCell>
+                </TableCell> */}
                 <TableCell>
                   Name
                 </TableCell>
@@ -100,19 +100,21 @@ export const PlayerListResults = ({ players, ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {players.slice(0, limit).map((player) => (
+              {players.slice(0, limit).map((player, key) => (
                 <TableRow
+                 onClick = {handleOpenPlayerDetails}
                   hover
-                  key={player.id}
+                  style={{cursor:"pointer"}}
+                  key={key}
                   selected={selectedPlayerIds.indexOf(player.id) !== -1}
                 >
-                  <TableCell padding="checkbox">
+                  {/* <TableCell padding="checkbox">
                     <Checkbox
                       checked={selectedPlayerIds.indexOf(player.id) !== -1}
                       onChange={(event) => handleSelectOne(event, player.id)}
                       value="true"
                     />
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell>
                     <Box
                       sx={{

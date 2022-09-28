@@ -1,571 +1,446 @@
 import {
     Button,
-    CircularProgress,
     Dialog,
     DialogActions,
     DialogContent,
-    DialogContentText,
-    DialogTitle,
+    Box,
+    Container,
+    Typography,
+    TableContainer,
+    Paper,
+    TableCell,
+    Table,
+    TableHead,
+    TableRow,
+    StyledTableCell,
+    TableBody, StyledTableRow,
+    Grid,
     TextField,
+    Divider,
+    Card,
+    CardContent,
+    CardActions,
     FormControl,
     InputLabel,
     Select,
     MenuItem,
-    Box,
-    Grid,
+    Avatar
 } from "@mui/material";
-import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
+import LoadingBox from "src/components/common/loading-box";
+import { PlayerListResults } from "src/components/player/player-list-results";
+
+import { players } from "../../__mocks__/players.js";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { addAcademy } from "src/services/academyRequest";
-import LoadingBox from "src/components/common/loading-box";
+import { useSnackbar } from "notistack";
+import { deleteAcademy } from "src/services/academyRequest.js";
+import banner from '../../../public/static/images/background/register.jpg';
 
-const sportsList = [
-    {
-        value: "football",
-        label: "Football"
-    },
-    {
-        value: "cricket",
-        label: "Cricket"
-    },
-    {
-        value: "tennis",
-        label: "Tennis"
-    }
-];
 
-export const PlayerDetailsDialog = ({ open, handleClose }) => {
+
+export const PlayerDetailsDialog = ({ open, handleClose, }) => {
     const { enqueueSnackbar } = useSnackbar();
+    const user = {
+        avatar: "",
+        city: "",
+        country: 'USA',
+        jobTitle: 'Senior Developer',
+        name: "club.Club",
+        timezone: 'GTM-7'
+    };
     const [loading, setLoading] = useState();
 
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
-            FirstName: "",
-            LastName: "",
-            AcademyClub: "",
-            TypeOfPlayer: "",
-            Gender: "",
-            DateOfBirth: "",
-            Address: "",
-            Phone: "",
-            EducationQualification: "",
-            Documents: "",
-            Photo: "",
-            PlayerTeam: "",
-            Email: "",
-            BasePrice: "",
-            PlayingPosition: "",
-            TMSITMSApplicable: ""
+
+
         },
         validationSchema: Yup.object({
-            FirstName: Yup
-                .string()
-                .max(100)
-                .required("Player's First Name is required"),
-            LastName: Yup
-                .string()
-                .max(100)
-                .required("Player's Last Name is required"),
-            AcademyClub: Yup
-                .string()
-            // .required('Required')
-            ,
-            TypeOfPlayer: Yup
-                .string()
-            // .required('Required')
-            ,
-            Address: Yup
-                .string()
-            // .required('Required')
-            ,
-
-            Phone: Yup.string()
-                .length(10)
-                .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
-                .required("Phone number is required"),
-            EducationQualification: Yup
-                .string()
-                .max(255)
-            // .required("Email is required")
-            ,
-            Documents: Yup
-                .string()
-                .max(255)
-            // .required("Email is required")
-            ,
-            Photo: Yup
-                .string()
-                .max(255)
-            // .required("Email is required")
-            ,
-            PlayerTeam: Yup
-                .string()
-                .max(255)
-            // .required("Email is required")
-            ,
-            Email: Yup
-                .string()
-                .email("Must be a valid Email")
-                .max(255)
-                .required("Email is required"),
-
-            BasePrice: Yup
-                .string()
-                .max(100),
-            PlayingPosition: Yup
-                .string()
-                .max(100),
-            TMSITMSApplicable: Yup
-                .string()
-                .max(100),
 
         }),
+
         onSubmit: async (data) => {
             setLoading(true);
-
             try {
-                console.log("**********");
                 console.log(data);
-                // await addAcademy(data);
+                // await updateAcademy(data);
                 handleClose();
-                enqueueSnackbar("Player Added Succesfully", { variant: "success" });
+                enqueueSnackbar("Club Updated Succesfully", { variant: "success" });
                 setLoading(false);
-
             } catch (error) {
+                console.log(error);
                 setLoading(false);
             }
         },
     });
 
-    useEffect(() => {
-        if (!open) {
-            formik.resetForm();
+    const handleDelete = (data) => {
+
+        setLoading(true);
+        try {
+            // deleteAcademy(data).then((response) => {
+            //     if (response.status == "success") {
+            //         handleClose();
+            //         enqueueSnackbar("Club Deleted Succesfully", { variant: "success" });
+
+            //         setLoading(false);
+            //     }
+            //     else {
+            //         handleClose();
+            //         enqueueSnackbar(`Error : ${response.message}`, { variant: "error" });
+            //         setLoading(false);
+            //     }
+            // });
+            console.log(data)
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
         }
-    }, [open]);
+    }
+
+    function createData(Goals, Shots, Possessions, Ratings, ) {
+        return { Goals, Shots, Possessions, Ratings,  };
+      }
+
+    const rows = [
+        createData('Ronaldo ', 26, 60.9, 8),
+        createData('Messi', 18, 65.9, 7.7),
+      
+      ];
+
 
     return (
         <Dialog
             open={open}
             onClose={!loading && handleClose}
             fullWidth
-            maxWidth="lg"
+            maxWidth="xl"
             BackdropProps={{
                 style: { backgroundColor: "#121212dd" },
             }}
         >
             {loading && <LoadingBox />}
-            <form onSubmit={formik.handleSubmit}>
-                <DialogTitle>Add New Player</DialogTitle>
-                <DialogContent>
-                    <DialogContentText sx={{ marginBottom: 2 }}>
-                        Enter the required basic details of the Player below.
-                    </DialogContentText>
-
-                    <Grid
-                        container
-                        spacing={3}
+            <DialogContent style={{ margin: 0, padding: 0 }} >
+                <form onSubmit={formik.handleSubmit}>
+                    <Box
+                        component="main"
+                        sx={{
+                            flexGrow: 1,
+                        }}
                     >
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                error={Boolean(formik.touched.FirstName && formik.errors.FirstName)}
-                                fullWidth
-                                helperText={formik.touched.FirstName && formik.errors.FirstName}
-                                label="First Name"
-                                margin="dense"
-                                name="FirstName"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="text"
-                                value={formik.values.FirstName}
-                                variant="outlined"
-                            />
-                        </Grid>
+                        <div style={{
+                            width: "100%",
+                            height: "200px",
+                            marginBottom: "-100px",
+                            // background: `url(${club.Banner})center center`,
+                        }}></div>
 
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                error={Boolean(formik.touched.LastName && formik.errors.LastName)}
-                                fullWidth
-                                helperText={formik.touched.LastName && formik.errors.LastName}
-                                label="Last Name"
-                                margin="dense"
-                                name="LastName"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="text"
-                                value={formik.values.LastName}
-                                variant="outlined"
-                            />
-                        </Grid>
-
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                error={Boolean(formik.touched.AcademyClub && formik.errors.AcademyClub)}
-                                fullWidth
-                                helperText={formik.touched.AcademyClub && formik.errors.AcademyClub}
-                                label="Academy / Club"
-                                margin="dense"
-                                name="AcademyClub"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="text"
-                                value={formik.values.AcademyClub}
-                                variant="outlined"
-                            />
-                        </Grid>
-
-
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                error={Boolean(formik.touched.TypeOfPlayer && formik.errors.TypeOfPlayer)}
-                                fullWidth
-                                helperText={formik.touched.TypeOfPlayer && formik.errors.TypeOfPlayer}
-                                label="Type Of Player"
-                                margin="dense"
-                                name="TypeOfPlayer"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="text"
-                                value={formik.values.TypeOfPlayer}
-                                variant="outlined"
-                            />
-                        </Grid>
-
-
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                error={Boolean(formik.touched.Gender && formik.errors.Gender)}
-                                fullWidth
-                                helperText={formik.touched.Gender && formik.errors.Gender}
-                                label="Gender"
-                                margin="dense"
-                                name="Gender"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="text"
-                                value={formik.values.Gender}
-                                variant="outlined"
-                            />
-                        </Grid>
-
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                error={Boolean(formik.touched.DateOfBirth && formik.errors.DateOfBirth)}
-                                fullWidth
-                                helperText={formik.touched.DateOfBirth && formik.errors.DateOfBirth}
-                                label="Date Of Birth"
-                                margin="dense"
-                                name="DateOfBirth"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="date"
-                                value={formik.values.DateOfBirth}
-                                variant="outlined"
-                            />
-                        </Grid>
-
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                error={Boolean(formik.touched.Address && formik.errors.Address)}
-                                fullWidth
-                                helperText={formik.touched.Address && formik.errors.Address}
-                                label="Address"
-                                margin="dense"
-                                name="Address"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="text"
-                                value={formik.values.Address}
-                                variant="outlined"
-                            />
-                        </Grid>
-
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                error={Boolean(formik.touched.Phone && formik.errors.Phone)}
-                                fullWidth
-                                helperText={formik.touched.Phone && formik.errors.Phone}
-                                label="Phone Number"
-                                margin="dense"
-                                name="Phone"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="number"
-                                value={formik.values.Phone}
-                                variant="outlined"
-                            />
-                        </Grid>
-
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                error={Boolean(formik.touched.EducationQualification && formik.errors.edu)}
-                                fullWidth
-                                helperText={formik.touched.EducationQualification && formik.errors.edu}
-                                label="Educational Qualification"
-                                margin="dense"
-                                name="EducationQualification"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="text"
-                                value={formik.values.EducationQualification}
-                                variant="outlined"
-                            />
-                        </Grid>
-
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                error={Boolean(formik.touched.Documents && formik.errors.Documents)}
-                                fullWidth
-                                helperText={formik.touched.Documents && formik.errors.Documents}
-                                label="Documents"
-                                margin="dense"
-                                name="Documents"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="file"
-                                value={formik.values.Documents}
-                                variant="outlined"
-                            />
-                        </Grid>
-
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                error={Boolean(formik.touched.PlayerTeam && formik.errors.PlayerTeam)}
-                                fullWidth
-                                helperText={formik.touched.PlayerTeam && formik.errors.PlayerTeam}
-                                label="Player Team"
-                                margin="dense"
-                                name="PlayerTeam"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="text"
-                                value={formik.values.PlayerTeam}
-                                variant="outlined"
-                            />
-                        </Grid>
-
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                error={Boolean(formik.touched.Photo && formik.errors.Photo)}
-                                fullWidth
-                                helperText={formik.touched.Photo && formik.errors.Photo}
-                                label="Photo"
-                                margin="dense"
-                                name="Photo"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="file"
-                                value={formik.values.Photo}
-                                variant="outlined"
-                            />
-                        </Grid>
-
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                error={Boolean(formik.touched.Email && formik.errors.Email)}
-                                fullWidth
-                                helperText={formik.touched.Email && formik.errors.Email}
-                                label="Email"
-                                margin="dense"
-                                name="Email"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="email"
-                                value={formik.values.Email}
-                                variant="outlined"
-                            />
-                        </Grid>
-
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                error={Boolean(formik.touched.BasePrice && formik.errors.BasePrice)}
-                                fullWidth
-                                helperText={formik.touched.BasePrice && formik.errors.BasePrice}
-                                label="Base Price"
-                                margin="dense"
-                                name="BasePrice"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="number"
-                                value={formik.values.BasePrice}
-                                variant="outlined"
-                            />
-                        </Grid>
-
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                error={Boolean(formik.touched.PlayingPosition && formik.errors.PlayingPosition)}
-                                fullWidth
-                                helperText={formik.touched.PlayingPosition && formik.errors.PlayingPosition}
-                                label="Playing Position"
-                                margin="dense"
-                                name="PlayingPosition"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="text"
-                                value={formik.values.PlayingPosition}
-                                variant="outlined"
-                            />
-                        </Grid>
-
-                        {/* <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-helper-label">Sports List</InputLabel>
-                                <Select
-                                    multiple
-                                    labelId="demo-simple-select-helper-label"
-                                    id="demo-simple-select-helper"
-                                    value={formik.values.sportsList}
-                                    label="Sports List"
-                                    name="sportsList"
-                                    onChange={formik.handleChange}
+                        <Container maxWidth="lg">
+                            <Grid
+                                container
+                                spacing={3}
+                            >
+                                <Grid
+                                    item
+                                    lg={4}
+                                    md={6}
+                                    xs={12}
                                 >
-                                    {sportsList?.map((option, key) => (
-                                        <MenuItem key={key}
-                                            value={option.label}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </Grid> */}
+                                    {/* Profile */}
+                                    <Card >
+                                        <CardContent>
+                                            <Box
+                                                sx={{
+                                                    alignItems: 'center',
+                                                    display: 'flex',
+                                                    flexDirection: 'column'
+                                                }}
+                                            >
+                                                <Avatar
+                                                    src={user.avatar}
+                                                    sx={{
+                                                        height: 64,
+                                                        mb: 2,
+                                                        width: 64
+                                                    }}
+                                                />
+                                                <Typography
+                                                    color="textPrimary"
+                                                    gutterBottom
+                                                    variant="h5"
+                                                >
+                                                    {"Cristiano Ronaldo"}
+                                                </Typography>
+                                                <Typography
+                                                    color="textSecondary"
+                                                    variant="body2"
+                                                >
+                                                    {"Portugal"}
+                                                </Typography>
+                                                <Typography
+                                                    color="textSecondary"
+                                                    variant="body2"
+                                                >
+                                                    {"Manchester United"}
+                                                </Typography>
+                                                {/* <Typography
+                                                    color="textSecondary"
+                                                    variant="body2"
+                                                >
+                                                    {user.timezone}
+                                                </Typography> */}
+                                            </Box>
+                                        </CardContent>
+                                        <Divider />
 
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                error={Boolean(formik.touched.TMSITMSApplicable && formik.errors.TMSITMSApplicable)}
-                                fullWidth
-                                helperText={formik.touched.TMSITMSApplicable && formik.errors.TMSITMSApplicable}
-                                label=" TMS / ITMS Applicable"
-                                margin="dense"
-                                name="TMSITMSApplicable"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="text"
-                                value={formik.values.TMSITMSApplicable}
-                                variant="outlined"
-                            />
-                        </Grid>
+                                        <Grid container
+                                            spacing={2} >
 
-                        {/* <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField style={{ display: 'none' }}
-                                error={Boolean(formik.touched.logo && formik.errors.logo)}
-                                fullWidth
-                                helperText={formik.touched.logo && formik.errors.logo}
-                                label="Logo"
-                                id="uploadLogo"
-                                margin="dense"
-                                name="logo"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="file"
-                                value={formik.values.logo}
-                                variant="outlined"
-                            />
-                            <Button onClick={() => { document.getElementById("uploadLogo").click() }}>Upload Logo</Button>
-                        </Grid> */}
+                                            {/* <Grid
+                                                item
+                                                lg={6}
+                                                md={6}
+                                                xs={6}
+                                            >
+                                                <CardActions>
+                                                    <TextField style={{ display: 'none' }}
+                                                        error={Boolean(formik.touched.logo && formik.errors.logo)}
+                                                        fullWidth
+                                                        helperText={formik.touched.logo && formik.errors.logo}
+                                                        label="Logo"
+                                                        id="uploadClubLogo"
+                                                        margin="dense"
+                                                        name="logo"
+                                                        onBlur={formik.handleBlur}
+                                                        onChange={formik.handleChange}
+                                                        type="file"
+                                                        value={formik.values.logo}
+                                                        variant="outlined"
+                                                    />
+                                                    <Button onClick={() => { document.getElementById("uploadClubLogo").click() }}>Upload Logo</Button>
+                                                </CardActions>
+                                            </Grid> */}
+                                            <Grid
+                                                item
+                                                lg={6}
+                                                md={6}
+                                                xs={6}
+                                            >
+                                                <Typography
+                                                    align="center"
+                                                    variant="h6"
+                                                >
+                                                    Born
+                                                </Typography>
+                                            </Grid>
+                                            <Grid
+                                                item
+                                                lg={6}
+                                                md={6}
+                                                xs={6}
+                                            >
+                                                <Typography>
+                                                    February 5, 1985
+                                                </Typography>
+                                            </Grid>
 
-                        {/* <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField style={{ display: 'none' }}
-                                error={Boolean(formik.touched.banner && formik.errors.banner)}
-                                fullWidth
-                                helperText={formik.touched.banner && formik.errors.banner}
-                                label="Banner"
-                                id="uploadBanner"
-                                margin="dense"
-                                name="banner"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="file"
-                                value={formik.values.banner}
-                                variant="outlined"
-                            />
-                            <Button onClick={() => { document.getElementById("uploadBanner").click() }}>Upload Banner</Button>
-                        </Grid> */}
+                                            <Grid
+                                                item
+                                                lg={6}
+                                                md={6}
+                                                xs={6}
+                                            >
+                                                <Typography
+                                                    align="center"
+                                                    variant="h6"
+                                                >
+                                                    Position
+                                                </Typography>
+                                            </Grid>
+                                            <Grid
+                                                item
+                                                lg={6}
+                                                md={6}
+                                                xs={6}
+                                            >
+                                                <Typography>
+                                                    Center
+                                                </Typography>
+                                            </Grid>
 
-                    </Grid>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} >Cancel</Button>
-                    <Button type="submit" variant="contained">Add</Button>
-                </DialogActions>
-            </form>
+
+                                            <Grid
+                                                item
+                                                lg={6}
+                                                md={6}
+                                                xs={6}
+                                            >
+                                                <Typography
+                                                    align="center"
+                                                    variant="h6"
+                                                >
+                                                    Height
+                                                </Typography>
+                                            </Grid>
+                                            <Grid
+                                                item
+                                                lg={6}
+                                                md={6}
+                                                xs={6}
+                                            >
+                                                <Typography>
+                                                    1.85 m
+                                                </Typography>
+                                            </Grid>
+
+                                        </Grid>
+                                    </Card>
+                                    {/* Profile */}
+                                </Grid>
+                                <Grid
+                                    item
+                                    lg={8}
+                                    md={6}
+                                    xs={12}
+                                >
+                                    {/* Details */}
+
+                                    <Card>
+                                        <CardContent>
+                                            <Grid
+                                                container
+                                                spacing={3}
+                                            >
+                                                <Grid
+                                                    item
+                                                    md={6}
+                                                    xs={12}
+                                                >
+                                                    <Typography>
+                                                        <h4>Profile Summary</h4>
+                                                    </Typography>
+                                                </Grid>
+
+                                                <Grid
+                                                    item
+                                                    md={12}
+                                                // xs={12}
+                                                >
+                                                    <Typography>
+                                                        Cristiano Ronaldo dos Santos Aveiro GOIH ComM (Portuguese pronunciation:  born 5 February 1985) is a Portuguese professional footballer who plays as a forward for Premier League club Manchester United and captains the Portugal national team. Widely regarded as one of the greatest players of all time, Ronaldo has won five Ballon d'Or awards[note 3] and four European Golden Shoes, the most by a European player. He has won 32 trophies in his career, including seven league titles, five UEFA Champions Leagues, and the UEFA European Championship. Ronaldo holds the records for most appearances (183), goals (140), and assists (42) in the Champions League, goals in the European Championship (14), international goals (117), and international appearances by a European (189). He is one of the few players to have made over 1,100 professional career appearances, and has scored over 800 official senior career goals for club and country.
+                                                    </Typography>
+                                                </Grid>
+
+                                                {/* <Grid
+                                                    item
+                                                    md={6}
+                                                    xs={12}>
+                                                    <FormControl fullWidth>
+                                                        <InputLabel id="demo-simple-select-helper-label">Sports List</InputLabel>
+                                                        <Select
+                                                            // multiple
+                                                            labelId="demo-simple-select-helper-label"
+                                                            id="demo-simple-select-helper"
+                                                            value={formik.values.sportsList}
+                                                            label="Sports List"
+                                                            name="sportsList"
+                                                            onChange={formik.handleChange}
+                                                        >
+                                                            <MenuItem value="Football">Football</MenuItem>
+                                                            <MenuItem value="Cricket">Cricket</MenuItem>
+                                                            <MenuItem value="Tennis">Tennis</MenuItem>
+                                                        </Select>
+                                                    </FormControl>
+                                                </Grid> */}
+
+                                            </Grid>
+                                        </CardContent>
+                                        <Divider />
+
+                                        {/* <CardActions>
+                                            <Grid container
+                                                spacing={8}
+                                                style={{ textAlign: 'center' }} >
+                                                <Grid
+                                                    item
+                                                    lg={6}
+                                                    md={6}
+                                                    xs={6}
+                                                >
+                                                    <Button
+                                                        variant="contained"
+                                                        style={{ backgroundColor: 'red' }}
+                                                        onClick={() => {
+
+                                                            handleDelete(club.email)
+                                                        }}>Delete</Button>
+                                                </Grid>
+                                                <Grid
+                                                    item
+                                                    lg={6}
+                                                    md={6}
+                                                    xs={6}
+                                                >
+                                                    <Button type="submit"
+                                                        variant="contained">Save Details</Button>
+                                                </Grid>
+                                            </Grid>
+                                        </CardActions> */}
+                                    </Card>
+
+                                    {/* Details */}
+                                </Grid>
+                            </Grid>
+
+                            {/* Teams List */}
+                            {/* <Typography>Clubs - Teams </Typography>
+                            <Box sx={{ mt: 3 }}>
+                                <PlayerListResults players={players} />
+                            </Box> */}
+
+
+                            <Typography>Clubs - Teams </Typography>
+                            <Box sx={{ mt: 3 }}>
+                                <TableContainer component={Paper}>
+                                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell>Name</TableCell>
+                                                <TableCell align="right">Shots</TableCell>
+                                                <TableCell align="right">Possessions</TableCell>
+                                                <TableCell align="right">Ratings</TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {rows.map((row) => (
+                                                <TableRow
+                                                    key={row.Goals}
+                                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                >
+                                                    <TableCell component="th" scope="row">
+                                                        {row.Goals}
+                                                    </TableCell>
+                                                    <TableCell align="right">{row.Shots}</TableCell>
+                                                    <TableCell align="right">{row.Possessions}</TableCell>
+                                                    <TableCell align="right">{row.Ratings}</TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+
+                            </Box>
+
+                        </Container>
+                    </Box>
+                </form>
+            </DialogContent>
+
+            <DialogActions>
+                <Button onClick={handleClose}>Close</Button>
+            </DialogActions>
         </Dialog>
     );
 };

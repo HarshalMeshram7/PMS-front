@@ -25,6 +25,7 @@ import { addAcademy } from "src/services/academyRequest";
 import LoadingBox from "src/components/common/loading-box";
 import { parseWithOptions } from "date-fns/fp";
 import { OnlinePredictionSharp } from "@mui/icons-material";
+import { addFederation } from "src/services/federationRequest";
 
 const sportsList = [
     {
@@ -47,11 +48,13 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
 
     const formik = useFormik({
         initialValues: {
-            federationName: "Federation1",
+            federation: "Federation1",
             address: "Address",
             phone: "8208793805",
             email: "@gmail.com",
-            personName: "Person name",
+            password: "Monish@1995",
+            recoveryEMail: "@gmail.com",
+            contactPersonName: "Person name",
             logo: "",
             banner: "",
             accreditation: "accreditation",
@@ -59,11 +62,10 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
             twitter: "tw",
             instagram: "ins",
             // sportsList: [],
-            password: "Monish@1995",
             cnfpassword: "Monish@1995"
         },
         validationSchema: Yup.object({
-            federationName: Yup
+            federation: Yup
                 .string()
                 .max(100)
                 .required("Federation Name is required"),
@@ -82,10 +84,16 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
                 .max(255)
             // .required("Email is required")
             ,
-            personName: Yup
+            // recoveryEMail:Yup
+            // .string()
+            // .email("Must be a valid Email")
+            // .max(255)
+        // .required("Email is required")
+        // ,
+        contactPersonName: Yup
                 .string()
                 .max(100)
-            // .required("Person Name is required")
+            // .required("Contact Person Name is required")
             ,
             accreditation: Yup
                 .string()
@@ -115,19 +123,20 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
             setLoading(true);
             try {
                 console.log(data);
-                // await addAcademy(data).then((resp) => {
-                //     if (resp.status === "success") {
+                await addFederation(data).then((resp) => {
+                    if (resp.status === "success") {
                         handleClose();
                         enqueueSnackbar("Feferation Added Succesfully", { variant: "success" });
-                //         mutate();
-                //         setLoading(false);
-                //     }
-                //     if (resp.status === "failed") {
-                //         handleClose();
-                //         enqueueSnackbar("Feferation Not Added", { variant: "failed" });
-                //         setLoading(false);
-                //     }
-                // })
+                        mutate();
+                        setLoading(false);
+                    }
+                    if (resp.status === "failed") {
+                        handleClose();
+                        enqueueSnackbar("Feferation Not Added", { variant: "failed" });
+                        setLoading(false);
+                    }
+                
+            })
             } catch (error) {
                 setLoading(false);
             }
@@ -168,16 +177,16 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
                             xs={12}
                         >
                             <TextField
-                                error={Boolean(formik.touched.federationName && formik.errors.federationName)}
+                                error={Boolean(formik.touched.federation && formik.errors.federation)}
                                 fullWidth
-                                helperText={formik.touched.federationName && formik.errors.federationName}
-                                label="Name"
+                                helperText={formik.touched.federation && formik.errors.federation}
+                                label="Federation Name"
                                 margin="dense"
-                                name="federationName"
+                                name="federation"
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
                                 type="text"
-                                value={formik.values.federationName}
+                                value={formik.values.federation}
                                 variant="outlined"
                             />
                         </Grid>
@@ -228,6 +237,26 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
                             xs={12}
                         >
                             <TextField
+                                error={Boolean(formik.touched.contactPersonName && formik.errors.contactPersonName)}
+                                fullWidth
+                                helperText={formik.touched.contactPersonName && formik.errors.contactPersonName}
+                                label="Contact Person Name"
+                                margin="dense"
+                                name="contactPersonName"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="text"
+                                value={formik.values.contactPersonName}
+                                variant="outlined"
+                            />
+                        </Grid>
+
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <TextField
                                 error={Boolean(formik.touched.email && formik.errors.email)}
                                 fullWidth
                                 helperText={formik.touched.email && formik.errors.email}
@@ -248,16 +277,16 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
                             xs={12}
                         >
                             <TextField
-                                error={Boolean(formik.touched.personName && formik.errors.personName)}
+                                error={Boolean(formik.touched.recoveryEMail && formik.errors.recoveryEMail)}
                                 fullWidth
-                                helperText={formik.touched.personName && formik.errors.personName}
-                                label="Person Name"
+                                helperText={formik.touched.recoveryEMail && formik.errors.recoveryEMail}
+                                label="Recovery Email"
                                 margin="dense"
-                                name="personName"
+                                name="recoveryEMail"
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
-                                type="text"
-                                value={formik.values.personName}
+                                type="email"
+                                value={formik.values.recoveryEMail}
                                 variant="outlined"
                             />
                         </Grid>
@@ -342,12 +371,12 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
                             />
                         </Grid>
 
-                        <Grid
+                        {/* <Grid
                             item
                             md={6}
                             xs={12}
                         >
-                            {/* <FormControl fullWidth>
+                            <FormControl fullWidth>
                                 <InputLabel id="demo-simple-select-helper-label">Sports List</InputLabel>
                                 <Select
                                     multiple
@@ -363,8 +392,8 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
                                         <MenuItem id={key} value={option.label}>{option.label}</MenuItem>
                                     ))}
                                 </Select>
-                            </FormControl> */}
-                        </Grid>
+                            </FormControl>
+                        </Grid> */}
 
                         <Grid
                             item

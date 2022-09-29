@@ -9,7 +9,7 @@ export const addFederation = async (data) => {
         throw "No Token";
     }
     try {
-        const res = await axios.post(`${MAIN_URL}/api/federation/addFederation/`, data, {
+        const res = await axios.post(`${MAIN_URL2}/Savefederation`, data, {
             headers: {
                 Authorization: "Bearer " + token,
             },
@@ -20,6 +20,28 @@ export const addFederation = async (data) => {
         throw error;
     }
 };
+
+// Update Federation
+export const updateFederation = async (data) => {
+    const { token } = useStorage();
+    if (!token) {
+        throw "No Token";
+    }
+    try {
+        const res = await axios.post(`${MAIN_URL2}/Updatefederation`, data, {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        });
+        return res.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};
+
+
+
 // Get All Federation
 export const getAllFederations = async (params) => {
     const { token } = useStorage();

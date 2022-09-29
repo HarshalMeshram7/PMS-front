@@ -25,6 +25,7 @@ import { players } from "../../__mocks__/players.js";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSnackbar } from "notistack";
+import { updateFederation } from "src/services/federationRequest.js";
 
 
 export const FederationDetailsDialog = ({ open, handleClose, federation, mutate }) => {
@@ -38,14 +39,18 @@ export const FederationDetailsDialog = ({ open, handleClose, federation, mutate 
         timezone: 'GTM-7'
     };
     const [loading, setLoading] = useState();
-
+    // console.log(federation);
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
-            federationName: federation.Federation,
+            id: federation.ID,
+            federation: federation.Federation,
             address: federation.Address,
             phone: federation.Phone,
-            personName: federation.ContactPersonName,
+            email: federation.Email,
+            password: federation.Password,
+            recoveryEMail: federation.RecoveryEMail,
+            contactPersonName: federation.ContactPersonName,
             logo: "",
             banner: "",
             accreditation: federation.Accreditation,
@@ -54,43 +59,43 @@ export const FederationDetailsDialog = ({ open, handleClose, federation, mutate 
             instagram: federation.Instagram
         },
         validationSchema: Yup.object({
-            federationName: Yup
-                .string()
-                .max(100)
-                .required("federation Name is required"),
-            address: Yup
-                .string()
-            // .required('Required')
-            ,
-            phone: Yup.string()
-                .length(10)
-                .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
-            // .required("Phone number is required")
-            ,
-            personName: Yup
-                .string()
-                .max(100)
+            // federation: Yup
+            //     .string()
+            //     .max(100)
+            //     .required("federation Name is required"),
+            // address: Yup
+            //     .string()
+            // // .required('Required')
+            // ,
+            // phone: Yup.string()
+            //     .length(10)
+            //     .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
+            // // .required("Phone number is required")
+            // ,
+            // contactPersonName: Yup
+            //     .string()
+            //     .max(100)
             // .required("Person Name is required")
-            ,
-            accreditation: Yup
-                .string()
-                .max(100),
-            facebook: Yup
-                .string()
-                .max(100),
-            twitter: Yup
-                .string()
-                .max(100),
-            instagram: Yup
-                .string()
-                .max(100),
+            // ,
+            // accreditation: Yup
+            //     .string()
+            //     .max(100),
+            // facebook: Yup
+            //     .string()
+            //     .max(100),
+            // twitter: Yup
+            //     .string()
+            //     .max(100),
+            // instagram: Yup
+            //     .string()
+            //     .max(100),
         }),
 
         onSubmit: async (data) => {
             setLoading(true);
             try {
                 console.log(data);
-                // await updatefederation(data);
+                await updateFederation(data);
                 handleClose();
                 enqueueSnackbar("Federation Updated Succesfully", { variant: "success" });
                 mutate();
@@ -103,16 +108,15 @@ export const FederationDetailsDialog = ({ open, handleClose, federation, mutate 
     });
 
     const handleDelete = (data) => {
-
         setLoading(true);
         try {
             console.log(data);
             // deletefederation(data).then((response) => {
             //     if (response.status == "success") {
-                    handleClose();
-                    enqueueSnackbar("federation Deleted Succesfully", { variant: "success" });
+            handleClose();
+            enqueueSnackbar("federation Deleted Succesfully", { variant: "success" });
             //         mutate();
-                    setLoading(false);
+            setLoading(false);
             //     }
             //     else {
             //         handleClose();
@@ -285,16 +289,16 @@ export const FederationDetailsDialog = ({ open, handleClose, federation, mutate 
                                                     xs={12}
                                                 >
                                                     <TextField
-                                                        error={Boolean(formik.touched.federationName && formik.errors.federationName)}
+                                                        error={Boolean(formik.touched.federation && formik.errors.federation)}
                                                         fullWidth
-                                                        helperText={formik.touched.federationName && formik.errors.federationName}
+                                                        helperText={formik.touched.federation && formik.errors.federation}
                                                         label="Name"
                                                         margin="dense"
-                                                        name="federationName"
+                                                        name="federation"
                                                         onBlur={formik.handleBlur}
                                                         onChange={formik.handleChange}
                                                         type="text"
-                                                        value={formik.values.federationName}
+                                                        value={formik.values.federation}
                                                         variant="outlined"
                                                     />
                                                 </Grid>
@@ -338,22 +342,81 @@ export const FederationDetailsDialog = ({ open, handleClose, federation, mutate 
                                                         variant="outlined"
                                                     />
                                                 </Grid>
-                                                
+
                                                 <Grid
                                                     item
                                                     md={6}
                                                     xs={12}>
                                                     <TextField
-                                                        error={Boolean(formik.touched.personName && formik.errors.personName)}
+                                                        error={Boolean(formik.touched.contactPersonName && formik.errors.contactPersonName)}
                                                         fullWidth
-                                                        helperText={formik.touched.personName && formik.errors.personName}
+                                                        helperText={formik.touched.contactPersonName && formik.errors.contactPersonName}
                                                         label="Person Name"
                                                         margin="dense"
-                                                        name="personName"
+                                                        name="contactPersonName"
                                                         onBlur={formik.handleBlur}
                                                         onChange={formik.handleChange}
                                                         type="text"
-                                                        value={formik.values.personName}
+                                                        value={formik.values.contactPersonName}
+                                                        variant="outlined"
+                                                    />
+                                                </Grid>
+                                                <Grid
+                                                    item
+                                                    md={6}
+                                                    xs={12}
+                                                >
+                                                    <TextField
+                                                        error={Boolean(formik.touched.email && formik.errors.email)}
+                                                        fullWidth
+                                                        helperText={formik.touched.email && formik.errors.email}
+                                                        label="Email"
+                                                        margin="dense"
+                                                        name="email"
+                                                        onBlur={formik.handleBlur}
+                                                        onChange={formik.handleChange}
+                                                        type="email"
+                                                        value={formik.values.email}
+                                                        variant="outlined"
+                                                    />
+                                                </Grid>
+
+                                                <Grid
+                                                    item
+                                                    md={6}
+                                                    xs={12}
+                                                >
+                                                    <TextField
+                                                        error={Boolean(formik.touched.recoveryEMail && formik.errors.recoveryEMail)}
+                                                        fullWidth
+                                                        helperText={formik.touched.recoveryEMail && formik.errors.recoveryEMail}
+                                                        label="Recovery Email"
+                                                        margin="dense"
+                                                        name="recoveryEMail"
+                                                        onBlur={formik.handleBlur}
+                                                        onChange={formik.handleChange}
+                                                        type="email"
+                                                        value={formik.values.recoveryEMail}
+                                                        variant="outlined"
+                                                    />
+                                                </Grid>
+
+                                                <Grid
+                                                    item
+                                                    md={6}
+                                                    xs={12}
+                                                >
+                                                    <TextField
+                                                        error={Boolean(formik.touched.password && formik.errors.password)}
+                                                        fullWidth
+                                                        helperText={formik.touched.password && formik.errors.password}
+                                                        label="Create Password"
+                                                        margin="dense"
+                                                        name="password"
+                                                        onBlur={formik.handleBlur}
+                                                        onChange={formik.handleChange}
+                                                        type="password"
+                                                        value={formik.values.password}
                                                         variant="outlined"
                                                     />
                                                 </Grid>
@@ -434,11 +497,11 @@ export const FederationDetailsDialog = ({ open, handleClose, federation, mutate 
                                                     />
                                                 </Grid>
 
-                                                <Grid
+                                                {/* <Grid
                                                     item
                                                     md={6}
                                                     xs={12}>
-                                                    {/* <FormControl fullWidth>
+                                                    <FormControl fullWidth>
                                                         <InputLabel id="demo-simple-select-helper-label">Sports List</InputLabel>
                                                         <Select
                                                             multiple
@@ -453,8 +516,8 @@ export const FederationDetailsDialog = ({ open, handleClose, federation, mutate 
                                                             <MenuItem value="Cricket">Cricket</MenuItem>
                                                             <MenuItem value="Tennis">Tennis</MenuItem>
                                                         </Select>
-                                                    </FormControl> */}
-                                                </Grid>
+                                                    </FormControl>
+                                                </Grid> */}
 
                                             </Grid>
                                         </CardContent>

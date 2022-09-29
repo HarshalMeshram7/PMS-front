@@ -4,7 +4,6 @@ import { Clock as ClockIcon } from '../../icons/clock';
 import { Download as DownloadIcon } from '../../icons/download';
 
 export const FederationCard = ({ product, handleOpenFederationDetails, handleOpenFederationFinance, ...rest }) => {
-  
   return (
     <Card
       sx={{

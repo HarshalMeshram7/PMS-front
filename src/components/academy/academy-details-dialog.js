@@ -11,11 +11,11 @@ import {
     Divider,
     Card,
     CardContent,
-    CardActions,
     FormControl,
     InputLabel,
     Select,
     MenuItem,
+    CardActions,
     Avatar
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -25,9 +25,38 @@ import { players } from "../../__mocks__/players.js";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSnackbar } from "notistack";
-import { deleteAcademy } from "src/services/academyRequest.js";
+import { deleteAcademy, updateAcademy } from "src/services/academyRequest.js";
 import banner from '../../../public/static/images/background/register.jpg';
 
+const clubID = [
+    {
+        value: "1",
+        label: "Club 1"
+    },
+    {
+        value: "2",
+        label: "Club 2"
+    },
+    {
+        value: "3",
+        label: "Club 3"
+    }
+];
+
+const federationID = [
+    {
+        value: "1",
+        label: "Federation 1"
+    },
+    {
+        value: "2",
+        label: "Federation 2"
+    },
+    {
+        value: "3",
+        label: "Federation 3"
+    }
+];
 
 export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => {
     const { enqueueSnackbar } = useSnackbar();
@@ -44,19 +73,25 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => 
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
-            academyName: academy.Academy,
+            id: academy.ID,
+            Academy: academy.Academy,
+            clubID: "",
+            federationID: null,
             address: academy.Address,
             phone: academy.Phone,
-            personName: academy.ContactPersonName,
+            email: academy.Email,
+            password: academy.Password,
+            recoveryEMail: academy.RecoveryEMail,
+            contactPersonName: academy.ContactPersonName,
             logo: "",
             banner: "",
-            accreditation: academy.Accreditation,
+            accrediation: academy.Accreditation,
             facebook: academy.Facebook,
             twitter: academy.Twitter,
             instagram: academy.Instagram
         },
         validationSchema: Yup.object({
-            academyName: Yup
+            Academy: Yup
                 .string()
                 .max(100)
                 .required("Academy Name is required"),
@@ -69,17 +104,15 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => 
                 .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
             // .required("Phone number is required")
             ,
-            personName: Yup
+            contactPersonName: Yup
                 .string()
                 .max(100)
             // .required("Person Name is required")
             ,
-            accreditation: Yup
+            accrediation: Yup
                 .string()
                 .max(100),
-            accreditation: Yup
-                .string()
-                .max(100),
+
             facebook: Yup
                 .string()
                 .max(100),
@@ -96,7 +129,7 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => 
             setLoading(true);
             try {
                 console.log(data);
-                // await updateAcademy(data);
+                await updateAcademy(data);
                 handleClose();
                 enqueueSnackbar("Academy Updated Succesfully", { variant: "success" });
                 mutate();
@@ -294,16 +327,16 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => 
                                                     xs={12}
                                                 >
                                                     <TextField
-                                                        error={Boolean(formik.touched.academyName && formik.errors.academyName)}
+                                                        error={Boolean(formik.touched.Academy && formik.errors.Academy)}
                                                         fullWidth
-                                                        helperText={formik.touched.academyName && formik.errors.academyName}
-                                                        label="Name"
+                                                        helperText={formik.touched.Academy && formik.errors.Academy}
+                                                        label="Academy Name"
                                                         margin="dense"
-                                                        name="academyName"
+                                                        name="Academy"
                                                         onBlur={formik.handleBlur}
                                                         onChange={formik.handleChange}
                                                         type="text"
-                                                        value={formik.values.academyName}
+                                                        value={formik.values.Academy}
                                                         variant="outlined"
                                                     />
                                                 </Grid>
@@ -347,23 +380,117 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => 
                                                         variant="outlined"
                                                     />
                                                 </Grid>
+
                                                 <Grid
                                                     item
                                                     md={6}
-                                                    xs={12}>
+                                                    xs={12}
+                                                >
                                                     <TextField
-                                                        error={Boolean(formik.touched.personName && formik.errors.personName)}
+                                                        error={Boolean(formik.touched.email && formik.errors.email)}
                                                         fullWidth
-                                                        helperText={formik.touched.personName && formik.errors.personName}
-                                                        label="Person Name"
+                                                        helperText={formik.touched.email && formik.errors.email}
+                                                        label="Email"
                                                         margin="dense"
-                                                        name="personName"
+                                                        name="email"
                                                         onBlur={formik.handleBlur}
                                                         onChange={formik.handleChange}
-                                                        type="text"
-                                                        value={formik.values.personName}
+                                                        type="email"
+                                                        value={formik.values.email}
                                                         variant="outlined"
+                                                    />
+                                                </Grid>
 
+
+                                                <Grid
+                                                    item
+                                                    md={6}
+                                                    xs={12}
+                                                >
+                                                    <FormControl fullWidth>
+                                                        <InputLabel id="demo-simple-select-helper-label">Club</InputLabel>
+                                                        <Select
+                                                            // multiple
+                                                            labelId="demo-simple-select-helper-label"
+                                                            id="demo-simple-select-helper"
+                                                            value={formik.values.clubID}
+                                                            label="Select Club"
+                                                            name="clubID"
+                                                            onChange={formik.handleChange}
+                                                        >
+                                                            {clubID?.map((option, key) => (
+                                                                <MenuItem key={key}
+                                                                    value={option.value}>
+                                                                    {option.label}
+                                                                </MenuItem>
+                                                            ))}
+                                                        </Select>
+                                                    </FormControl>
+                                                </Grid>
+
+                                                <Grid
+                                                    item
+                                                    md={6}
+                                                    xs={12}
+                                                >
+                                                    <FormControl fullWidth>
+                                                        <InputLabel id="demo-simple-select-helper-label">Federation</InputLabel>
+                                                        <Select
+                                                            // multiple
+                                                            labelId="demo-simple-select-helper-label"
+                                                            id="demo-simple-select-helper"
+                                                            value={formik.values.federationID}
+                                                            label="Select Federation"
+                                                            name="federationID"
+                                                            onChange={formik.handleChange}
+                                                        >
+                                                            {federationID?.map((option, key) => (
+                                                                <MenuItem key={key}
+                                                                    value={option.value}>
+                                                                    {option.label}
+                                                                </MenuItem>
+                                                            ))}
+                                                        </Select>
+                                                    </FormControl>
+                                                </Grid>
+
+                                                <Grid
+                                                    item
+                                                    md={6}
+                                                    xs={12}
+                                                >
+                                                    <TextField
+                                                        error={Boolean(formik.touched.password && formik.errors.password)}
+                                                        fullWidth
+                                                        helperText={formik.touched.password && formik.errors.password}
+                                                        label="Password"
+                                                        margin="dense"
+                                                        name="password"
+                                                        onBlur={formik.handleBlur}
+                                                        onChange={formik.handleChange}
+                                                        type="password"
+                                                        value={formik.values.password}
+                                                        variant="outlined"
+                                                    />
+                                                </Grid>
+
+                                                <Grid
+                                                    item
+                                                    md={6}
+                                                    xs={12}
+                                                >
+                                                    <TextField
+                                                        error={Boolean(formik.touched.recoveryEMail && formik.errors.recoveryEMail)}
+                                                        fullWidth
+                                                        helperText={formik.touched.recoveryEMail && formik.errors.recoveryEMail}
+                                                        label="Recovery Email"
+                                                        margin="dense"
+                                                        name="recoveryEMail"
+                                                        onBlur={formik.handleBlur}
+                                                        onChange={formik.handleChange}
+                                                        type="password"
+                                                        value={formik.values.recoveryEMail}
+                                                        variant="outlined"
                                                     />
                                                 </Grid>
 
@@ -372,18 +499,36 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => 
                                                     md={6}
                                                     xs={12}>
                                                     <TextField
-                                                        error={Boolean(formik.touched.accreditation && formik.errors.accreditation)}
+                                                        error={Boolean(formik.touched.contactPersonName && formik.errors.contactPersonName)}
                                                         fullWidth
-                                                        helperText={formik.touched.accreditation && formik.errors.accreditation}
-                                                        label="Accreditation"
+                                                        helperText={formik.touched.contactPersonName && formik.errors.contactPersonName}
+                                                        label="Contact Person Name"
                                                         margin="dense"
-                                                        name="accreditation"
+                                                        name="contactPersonName"
                                                         onBlur={formik.handleBlur}
                                                         onChange={formik.handleChange}
                                                         type="text"
-                                                        value={formik.values.accreditation}
+                                                        value={formik.values.contactPersonName}
                                                         variant="outlined"
+                                                    />
+                                                </Grid>
 
+                                                <Grid
+                                                    item
+                                                    md={6}
+                                                    xs={12}>
+                                                    <TextField
+                                                        error={Boolean(formik.touched.accrediation && formik.errors.accrediation)}
+                                                        fullWidth
+                                                        helperText={formik.touched.accrediation && formik.errors.accrediation}
+                                                        label="Accrediation"
+                                                        margin="dense"
+                                                        name="accrediation"
+                                                        onBlur={formik.handleBlur}
+                                                        onChange={formik.handleChange}
+                                                        type="text"
+                                                        value={formik.values.accrediation}
+                                                        variant="outlined"
                                                     />
                                                 </Grid>
 
@@ -423,7 +568,6 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => 
                                                         type="text"
                                                         value={formik.values.twitter}
                                                         variant="outlined"
-
                                                     />
                                                 </Grid>
 
@@ -468,12 +612,53 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => 
                                                     </FormControl> */}
                                                 </Grid>
 
+                                                <Grid
+                                                    item
+                                                    md={6}
+                                                    xs={12}
+                                                >
+                                                    <TextField style={{ display: 'none' }}
+                                                        error={Boolean(formik.touched.logo && formik.errors.logo)}
+                                                        fullWidth
+                                                        helperText={formik.touched.logo && formik.errors.logo}
+                                                        label="Logo"
+                                                        id="uploadLogo"
+                                                        margin="dense"
+                                                        name="logo"
+                                                        onBlur={formik.handleBlur}
+                                                        onChange={formik.handleChange}
+                                                        type="file"
+                                                        value={formik.values.logo}
+                                                        variant="outlined"
+                                                    />
+                                                    <Button onClick={() => { document.getElementById("uploadLogo").click() }}>Upload Logo</Button>
+                                                </Grid>
+
+                                                <Grid
+                                                    item
+                                                    md={6}
+                                                    xs={12}
+                                                >
+                                                    <TextField style={{ display: 'none' }}
+                                                        error={Boolean(formik.touched.banner && formik.errors.banner)}
+                                                        fullWidth
+                                                        helperText={formik.touched.banner && formik.errors.banner}
+                                                        label="Banner"
+                                                        id="uploadBanner"
+                                                        margin="dense"
+                                                        name="banner"
+                                                        onBlur={formik.handleBlur}
+                                                        onChange={formik.handleChange}
+                                                        type="file"
+                                                        value={formik.values.banner}
+                                                        variant="outlined"
+                                                    />
+                                                    <Button onClick={() => { document.getElementById("uploadBanner").click() }}>Upload Banner</Button>
+                                                </Grid>
 
                                             </Grid>
                                         </CardContent>
                                         <Divider />
-
-
 
                                         <CardActions>
                                             <Grid container

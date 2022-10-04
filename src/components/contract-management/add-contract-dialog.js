@@ -36,7 +36,7 @@ const sportsList = [
     }
 ];
 
-export const AddPlayerDialog = ({ open, handleClose }) => {
+export const AddContractDialog = ({ open, handleClose }) => {
     const { enqueueSnackbar } = useSnackbar();
     const [loading, setLoading] = useState();
 
@@ -157,10 +157,10 @@ export const AddPlayerDialog = ({ open, handleClose }) => {
         >
             {loading && <LoadingBox />}
             <form onSubmit={formik.handleSubmit}>
-                <DialogTitle>Add New Playersss</DialogTitle>
+                <DialogTitle>Add New Contract</DialogTitle>
                 <DialogContent>
                     <DialogContentText sx={{ marginBottom: 2 }}>
-                        Enter the required basic details of the Player below.
+                        Enter the required basic details of the Contract below.
                     </DialogContentText>
 
                     <Grid

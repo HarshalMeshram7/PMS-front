@@ -46,6 +46,13 @@ import FederationOrganization from "../federation/federationfinance-component/fe
 import PlayerDetailsTab from "./playersdetailtabs/players-personal-tab.js";
 import PlayerPaymnetTab from "./playersdetailtabs/players-paymnet-tab.js";
 import AcademyFinance from "../academy/academyfinance-component/academy-finance.js";
+import PlayerContractType from "./playersdetailtabs/players-contract.js";
+import PlayerFitnessTab from "./playersdetailtabs/player-fitness-tab.js";
+import PlayerTrainingModuleTab from "./playersdetailtabs/player-trainingmodule-tab.js";
+import PlayerTrainingManagementTab from "./playersdetailtabs/player-trainingmanagement-tab.js";
+import PlayerStatisticTab from "./playersdetailtabs/player-statistic.js";
+import PlayerCommunicationTab from "./playersdetailtabs/player-communication.js";
+import PlayerProfileTab from "./playersdetailtabs/player-profile.js";
 
 
 
@@ -472,20 +479,29 @@ export const PlayerDetailsDialog = ({ open, handleClose, }) => {
                                     <LinkTab value="0" label="Personal Details" />
                                     <LinkTab value="1" label="Payment Details" />
                                     <LinkTab value="2" label="Contract Type" />
-                                    <LinkTab value="3" label="Fitness" />
-                                    <LinkTab value="4" label="Training Module" />
-                                    <LinkTab value="5" label="Training Management" />
-                                    <LinkTab value="6" label="Profile" />
-                                    <LinkTab value="7" label="Statistic" />
-                                    <LinkTab value="7" label="Player Communication" />
+                                    <LinkTab value="3" label="TMS / ITMS" />
+                                    <LinkTab value="4" label="Fitness" />
+                                    <LinkTab value="5" label="Training Module" />
+                                    <LinkTab value="6" label="Training Management" />
+                                    <LinkTab value="7" label="Profile" />
+                                    <LinkTab value="8" label="Statistic" />
+                                    <LinkTab value="9" label="Evaluation" />
+                                    <LinkTab value="10" label="Communication" />
                                 </Tabs>
                             </Box>
                         </Grid>
                         <Container maxWidth="md">
                             {value == "0" && <PlayerDetailsTab />}
                             {value == "1" && <PlayerPaymnetTab />}
-                            {value == "2" && <FederationOrganization />}
-                            {value == "3" && <>Fitness</>}
+                            {value == "2" && <PlayerContractType />}
+                            {value == "3" && <>TMS / ITMS</>}
+                            {value == "4" && <PlayerFitnessTab />}
+                            {value == "5" && <PlayerTrainingModuleTab />}
+                            {value == "6" && <PlayerTrainingManagementTab />}
+                            {value == "7" && <PlayerProfileTab />}
+                            {value == "8" && <PlayerStatisticTab />}
+                            {value == "9" && <>Evaluation</>}
+                            {value == "10" && <PlayerCommunicationTab />}
                         </Container>
 
 

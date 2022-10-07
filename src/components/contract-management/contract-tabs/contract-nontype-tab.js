@@ -17,7 +17,6 @@ import {
     TextareaAutosize
 } from "@mui/material";
 import { bool } from "prop-types";
-import { LocalizationProvider } from "@mui/x-date-pickers";
 
 export default function ContractNonType() {
     const formik = useFormik({

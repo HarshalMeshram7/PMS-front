@@ -1,17 +1,17 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Grid, TextField, Button, Card, CardContent } from "@mui/material";
-import payment from "../../../../public/static/images/common/payment.png"
+import {
+  Grid, TextField, Button, Card, CardContent, FormControl,
+  FormGroup, FormControlLabel, FormLabel, RadioGroup, Radio
+} from "@mui/material";
+import Checkbox from '@mui/material/Checkbox';
 
-export default function PlayerPaymnetTab() {
+export default function PlayerContractType() {
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      FirstName: "",
-      LastName: "",
-      CreditCardNumber: "",
-      ExpiryMonth: "",
-      ExpiryYear: "",
+      ContractDuration: ""
     },
     validationSchema: Yup.object({}),
 
@@ -21,157 +21,53 @@ export default function PlayerPaymnetTab() {
       } catch (error) {
         console.log(error);
       }
+
     },
   });
+
 
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
         <Card>
-            <CardContent>
-            <Grid container spacing={3}>
-            <Grid item md={6} xs={12}>
-                <TextField
-                  error={Boolean(formik.touched.FirstName && formik.errors.FirstName)}
-                  fullWidth
-                  helperText={formik.touched.FirstName && formik.errors.FirstName}
-                  label="Have to change this to paymnet type SELECT"
-                  margin="dense"
-                  name="FirstName"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="text"
-                  value={formik.values.FirstName}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item md={6} xs={12}>
-                <TextField
-                  error={Boolean(formik.touched.FirstName && formik.errors.FirstName)}
-                  fullWidth
-                  helperText={formik.touched.FirstName && formik.errors.FirstName}
-                  label="Have to change this to notification type select"
-                  margin="dense"
-                  name="FirstName"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="text"
-                  value={formik.values.FirstName}
-                  variant="outlined"
-                />
-              </Grid>
-            </Grid>
-            </CardContent>
-        </Card>
-        <Card>
           <CardContent>
-            <Grid container spacing={3}>
-              <Grid item md={12} xs={12} textAlign="center" ><img style={{ width: "45vw" }} src={payment.src} alt="paymentlogo" /></Grid>
-              <Grid item md={6} xs={12}>
-                <TextField
-                  error={Boolean(formik.touched.FirstName && formik.errors.FirstName)}
-                  fullWidth
-                  helperText={formik.touched.FirstName && formik.errors.FirstName}
-                  label="First Name"
-                  margin="dense"
-                  name="FirstName"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="text"
-                  value={formik.values.FirstName}
-                  variant="outlined"
-                />
-              </Grid>
 
-              <Grid item md={6} xs={12}>
-                <TextField
-                  error={Boolean(formik.touched.LastName && formik.errors.LastName)}
-                  fullWidth
-                  helperText={formik.touched.LastName && formik.errors.LastName}
-                  label="Last Name"
-                  margin="dense"
-                  name="LastName"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="text"
-                  value={formik.values.LastName}
-                  variant="outlined"
-                />
+            <Grid
+              container
+              spacing={3}
+            >
+              <Grid
+                item
+                md={6}
+                xs={12}
+              >
+                <FormControl >
+                  <FormLabel id="demo-radio-buttons-group-label">Contract Duration</FormLabel>
+                  <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    defaultValue="1Year"
+                    name="ContractDuration"
+                    error={Boolean(formik.touched.ContractDuration && formik.errors.ContractDuration)}
+                    helperText={formik.touched.ContractDuration && formik.errors.ContractDuration}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.ContractDuration}
+                  >
+                    <FormControlLabel value="1Year" control={<Radio />} label="1 Year Contract" />
+                    <FormControlLabel value="3Year" control={<Radio />} label="3 Year Contract" />
+                    <FormControlLabel value="Other" control={<Radio />} label="Other" />
+                  </RadioGroup>
+                </FormControl>
               </Grid>
-
-              <Grid item md={6} xs={12}>
-                <TextField
-                  error={Boolean(formik.touched.CreditCardNumber && formik.errors.CreditCardNumber)}
-                  fullWidth
-                  helperText={formik.touched.CreditCardNumber && formik.errors.CreditCardNumber}
-                  label="Credit Card Number"
-                  margin="dense"
-                  name="CreditCardNumber"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="number"
-                  value={formik.values.CreditCardNumber}
-                  variant="outlined"
-                />
-              </Grid>
-
-              <Grid item md={6} xs={12}>
-                <TextField
-                  error={Boolean(formik.touched.SecurityCode && formik.errors.SecurityCode)}
-                  fullWidth
-                  helperText={formik.touched.SecurityCode && formik.errors.SecurityCode}
-                  label="Security Code"
-                  margin="dense"
-                  name="SecurityCode"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="text"
-                  value={formik.values.SecurityCode}
-                  variant="outlined"
-                />
-              </Grid>
-
-              <Grid item md={6} xs={12}>
-                <TextField
-                  error={Boolean(formik.touched.ExpiryYear && formik.errors.ExpiryYear)}
-                  fullWidth
-                  helperText={formik.touched.ExpiryYear && formik.errors.ExpiryYear}
-                  label="Expiry Year"
-                  margin="dense"
-                  name="ExpiryYear"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="number"
-                  value={formik.values.ExpiryYear}
-                  variant="outlined"
-                />
-              </Grid>
-
-              <Grid item md={6} xs={12}>
-                <TextField
-                  error={Boolean(formik.touched.ExpiryMonth && formik.errors.ExpiryMonth)}
-                  fullWidth
-                  helperText={formik.touched.ExpiryMonth && formik.errors.ExpiryMonth}
-                  label="Expiry Month"
-                  margin="dense"
-                  name="ExpiryMonth"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="text"
-                  value={formik.values.ExpiryMonth}
-                  variant="outlined"
-                />
-              </Grid>
-
-              <Grid item md={6} xs={12}></Grid>
 
               <Grid item md={12} xs={12} textAlign="center">
                 <Button type="submit" variant="outlined" color="primary">
-                  Pay
+                  Save
                 </Button>
               </Grid>
-              <Grid />
+
             </Grid>
+
           </CardContent>
         </Card>
       </form>

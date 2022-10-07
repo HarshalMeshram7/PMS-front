@@ -1,11 +1,13 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Grid, TextField, Button, Card, CardContent } from "@mui/material";
+import { Grid, TextField, Button, Card, 
+  FormControl, InputLabel, Select, MenuItem, CardContent } from "@mui/material";
 import payment from "../../../../public/static/images/common/payment.png"
 
 export default function PlayerPaymnetTab() {
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       FirstName: "",
       LastName: "",
@@ -28,42 +30,62 @@ export default function PlayerPaymnetTab() {
     <>
       <form onSubmit={formik.handleSubmit}>
         <Card>
+
           {/* <Card>
             <CardContent>
               <Grid container spacing={3}>
                 <Grid item md={6} xs={12}>
-                  <TextField
-                    error={Boolean(formik.touched.FirstName && formik.errors.FirstName)}
-                    fullWidth
-                    helperText={formik.touched.FirstName && formik.errors.FirstName}
-                    label="Have to change this to paymnet type SELECT"
-                    margin="dense"
-                    name="FirstName"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="text"
-                    value={formik.values.FirstName}
-                    variant="outlined"
-                  />
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Payment Plan</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      label="PaymentPlan"
+                      error={Boolean(formik.touched.PaymentPlan && formik.errors.PaymentPlan)}
+                      fullWidth
+                      helperText={formik.touched.PaymentPlan && formik.errors.PaymentPlan}
+                      margin="dense"
+                      name="PaymentPlan"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.PaymentPlan}
+                      variant="outlined"
+                    >
+                      <MenuItem value="online">Online</MenuItem>
+                      <MenuItem value="offline">Offline</MenuItem>
+                      <MenuItem value="other">Other</MenuItem>
+                    </Select>
+                  </FormControl>
                 </Grid>
+                
                 <Grid item md={6} xs={12}>
-                  <TextField
-                    error={Boolean(formik.touched.FirstName && formik.errors.FirstName)}
-                    fullWidth
-                    helperText={formik.touched.FirstName && formik.errors.FirstName}
-                    label="Have to change this to notification type select"
-                    margin="dense"
-                    name="FirstName"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="text"
-                    value={formik.values.FirstName}
-                    variant="outlined"
-                  />
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Notification</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      label="Notification"
+                      error={Boolean(formik.touched.Notification && formik.errors.Notification)}
+                      fullWidth
+                      helperText={formik.touched.Notification && formik.errors.Notification}
+                      margin="dense"
+                      name="Notification"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.Notification}
+                      variant="outlined"
+                    >
+                      <MenuItem value="SMS">SMS</MenuItem>
+                      <MenuItem value="Email">Email</MenuItem>
+                      <MenuItem value="other">Other</MenuItem>
+                    </Select>
+                  </FormControl>
                 </Grid>
+
               </Grid>
             </CardContent>
           </Card> */}
+
           <Card>
             <CardContent>
               <Grid container spacing={3}>
@@ -167,7 +189,7 @@ export default function PlayerPaymnetTab() {
                 <Grid item md={6} xs={12}></Grid>
 
                 <Grid item md={12} xs={12} textAlign="center">
-                  <Button variant="outlined" color="primary">
+                  <Button type="submit" variant="outlined" color="primary">
                     Pay
                   </Button>
                 </Grid>

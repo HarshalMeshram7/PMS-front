@@ -16,16 +16,16 @@ import {
     FormControl,
     TextareaAutosize
 } from "@mui/material";
-import { bool } from "prop-types";
-import { LocalizationProvider } from "@mui/x-date-pickers";
+
 
 
 
 export default function ContractTransferLocking() {
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
-            BudgetDetails: "",
-            DateOfBirth: "",
+            LoanStartDate: "",
+            LoanEndDate: "",
 
         },
         validationSchema: Yup.object({}),
@@ -68,49 +68,13 @@ export default function ContractTransferLocking() {
                                             }
                                             label="Transfer Player Locked"
                                         />
-
                                     </FormGroup>
                                 </FormControl>
                             </Grid>
 
                             <Grid item md={6} xs={12}>
-                                <Typography>Loan Period: </Typography>
+                                <Typography>Loan Period Start Date: </Typography>
                             </Grid>
-
-                            {/* <Grid item md={6} xs={12}>
-                                <TextareaAutosize
-                                    minRows={6}
-                                    style={{ width: 200 }}
-                                    error={Boolean(formik.touched.BudgetDetails && formik.errors.BudgetDetails)}
-                                    fullWidth
-                                    helperText={formik.touched.BudgetDetails && formik.errors.BudgetDetails}
-                                    label="Budget Details"
-                                    margin="dense"
-                                    name="BudgetDetails"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="number"
-                                    value={formik.values.BudgetDetails}
-                                    variant="outlined"
-                                />
-                            </Grid> */}
-
-
-                            {/* <Grid item md={6} xs={12}>
-                                <TextField
-                                    error={Boolean(formik.touched.DateOfBirth && formik.errors.DateOfBirth)}
-                                    fullWidth
-                                    helperText={formik.touched.DateOfBirth && formik.errors.DateOfBirth}
-                                    name="DateOfBirth"
-                                    label="Date of Birth"
-                                    margin="dense"
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.DateOfBirth}
-                                    onChange={formik.handleChange}
-                                    type="date"
-                                    variant="outlined"
-                                />
-                            </Grid> */}
 
                             {/* <Grid item md={6} xs={12}>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -131,6 +95,44 @@ export default function ContractTransferLocking() {
                                     />
                                 </LocalizationProvider>
                             </Grid> */}
+
+                            <Grid item md={6} xs={12}>
+                                <TextField
+                                    error={Boolean(formik.touched.LoanStartDate && formik.errors.LoanStartDate)}
+                                    fullWidth
+                                    helperText={formik.touched.LoanStartDate && formik.errors.LoanStartDate}
+                                    label="Loan Start Date"
+                                    margin="dense"
+                                    InputLabelProps={{ shrink: true }}
+                                    name="LoanStartDate"
+                                    onBlur={formik.handleBlur}
+                                    onChange={formik.handleChange}
+                                    type="date"
+                                    value={formik.values.LoanStartDate}
+                                    variant="outlined"
+                                />
+                            </Grid>
+
+                            <Grid item md={6} xs={12}>
+                                <Typography>Loan Period End Date: </Typography>
+                            </Grid>
+
+                            <Grid item md={6} xs={12}>
+                                <TextField
+                                    error={Boolean(formik.touched.LoanEndDate && formik.errors.LoanEndDate)}
+                                    fullWidth
+                                    helperText={formik.touched.LoanEndDate && formik.errors.LoanEndDate}
+                                    label="Loan End Date"
+                                    InputLabelProps={{ shrink: true }}
+                                    margin="dense"
+                                    name="LoanEndDate"
+                                    onBlur={formik.handleBlur}
+                                    onChange={formik.handleChange}
+                                    type="date"
+                                    value={formik.values.LoanEndDate}
+                                    variant="outlined"
+                                />
+                            </Grid>
 
                             <Grid item md={12} xs={12} textAlign="center">
                                 <Button type="submit" variant="outlined" color="primary">

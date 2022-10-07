@@ -1,18 +1,23 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Grid, TextField, Button, Card, CardContent } from "@mui/material";
+import {
+    Grid, TextField, Button, Card, CardContent, MenuItem, FormControl,
+    Select, DialogTitle, InputLabel
+} from "@mui/material";
+import { Divider, Typography } from "@material-ui/core";
+import { Male } from "@mui/icons-material";
 
-export default function TMS_ITMSTab() {
+export default function PlayerCommunicationTab() {
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
-            TransferredToWhichClub: "",
-            PeriodOfTransfer: "",
-            Documentation: "",
-            MOU: "",
-            Agreement: "",
-            PaymentDetails: "",
-            
+            Coaches: "",
+            TeamMember: "",
+            GroupMessaging: "",
+            LiveChat: "",
+            NotificationRemainder: "",
+
         },
         validationSchema: Yup.object({}),
 
@@ -34,6 +39,7 @@ export default function TMS_ITMSTab() {
                         <Grid
                             container
                             spacing={3}
+                            sx={{ marginBottom: 2 }}
                         >
                             <Grid
                                 item
@@ -41,16 +47,16 @@ export default function TMS_ITMSTab() {
                                 xs={12}
                             >
                                 <TextField
-                                    error={Boolean(formik.touched.TransferredToWhichClub && formik.errors.TransferredToWhichClub)}
+                                    error={Boolean(formik.touched.Coaches && formik.errors.Coaches)}
                                     fullWidth
-                                    helperText={formik.touched.TransferredToWhichClub && formik.errors.TransferredToWhichClub}
-                                    label="Transferred To Which Club"
+                                    helperText={formik.touched.Coaches && formik.errors.Coaches}
+                                    label="Coaches"
                                     margin="dense"
-                                    name="TransferredToWhichClub"
+                                    name="Coaches"
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
                                     type="text"
-                                    value={formik.values.TransferredToWhichClub}
+                                    value={formik.values.Coaches}
                                     variant="outlined"
                                 />
                             </Grid>
@@ -61,16 +67,16 @@ export default function TMS_ITMSTab() {
                                 xs={12}
                             >
                                 <TextField
-                                    error={Boolean(formik.touched.PeriodOfTransfer && formik.errors.PeriodOfTransfer)}
+                                    error={Boolean(formik.touched.TeamMember && formik.errors.TeamMember)}
                                     fullWidth
-                                    helperText={formik.touched.PeriodOfTransfer && formik.errors.PeriodOfTransfer}
-                                    label="Period Of Transfer"
+                                    helperText={formik.touched.TeamMember && formik.errors.TeamMember}
+                                    label="Team Member"
                                     margin="dense"
-                                    name="PeriodOfTransfer"
+                                    name="TeamMember"
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
                                     type="text"
-                                    value={formik.values.PeriodOfTransfer}
+                                    value={formik.values.TeamMember}
                                     variant="outlined"
                                 />
                             </Grid>
@@ -81,17 +87,16 @@ export default function TMS_ITMSTab() {
                                 xs={12}
                             >
                                 <TextField
-                                    error={Boolean(formik.touched.Documentation && formik.errors.Documentation)}
+                                    error={Boolean(formik.touched.GroupMessaging && formik.errors.GroupMessaging)}
                                     fullWidth
-                                    helperText={formik.touched.Documentation && formik.errors.Documentation}
-                                    label="Documentation"
+                                    helperText={formik.touched.GroupMessaging && formik.errors.GroupMessaging}
+                                    label="Group Messaging"
                                     margin="dense"
-                                    InputLabelProps={{ shrink: true }}
-                                    name="Documentation"
+                                    name="GroupMessaging"
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
-                                    type="file"
-                                    value={formik.values.Documentation}
+                                    type="text"
+                                    value={formik.values.GroupMessaging}
                                     variant="outlined"
                                 />
                             </Grid>
@@ -102,16 +107,16 @@ export default function TMS_ITMSTab() {
                                 xs={12}
                             >
                                 <TextField
-                                    error={Boolean(formik.touched.MOU && formik.errors.MOU)}
+                                    error={Boolean(formik.touched.LiveChat && formik.errors.LiveChat)}
                                     fullWidth
-                                    helperText={formik.touched.MOU && formik.errors.MOU}
-                                    label="MOU"
+                                    helperText={formik.touched.LiveChat && formik.errors.LiveChat}
+                                    label="Live Chat"
                                     margin="dense"
-                                    name="MOU"
+                                    name="LiveChat"
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
                                     type="text"
-                                    value={formik.values.MOU}
+                                    value={formik.values.LiveChat}
                                     variant="outlined"
                                 />
                             </Grid>
@@ -122,48 +127,26 @@ export default function TMS_ITMSTab() {
                                 xs={12}
                             >
                                 <TextField
-                                    error={Boolean(formik.touched.Agreement && formik.errors.Agreement)}
+                                    error={Boolean(formik.touched.NotificationRemainder && formik.errors.NotificationRemainder)}
                                     fullWidth
-                                    helperText={formik.touched.Agreement && formik.errors.Agreement}
-                                    label="Agreement"
+                                    helperText={formik.touched.NotificationRemainder && formik.errors.NotificationRemainder}
+                                    label="Notification Remainder"
                                     margin="dense"
-                                    name="Agreement"
+                                    name="NotificationRemainder"
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
                                     type="text"
-                                    value={formik.values.Agreement}
+                                    value={formik.values.NotificationRemainder}
                                     variant="outlined"
                                 />
                             </Grid>
-
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    error={Boolean(formik.touched.PaymentDetails && formik.errors.PaymentDetails)}
-                                    fullWidth
-                                    helperText={formik.touched.PaymentDetails && formik.errors.PaymentDetails}
-                                    label="Payment Details"
-                                    margin="dense"
-                                    name="PaymentDetails"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="text"
-                                    value={formik.values.PaymentDetails}
-                                    variant="outlined"
-                                />
-                            </Grid>
-
-                            <Grid item md={12} xs={12} textAlign="center">
-                                <Button type="submit" variant="outlined" color="primary">
-                                    Save
-                                </Button>
-                            </Grid>
-
                         </Grid>
 
+                        <Grid item md={12} xs={12} textAlign="center">
+                            <Button sx={{ marginTop: 2 }} type="submit" variant="outlined" color="primary">
+                                Save
+                            </Button>
+                        </Grid>
                     </CardContent>
                 </Card>
             </form>

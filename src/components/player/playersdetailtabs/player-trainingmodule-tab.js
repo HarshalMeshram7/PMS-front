@@ -1,15 +1,20 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Grid, TextField, Button, Card, CardContent } from "@mui/material";
+import {
+    Grid, TextField, Button, Card, CardContent, MenuItem, FormControl,
+    Select, DialogTitle, InputLabel
+} from "@mui/material";
+import { Divider, Typography } from "@material-ui/core";
+import { Male } from "@mui/icons-material";
 
-export default function ContractPlayerNonProfessionTab() {
+export default function PlayerTrainingModuleTab() {
     const formik = useFormik({
         initialValues: {
-            Documentation: "",
-            MOU: "",
-            Agreement: "",
-            
+            ShortTermTraining: "",
+            LongTermTraining: "",
+            SpecialTraining: "",
+           
         },
         validationSchema: Yup.object({}),
 
@@ -31,25 +36,24 @@ export default function ContractPlayerNonProfessionTab() {
                         <Grid
                             container
                             spacing={3}
+                            sx={{ marginBottom: 2 }}
                         >
-                                            
                             <Grid
                                 item
                                 md={6}
                                 xs={12}
                             >
                                 <TextField
-                                    error={Boolean(formik.touched.Documentation && formik.errors.Documentation)}
+                                    error={Boolean(formik.touched.ShortTermTraining && formik.errors.ShortTermTraining)}
                                     fullWidth
-                                    helperText={formik.touched.Documentation && formik.errors.Documentation}
-                                    label="Documentation"
-                                    InputLabelProps={{ shrink: true }}
+                                    helperText={formik.touched.ShortTermTraining && formik.errors.ShortTermTraining}
+                                    label="Short Term Training"
                                     margin="dense"
-                                    name="Documentation"
+                                    name="ShortTermTraining"
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
-                                    type="file"
-                                    value={formik.values.Documentation}
+                                    type="text"
+                                    value={formik.values.ShortTermTraining}
                                     variant="outlined"
                                 />
                             </Grid>
@@ -60,50 +64,47 @@ export default function ContractPlayerNonProfessionTab() {
                                 xs={12}
                             >
                                 <TextField
-                                    error={Boolean(formik.touched.Agreement && formik.errors.Agreement)}
+                                    error={Boolean(formik.touched.LongTermTraining && formik.errors.LongTermTraining)}
                                     fullWidth
-                                    helperText={formik.touched.Agreement && formik.errors.Agreement}
-                                    label="Agreement"
+                                    helperText={formik.touched.LongTermTraining && formik.errors.LongTermTraining}
+                                    label="Long Term Training"
                                     margin="dense"
-                                    InputLabelProps={{ shrink: true }}
-                                    name="Agreement"
+                                    name="LongTermTraining"
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
-                                    type="file"
-                                    value={formik.values.Agreement}
+                                    type="text"
+                                    value={formik.values.LongTermTraining}
                                     variant="outlined"
                                 />
                             </Grid>
-                            
+
                             <Grid
                                 item
                                 md={6}
                                 xs={12}
                             >
                                 <TextField
-                                    error={Boolean(formik.touched.MOU && formik.errors.MOU)}
+                                    error={Boolean(formik.touched.SpecialTraining && formik.errors.SpecialTraining)}
                                     fullWidth
-                                    helperText={formik.touched.MOU && formik.errors.MOU}
-                                    label="MOU"
+                                    helperText={formik.touched.SpecialTraining && formik.errors.SpecialTraining}
+                                    label="Special Training"
                                     margin="dense"
-                                    InputLabelProps={{ shrink: true }}
-                                    name="MOU"
+                                    name="SpecialTraining"
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
-                                    type="file"
-                                    value={formik.values.MOU}
+                                    type="text"
+                                    value={formik.values.SpecialTraining}
                                     variant="outlined"
                                 />
-                            </Grid>
-
-                            <Grid item md={12} xs={12} textAlign="center">
-                                <Button type="submit" variant="outlined" color="primary">
-                                    Save
-                                </Button>
                             </Grid>
 
                         </Grid>
 
+                        <Grid item md={12} xs={12} textAlign="center">
+                            <Button sx={{ marginTop: 2 }} type="submit" variant="outlined" color="primary">
+                                Save
+                            </Button>
+                        </Grid>
                     </CardContent>
                 </Card>
             </form>

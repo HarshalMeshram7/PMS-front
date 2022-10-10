@@ -79,18 +79,19 @@ export const getAcademy = async (params) => {
     }
 };
 
-export const deleteAcademy = async (email) => {
+export const deleteAcademy = async (ID) => {
     const { token } = useStorage();
     if (!token) {
         throw "No Token";
     }
     try {
 
-        const res = await axios.post(`${MAIN_URL}/api/academy/deleteacademy/`,{email:email}, {
+        const res = await axios.post(`${MAIN_URL2}/Deleteacademy/`,{academy:ID}, {
             headers: {
                 Authorization: "Bearer " + token,
             },
         });
+        console.log(res);
         return res.data;
     } catch (error) {
         console.log(error);

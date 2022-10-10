@@ -146,7 +146,7 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => 
         setLoading(true);
         try {
             deleteAcademy(data).then((response) => {
-                if (response.status == "success") {
+                if (response.status == "SUCCESS") {
                     handleClose();
                     enqueueSnackbar("Academy Deleted Succesfully", { variant: "success" });
                     mutate();
@@ -675,7 +675,7 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => 
                                                         style={{ backgroundColor: 'red' }}
                                                         onClick={() => {
 
-                                                            handleDelete(academy.email)
+                                                            handleDelete(academy.ID)
                                                         }}>Delete</Button>
                                                 </Grid>
                                                 <Grid

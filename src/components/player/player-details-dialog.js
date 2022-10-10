@@ -53,6 +53,7 @@ import PlayerTrainingManagementTab from "./playersdetailtabs/player-trainingmana
 import PlayerStatisticTab from "./playersdetailtabs/player-statistic.js";
 import PlayerCommunicationTab from "./playersdetailtabs/player-communication.js";
 import PlayerProfileTab from "./playersdetailtabs/player-profile.js";
+import PlayerTMSITMSTab from "./playersdetailtabs/player-TMSITMS-tab.js";
 
 
 
@@ -494,7 +495,7 @@ export const PlayerDetailsDialog = ({ open, handleClose, }) => {
                             {value == "0" && <PlayerDetailsTab />}
                             {value == "1" && <PlayerPaymnetTab />}
                             {value == "2" && <PlayerContractType />}
-                            {value == "3" && <>TMS / ITMS</>}
+                            {value == "3" && <PlayerTMSITMSTab />}
                             {value == "4" && <PlayerFitnessTab />}
                             {value == "5" && <PlayerTrainingModuleTab />}
                             {value == "6" && <PlayerTrainingManagementTab />}

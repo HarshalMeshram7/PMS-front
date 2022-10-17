@@ -52,7 +52,7 @@ export default function ContractType() {
                                         onChange={formik.handleChange}
                                         value={formik.values.ContractDuration}
                                     >
-                                        <FormControlLabel value="1Year" control={<Radio />} label="1 Year Contract" />
+                                        <FormControlLabel value="1Year" checked control={<Radio />} label="1 Year Contract" />
                                         <FormControlLabel value="3Year" control={<Radio />} label="3 Year Contract" />
                                         <FormControlLabel value="Other" control={<Radio />} label="Other" />
                                     </RadioGroup>

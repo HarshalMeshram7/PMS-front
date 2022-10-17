@@ -227,7 +227,7 @@ export const AddTeamDialog = ({ open, handleClose }) => {
                                 name="phone"
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
-                                type="tel"
+                                type="phone"
                                 value={formik.values.phone}
                                 variant="outlined"
                             />

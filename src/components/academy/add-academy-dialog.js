@@ -243,12 +243,12 @@ export const AddAcademyDialog = ({ open, handleClose, mutate }) => {
                                 error={Boolean(formik.touched.phone && formik.errors.phone)}
                                 fullWidth
                                 helperText={formik.touched.phone && formik.errors.phone}
-                                label="Phone Number"
+                                label="Phone Numbersss"
                                 margin="dense"
                                 name="phone"
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
-                                type="tel"
+                                type="number"
                                 value={formik.values.phone}
                                 variant="outlined"
                             />
@@ -555,7 +555,7 @@ export const AddAcademyDialog = ({ open, handleClose, mutate }) => {
                             />
                             <Button onClick={() => { document.getElementById("uploadBanner").click() }}>Upload Banner</Button>
                         </Grid>
-                        
+
                         <Grid />
                     </Grid>
                 </DialogContent>

@@ -279,6 +279,7 @@ export const AddPlayerDialog = ({ open, handleClose }) => {
                                 fullWidth
                                 helperText={formik.touched.DateOfBirth && formik.errors.DateOfBirth}
                                 label="Date Of Birth"
+                                InputLabelProps={{ shrink: true }}
                                 margin="dense"
                                 name="DateOfBirth"
                                 onBlur={formik.handleBlur}
@@ -360,6 +361,7 @@ export const AddPlayerDialog = ({ open, handleClose }) => {
                                 helperText={formik.touched.Documents && formik.errors.Documents}
                                 label="Documents"
                                 margin="dense"
+                                InputLabelProps={{ shrink: true }}
                                 name="Documents"
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
@@ -399,6 +401,7 @@ export const AddPlayerDialog = ({ open, handleClose }) => {
                                 fullWidth
                                 helperText={formik.touched.Photo && formik.errors.Photo}
                                 label="Photo"
+                                InputLabelProps={{ shrink: true }}
                                 margin="dense"
                                 name="Photo"
                                 onBlur={formik.handleBlur}

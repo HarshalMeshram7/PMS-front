@@ -174,6 +174,7 @@ export const AddCoachDialog = ({ open, handleClose }) => {
                                 helperText={formik.touched.DateOfBirth && formik.errors.DateOfBirth}
                                 name="DateOfBirth"
                                 label="Date of Birth"
+                                InputLabelProps={{ shrink: true }}
                                 margin="dense"
                                 onBlur={formik.handleBlur}
                                 value={formik.values.DateOfBirth}

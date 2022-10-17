@@ -254,19 +254,21 @@ export const AddContractDialog = ({ open, handleClose }) => {
                             md={6}
                             xs={12}
                         >
-                            <TextField
-                                error={Boolean(formik.touched.Gender && formik.errors.Gender)}
-                                fullWidth
-                                helperText={formik.touched.Gender && formik.errors.Gender}
-                                label="Gender"
-                                margin="dense"
-                                name="Gender"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="text"
-                                value={formik.values.Gender}
-                                variant="outlined"
-                            />
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-helper-label">Gender</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-helper-label"
+                                    id="demo-simple-select-helper"
+                                    value={formik.values.Gender}
+                                    name="Gender"
+                                    label="Gender"
+                                    onChange={formik.handleChange}
+                                >
+                                    <MenuItem value="Male">Male</MenuItem>
+                                    <MenuItem value="Female">Female</MenuItem>
+                                    <MenuItem value="Other">Other</MenuItem>
+                                </Select>
+                            </FormControl>
                         </Grid>
 
                         <Grid
@@ -280,6 +282,7 @@ export const AddContractDialog = ({ open, handleClose }) => {
                                 helperText={formik.touched.DateOfBirth && formik.errors.DateOfBirth}
                                 label="Date Of Birth"
                                 margin="dense"
+                                InputLabelProps={{ shrink: true }}
                                 name="DateOfBirth"
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
@@ -360,6 +363,7 @@ export const AddContractDialog = ({ open, handleClose }) => {
                                 helperText={formik.touched.Documents && formik.errors.Documents}
                                 label="Documents"
                                 margin="dense"
+                                InputLabelProps={{ shrink: true }}
                                 name="Documents"
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
@@ -401,6 +405,7 @@ export const AddContractDialog = ({ open, handleClose }) => {
                                 label="Photo"
                                 margin="dense"
                                 name="Photo"
+                                InputLabelProps={{ shrink: true }}
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
                                 type="file"

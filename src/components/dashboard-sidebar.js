@@ -100,6 +100,13 @@ const items = [
   },
 
   {
+    href: '/administrative-template',
+    icon: (<GroupsIcon fontSize="small" />),
+    title: 'Administrative Template',
+    role: '3'
+  },
+
+  {
     href: '/staff-registration',
     icon: (<HowToRegIcon fontSize="small" />),
     title: 'Staff Registration',

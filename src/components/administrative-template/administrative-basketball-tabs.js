@@ -16,6 +16,7 @@ import { useState } from "react";
 import AdministrativeProfessionalTab from "./administrative-tabs/professional";
 import AdministrativeLoanPlayerTab from "./administrative-tabs/loan-player";
 import AdministrativePlayerPlayingPosition from "./administrative-tabs/player-playing-position";
+import BasketballPlayerPerformanceIndicator from "./administrative-tabs/basketball-PPIndicator";
 
 const AdministrativeBasketballTabs = () => {
 
@@ -57,14 +58,19 @@ const AdministrativeBasketballTabs = () => {
                             <LinkTab value="0" label="Professional" />
                             <LinkTab value="1" label="Loan Player" />
                             <LinkTab value="2" label="Player Playing Position" />
+                            <LinkTab value="3" label="Player Performance Indicator" />
                         </Tabs>
                     </Box>
 
                 </Grid>
                 <Container maxWidth="md">
                     {value == "0" && <AdministrativeProfessionalTab sports="Basketball - Profession" />}
-                    {value == "1" && <AdministrativeLoanPlayerTab sports="Basketball- Loan Player"/>}
-                    {value == "2" && <AdministrativePlayerPlayingPosition sports="Basketball- Player Playing Position"/>}
+                    {value == "1" && <AdministrativeLoanPlayerTab sports="Basketball- Loan Player" />}
+                    {value == "2" && <AdministrativePlayerPlayingPosition sports="Basketball- Player Playing Position" />}
+                    {value == "3" && <BasketballPlayerPerformanceIndicator />}
+
+
+
 
                 </Container>
             </DialogContent>

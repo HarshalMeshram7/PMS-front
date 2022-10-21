@@ -17,6 +17,7 @@ import AdministrativeProfessionalTab from "./administrative-tabs/professional";
 import AdministrativeLoanPlayerTab from "./administrative-tabs/loan-player";
 import AdministrativePlayerPlayingPosition from "./administrative-tabs/player-playing-position";
 import VolleyPlayerPlayingPosition from "./administrative-tabs/volley-player-playing-position";
+import VolleyballPlayerPerformanceIndicator from "./administrative-tabs/volleyball-PPIndicator";
 
 const AdministrativeVolleyballTabs = () => {
 
@@ -58,6 +59,7 @@ const AdministrativeVolleyballTabs = () => {
                             <LinkTab value="0" label="Professional" />
                             <LinkTab value="1" label="Loan Player" />
                             <LinkTab value="2" label="Player Playing Position" />
+                            <LinkTab value="3" label="Player Performance Indicator" />
                         </Tabs>
                     </Box>
 
@@ -66,6 +68,8 @@ const AdministrativeVolleyballTabs = () => {
                     {value == "0" && <AdministrativeProfessionalTab sports="Volleyball - Professional" />}
                     {value == "1" && <AdministrativeLoanPlayerTab sports="Volleyball- Loan Player"/>}
                     {value == "2" && <VolleyPlayerPlayingPosition />} 
+                    {value == "3" && <h3>Player Performance Indicator</h3>} 
+                    {value == "3" && <VolleyballPlayerPerformanceIndicator/>} 
 
                 </Container>
             </DialogContent>

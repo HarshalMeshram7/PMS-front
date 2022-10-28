@@ -76,8 +76,14 @@ export const handlePriview = (fileName) => {
 };
 
 // retrive file name
-export const getFileName = (url) =>{
-  if(url == ""){
+export const getFileName = (url ) =>{
+  if(url == "" ){
+    return url
+  }
+  if(url == null ){
+    return url
+  }
+  if(url == undefined ){
     return url
   }
   return url?.substring(url.lastIndexOf('/')+1)

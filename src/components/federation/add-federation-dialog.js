@@ -73,8 +73,6 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
     setUploadedBanner(false)
     setSelectedBanner(e.target.files[0])
     setSelectedBannerName(e.target.files[0].name)}
-    
-
 }
 const onFileUpload = async (file, id) => {
     setLoading(true)
@@ -183,7 +181,7 @@ const onFileUpload = async (file, id) => {
         await addFederation(finalData).then((resp) => {
           if (resp.status === "success") {
             handleClose();
-            enqueueSnackbar("Feferation Added Succesfully", { variant: "success" });
+            enqueueSnackbar("Federation Added Succesfully", { variant: "success" });
             mutate();
             setLoading(false);
           }

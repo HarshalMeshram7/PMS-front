@@ -71,7 +71,8 @@ const Federation = () => {
                     open={showAddFederationDialog}
                     handleClose={handleCloseAddFederation}
                 />
-                <FederationDetailsDialog federation={federation}
+                <FederationDetailsDialog 
+                    federation={federation}
                     mutate={mutate}
                     open={showFederationDetailsDialog}
                     handleClose={handleCloseFederationDetails} />

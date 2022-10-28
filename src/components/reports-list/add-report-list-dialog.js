@@ -24,6 +24,12 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import LoadingBox from "src/components/common/loading-box";
 import ReportListFederationTab from "./reports-list-tabs/report-federation-tab";
+import ReportListClubTab from "./reports-list-tabs/report-club-tab";
+import ReportListTeamTabs from "./reports-list-tabs/report-team-tab";
+import ReportListPlayerTab from "./reports-list-tabs/report-player-tab";
+import ReportListRefereeTab from "./reports-list-tabs/report-referee-tab";
+import ReportListCoachesTab from "./reports-list-tabs/report-coach-tab";
+import ReportListGeneralTab from "./reports-list-tabs/report-general-tab";
 
 
 
@@ -116,23 +122,22 @@ export const AddReportListDialog = ({ open, handleClose }) => {
                         </Box>
                     </Grid>
                     <Container maxWidth="md">
-                        {/* {value == "0" && <>Federation</>} */}
-                        {value == "0" && <ReportListFederationTab/>}
-                                          
-                        {value == "1" && <>Club</>}
-                        {value == "2" && <>Team</>}
-                        {value == "3" && <>Player</>}
-                        {value == "4" && <>Referee</>}
-                        {value == "5" && <>Coach</>}
-                        {value == "6" && <>General</>}
+                        {value == "0" && <ReportListFederationTab />}
+                        {value == "1" && <ReportListClubTab />}
+                        {value == "2" && <ReportListTeamTabs />}
+                        {value == "3" && <ReportListPlayerTab/> }
+                        {value == "4" && <ReportListRefereeTab/> }
+                        {value == "5" && <ReportListCoachesTab/> }
+
+                        {value == "6" && <ReportListGeneralTab/> }
 
                     </Container>
 
                 </DialogContent>
-                <DialogActions>
+                {/* <DialogActions>
                     <Button onClick={handleClose} >Cancel</Button>
                     <Button type="submit" variant="contained">Addd</Button>
-                </DialogActions>
+                </DialogActions> */}
             </form>
         </Dialog>
     );

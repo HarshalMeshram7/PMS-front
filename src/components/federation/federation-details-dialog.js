@@ -26,7 +26,7 @@ import { players } from "../../__mocks__/players.js";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSnackbar } from "notistack";
-import { updateFederation } from "src/services/federationRequest.js";
+import { deleteFederation ,updateFederation } from "src/services/federationRequest.js";
 import DeleteIcon from "@mui/icons-material/Delete";
 import uploadFileToBlob, { deleteBlob, handlePriview, getFileName } from "src/utils/azureBlob";
 
@@ -227,19 +227,19 @@ export const FederationDetailsDialog = ({ open, handleClose, federation, mutate 
   const handleDelete = (data) => {
     setLoading(true);
     try {
-      console.log(data);
-      // deletefederation(data).then((response) => {
+      // let finalData = {Federation:data}
+      // deleteFederation(finalData).then((response) => {
       //     if (response.status == "success") {
       handleClose();
       enqueueSnackbar("federation Deleted Succesfully", { variant: "success" });
-      //         mutate();
+              mutate();
       setLoading(false);
-      //     }
-      //     else {
-      //         handleClose();
-      //         enqueueSnackbar(`Error : ${response.message}`, { variant: "error" });
-      //         setLoading(false);
-      //     }
+          // }
+          // else {
+          //     handleClose();
+          //     enqueueSnackbar(`Error : ${response.message}`, { variant: "error" });
+          //     setLoading(false);
+          // }
       // });
     } catch (error) {
       console.log(error);
@@ -664,7 +664,7 @@ export const FederationDetailsDialog = ({ open, handleClose, federation, mutate 
                             variant="contained"
                             style={{ backgroundColor: "red" }}
                             onClick={() => {
-                              handleDelete(federation.Email);
+                              handleDelete(federation.ID);
                             }}
                           >
                             Delete

@@ -81,14 +81,14 @@ export const getFederation = async (params) => {
     }
 };
 
-export const deleteFederation = async (email) => {
+export const deleteFederation = async (data) => {
     const { token } = useStorage();
     if (!token) {
         throw "No Token";
     }
     try {
 
-        const res = await axios.post(`${MAIN_URL}/api/federation/deletefederation/`,{email:email}, {
+        const res = await axios.post(`${MAIN_URL2}/Deletefederation/`,data, {
             headers: {
                 Authorization: "Bearer " + token,
             },

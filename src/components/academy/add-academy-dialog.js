@@ -8,6 +8,8 @@ import {
     Autocomplete,
     DialogTitle,
     TextField,
+    IconButton,
+    Typography,
     FormControl,
     InputLabel,
     Grid,
@@ -17,6 +19,7 @@ import {
     Box,
     Snackbar,
 } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useFormik } from "formik";
@@ -25,6 +28,8 @@ import { addAcademy } from "src/services/academyRequest";
 import LoadingBox from "src/components/common/loading-box";
 import { parseWithOptions } from "date-fns/fp";
 import { OnlinePredictionSharp } from "@mui/icons-material";
+import uploadFileToBlob, { deleteBlob, handlePriview, getFileName } from "src/utils/azureBlob";
+
 
 const sportsList = [
     {
@@ -72,8 +77,82 @@ const federationID = [
 ];
 
 export const AddAcademyDialog = ({ open, handleClose, mutate }) => {
-    const { enqueueSnackbar } = useSnackbar();
+        const { enqueueSnackbar } = useSnackbar();
     const [loading, setLoading] = useState();
+
+    //   logo upload
+    const [selectedLogo, setSelectedLogo] = useState(null);
+    const [selectedLogoName, setSelectedLogoName] = useState("");
+
+    const [uploadedLogo, setUploadedLogo] = useState(false);
+    const [uploadedLogoName, setUploadedLogoName] = useState("");
+    //  banner banner
+    const [selectedBanner, setSelectedBanner] = useState(null);
+    const [selectedBannerName, setSelectedBannerName] = useState("");
+
+    const [uploadedBanner, setUploadedBanner] = useState(false);
+    const [uploadedBannerName, setUploadedBannerName] = useState("");
+
+    const onFileChnage = (e) => {
+        if (e.target.name == "logo") {
+            setUploadedLogo(false)
+            setSelectedLogo(e.target.files[0])
+            setSelectedLogoName(e.target.files[0].name)
+        }
+
+        if (e.target.name == "banner") {
+            setUploadedBanner(false)
+            setSelectedBanner(e.target.files[0])
+            setSelectedBannerName(e.target.files[0].name)
+        }
+    }
+    const onFileUpload = async (file, id) => {
+        setLoading(true)
+
+        // *** UPLOAD TO AZURE STORAGE ***
+        const blobsInContainer = await uploadFileToBlob(file).then(() => {
+
+            if (id == 1) {
+                // prepare UI for results
+                setUploadedLogo(true);
+                setUploadedLogoName(selectedLogoName);
+                //   reseting selected files
+                setSelectedLogo(null);
+                setSelectedLogoName("");
+            }
+
+            if (id == 2) {
+                // prepare UI for results
+                setUploadedBanner(true);
+                setUploadedBannerName(selectedBannerName);
+                //   reseting selected files
+                setSelectedBanner(null);
+                setSelectedBannerName("");
+            }
+
+        });
+
+        setLoading(false)
+    };
+
+    const onDeleteFile = (fileName, id) => {
+        deleteBlob(fileName)
+            .then(() => {
+
+                if (id == 1) {
+                    setSelectedLogo(null);
+                    setUploadedLogoName("");
+                    setUploadedLogo(false);
+                }
+
+                if (id == 2) {
+                    setSelectedBanner(null);
+                    setUploadedBannerName("");
+                    setUploadedBanner(false);
+                }
+
+            })
+    }
 
     const formik = useFormik({
         initialValues: {
@@ -147,7 +226,8 @@ export const AddAcademyDialog = ({ open, handleClose, mutate }) => {
             try {
                 console.log("**********");
                 console.log(data);
-                await addAcademy(data).then((resp) => {
+                let finalData = { ...data, logo: handlePriview(uploadedLogoName), banner: handlePriview(uploadedBannerName) }
+                await addAcademy(finalData).then((resp) => {
                     if (resp.status === "success") {
                         handleClose();
                         enqueueSnackbar("Academy Added Succesfully", { variant: "success" });
@@ -522,16 +602,34 @@ export const AddAcademyDialog = ({ open, handleClose, mutate }) => {
                                 fullWidth
                                 helperText={formik.touched.logo && formik.errors.logo}
                                 label="Logo"
-                                id="uploadLogo"
+                                id="uploadAcademyLogo"
                                 margin="dense"
                                 name="logo"
                                 onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
+                                onChange={onFileChnage}
                                 type="file"
                                 value={formik.values.logo}
                                 variant="outlined"
                             />
-                            <Button onClick={() => { document.getElementById("uploadLogo").click() }}>Upload Logo</Button>
+                            <Button onClick={() => { document.getElementById("uploadAcademyLogo").click() }}>Upload Logo</Button>
+                            <Button disabled>
+                                <Typography>{selectedLogoName}</Typography>
+                            </Button>
+
+                            {uploadedLogo ? <Button disabled variant="contained">Uploaded &#10004; </Button> : <Button variant="contained" disabled={!selectedLogo} onClick={(e) => {
+                                onFileUpload(selectedLogo, 1)
+                            }} >Upload</Button>}
+
+                            <br></br>
+                            {uploadedLogo ? <><Button target="blank" href={handlePriview(uploadedLogoName)}>
+                                <Typography>{uploadedLogoName}</Typography>
+                            </Button>
+                                <IconButton onClick={() => {
+                                    onDeleteFile(uploadedLogoName, 1)
+                                }} aria-label="delete" size="large">
+                                    <DeleteIcon />
+                                </IconButton></> : ""}
+
                         </Grid>
 
                         <Grid
@@ -544,16 +642,32 @@ export const AddAcademyDialog = ({ open, handleClose, mutate }) => {
                                 fullWidth
                                 helperText={formik.touched.banner && formik.errors.banner}
                                 label="Banner"
-                                id="uploadBanner"
+                                id="uploadAcademyBanner"
                                 margin="dense"
                                 name="banner"
                                 onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
+                                onChange={onFileChnage}
                                 type="file"
                                 value={formik.values.banner}
                                 variant="outlined"
                             />
-                            <Button onClick={() => { document.getElementById("uploadBanner").click() }}>Upload Banner</Button>
+                            <Button onClick={() => { document.getElementById("uploadAcademyBanner").click() }}>Upload Banner</Button>
+
+                            <Button disabled>
+                                <Typography>{selectedBannerName}</Typography>
+                            </Button>
+                            {uploadedBanner ? <Button disabled variant="contained">Uploaded &#10004; </Button> : <Button variant="contained" disabled={!selectedBanner} onClick={(e) => {
+                                onFileUpload(selectedBanner, 2)
+                            }} >Upload</Button>}
+                            <br></br>
+                            {uploadedBanner ? <><Button target="blank" href={handlePriview(uploadedBannerName)}>
+                                <Typography>{uploadedBannerName}</Typography>
+                            </Button>
+                                <IconButton onClick={() => {
+                                    onDeleteFile(uploadedBannerName, 2)
+                                }} aria-label="delete" size="large">
+                                    <DeleteIcon />
+                                </IconButton></> : ""}
                         </Grid>
 
                         <Grid />

@@ -27,6 +27,7 @@ import * as Yup from "yup";
 import { useSnackbar } from "notistack";
 import { deleteAcademy, updateAcademy } from "src/services/academyRequest.js";
 import banner from '../../../public/static/images/background/register.jpg';
+import Academy from "src/pages/academy.js";
 
 const clubID = [
     {
@@ -69,7 +70,7 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => 
         timezone: 'GTM-7'
     };
     const [loading, setLoading] = useState();
-
+    console.log(academy);
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
@@ -190,7 +191,7 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => 
                             width: "100%",
                             height: "200px",
                             marginBottom: "-100px",
-                            background: `url(${banner.src})center center`,
+                            background: `url(${academy?.banner})center center`,
                         }}></div>
 
                         <Container maxWidth="lg">

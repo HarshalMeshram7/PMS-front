@@ -4,7 +4,6 @@ import { Clock as ClockIcon } from '../../icons/clock';
 import { Download as DownloadIcon } from '../../icons/download';
 
 export const AcademyCard = ({ product, handleOpenAcademyDetails, handleOpenAcademyFinance, ...rest }) => {
-  
   return (
     <Card
       sx={{
@@ -24,7 +23,7 @@ export const AcademyCard = ({ product, handleOpenAcademyDetails, handleOpenAcade
         >
           <Avatar
             alt="Product"
-            // src={product.logo}
+            src={product.Logo}
             variant="square"
           />
         </Box>

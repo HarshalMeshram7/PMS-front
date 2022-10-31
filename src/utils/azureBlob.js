@@ -72,7 +72,7 @@ export const deleteBlob = async (blobName) => {
 
 // priview
 export const handlePriview = (fileName) => {
-  return `https://samsmyhtp.blob.core.windows.net/data1/${fileName}`;
+  return `https://${storageAccountName}.blob.core.windows.net/${containerName}/${fileName}`;
 };
 
 // retrive file name

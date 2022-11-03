@@ -26,7 +26,7 @@ import { players } from "../../__mocks__/players.js";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSnackbar } from "notistack";
-import { deleteFederation ,updateFederation } from "src/services/federationRequest.js";
+import { deleteFederation, updateFederation } from "src/services/federationRequest.js";
 import DeleteIcon from "@mui/icons-material/Delete";
 import uploadFileToBlob, { deleteBlob, handlePriview, getFileName } from "src/utils/azureBlob";
 
@@ -60,13 +60,13 @@ export const FederationDetailsDialog = ({ open, handleClose, federation, mutate 
     if (federation?.Logo !== "") {
       if (federation?.Logo !== null) {
         if (federation?.Logo !== undefined) {
-          setUploadedLogoName(getFileName(federation?.Logo ));
+          setUploadedLogoName(getFileName(federation?.Logo));
           setUploadedLogo(true);
-        }else {
+        } else {
           setUploadedLogoName("");
           setUploadedLogo(false);
         }
-      }else {
+      } else {
         setUploadedLogoName("");
         setUploadedLogo(false);
       }
@@ -80,11 +80,11 @@ export const FederationDetailsDialog = ({ open, handleClose, federation, mutate 
         if (federation?.Banner !== undefined) {
           setUploadedBannerName(getFileName(federation?.Banner));
           setUploadedBanner(true);
-        }else {
+        } else {
           setUploadedBannerName("");
           setUploadedBanner(false);
         }
-      }else {
+      } else {
         setUploadedBannerName("");
         setUploadedBanner(false);
       }
@@ -170,36 +170,22 @@ export const FederationDetailsDialog = ({ open, handleClose, federation, mutate 
       instagram: federation.Instagram,
     },
     validationSchema: Yup.object({
-      // federation: Yup
-      //     .string()
-      //     .max(100)
-      //     .required("federation Name is required"),
-      // address: Yup
-      //     .string()
-      // // .required('Required')
-      // ,
-      // phone: Yup.string()
-      //     .length(10)
-      //     .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
-      // // .required("Phone number is required")
-      // ,
-      // contactPersonName: Yup
-      //     .string()
-      //     .max(100)
-      // .required("Person Name is required")
-      // ,
-      // accreditation: Yup
-      //     .string()
-      //     .max(100),
-      // facebook: Yup
-      //     .string()
-      //     .max(100),
-      // twitter: Yup
-      //     .string()
-      //     .max(100),
-      // instagram: Yup
-      //     .string()
-      //     .max(100),
+      federation: Yup.string().max(30, "Not more than 30 characters").required("Federation Name is required"),
+
+      address: Yup.string()
+        .max(50, "Not more than 50 characters").required('Address required'),
+
+      phone: Yup.string()
+        .length(10)
+        // .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, "Phone number is not valid")
+        .required("Phone number is required"),
+
+      contactPersonName: Yup.string().max(30, "Not more than 30 characters").required("Contact Person Name is required"),
+
+      accreditation: Yup.string().max(30, "Not more than 30 characters"),
+      facebook: Yup.string().max(30, "Not more than 30 characters"),
+      twitter: Yup.string().max(30, "Not more than 30 characters"),
+      instagram: Yup.string().max(30, "Not more than 30 characters")
     }),
 
     onSubmit: async (data) => {
@@ -232,14 +218,14 @@ export const FederationDetailsDialog = ({ open, handleClose, federation, mutate 
       //     if (response.status == "success") {
       handleClose();
       enqueueSnackbar("federation Deleted Succesfully", { variant: "success" });
-              mutate();
+      mutate();
       setLoading(false);
-          // }
-          // else {
-          //     handleClose();
-          //     enqueueSnackbar(`Error : ${response.message}`, { variant: "error" });
-          //     setLoading(false);
-          // }
+      // }
+      // else {
+      //     handleClose();
+      //     enqueueSnackbar(`Error : ${response.message}`, { variant: "error" });
+      //     setLoading(false);
+      // }
       // });
     } catch (error) {
       console.log(error);

@@ -59,34 +59,25 @@ export const ClubDetailsDialog = ({ open, handleClose, club, mutate }) => {
         validationSchema: Yup.object({
             clubName: Yup
                 .string()
-                .max(100)
+                .max(30, "Not more than 30 characters")
                 .required("Club Name is required"),
-            address: Yup
-                .string()
-            // .required('Required')
-            ,
+
+            address: Yup.string().max(50, "Not more than 50 characters").required('Address required'),
+
             phone: Yup.string()
                 .length(10)
-                .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
-            // .required("Phone number is required")
+                // .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
+                .required("Phone number is required")
             ,
             personName: Yup
                 .string()
-                .max(100)
-            // .required("Person Name is required")
+                .max(30, "Person Name is required")
+                .required("Person Name is required")
             ,
-            accreditation: Yup
-                .string()
-                .max(100),
-            facebook: Yup
-                .string()
-                .max(100),
-            twitter: Yup
-                .string()
-                .max(100),
-            instagram: Yup
-                .string()
-                .max(100),
+            accreditation: Yup.string().max(30, "Not more than 30 characters"),
+            facebook: Yup.string().max(30, "Not more than 30 characters"),
+            twitter: Yup.string().max(30, "Not more than 30 characters"),
+            instagram: Yup.string().max(30, "Not more than 30 characters"),
         }),
 
         onSubmit: async (data) => {
@@ -340,7 +331,7 @@ export const ClubDetailsDialog = ({ open, handleClose, club, mutate }) => {
                                                         variant="outlined"
                                                     />
                                                 </Grid>
-                                                
+
                                                 <Grid
                                                     item
                                                     md={6}

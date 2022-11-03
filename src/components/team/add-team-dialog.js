@@ -58,45 +58,43 @@ export const AddTeamDialog = ({ open, handleClose }) => {
             cnfpassword: ""
         },
         validationSchema: Yup.object({
-            teamName: Yup
-                .string()
-                .max(100)
-                .required("Team Name is required"),
-            address: Yup
-                .string()
-            // .required('Required')
-            ,
+            teamName:
+                Yup.string().max(30, "Not more than 30 characters").required("Federation Name is required"),
+
+            address: Yup.string().max(50, "Not more than 50 characters")
+                .required('Address required'),
+
             phone: Yup.string()
                 .length(10)
-                .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
-            // .required("Phone number is required")
+                // .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
+                .required("Phone number is required")
             ,
             email: Yup
                 .string()
                 .email("Must be a valid Email")
-                .max(255)
-            // .required("Email is required")
+                .max(35, "Not more than 35 characters")
+                .required("Email is required")
             ,
             personName: Yup
                 .string()
-                .max(100)
-            // .required("Person Name is required")
-            ,
+                .max(30, "Not more than 30 characters")
+                .required("Contact Person Name is required"),
+
             accreditation: Yup
                 .string()
-                .max(100),
+                .max(30, "Not more than 30 characters"),
             accreditation: Yup
                 .string()
-                .max(100),
+                .max(30, "Not more than 30 characters"),
             facebook: Yup
                 .string()
-                .max(100),
+                .max(30, "Not more than 30 characters"),
             twitter: Yup
                 .string()
-                .max(100),
+                .max(30, "Not more than 30 characters"),
             instagram: Yup
                 .string()
-                .max(100),
+                .max(30, "Not more than 30 characters"),
             // sportsList: Yup
             //     .string()
             //     .max(100)
@@ -104,8 +102,10 @@ export const AddTeamDialog = ({ open, handleClose }) => {
             //     ,
             password: Yup
                 .string()
-                .max(255)
-            // .required('Password is required')
+                .max(20, "Maximum 20 characters")
+                .required('Password is required')
+                .min(8, "Minimum 8 characters")
+                .matches(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,20}$/, " Must have uppercase, lowecase, special character and no space allowed")
             ,
             cnfpassword: Yup
                 .string()
@@ -383,7 +383,7 @@ export const AddTeamDialog = ({ open, handleClose }) => {
                                     name="sportsList"
                                     onChange={formik.handleChange}
                                 >
-                                    {sportsList?.map((option , key) => (
+                                    {sportsList?.map((option, key) => (
                                         <MenuItem key={key}
                                             value={option.label}>
                                             {option.label}

@@ -46,35 +46,34 @@ export const AddClubDialog = ({ open, handleClose, mutate }) => {
         validationSchema: Yup.object({
             clubName: Yup
                 .string()
-                .max(100)
+                .max(30, "Not more than 30 characters")
                 .required("Club Name is required"),
-            address: Yup
-                .string()
-            // .required('Required')
-            ,
+
+            address: Yup.string().max(50, "Not more than 50 characters").required('Address required'),
+
             phone: Yup.string()
                 .length(10)
-                .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
-            // .required("Phone number is required")
-            ,
+                // .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
+            .required("Phone number is required"),
+            
             email: Yup
                 .string()
                 .email("Must be a valid Email")
-                .max(255)
-            // .required("Email is required")
-            ,
+                .max(35, "Not more than 35 characters").required("Email is required"),
+
             personName: Yup
                 .string()
-                .max(100)
-            // .required("Person Name is required")
+                .max(30, "Not more than 30 characters")
+            .required("Person Name is required")
             ,
             accreditation: Yup
                 .string()
-                .max(100),
+                .max(30, "Not more than 30 characters"),
             password: Yup
                 .string()
-                .max(255)
-                .required('Password is required'),
+                .max(20, "Maximum 20 characters")
+                .required('Password is required')
+                .matches(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,20}$/, " Must have uppercase, lowecase, special character and no space allowed"),
             cnfpassword: Yup
                 .string()
                 .oneOf([Yup.ref('password'), null], 'Passwords must match')

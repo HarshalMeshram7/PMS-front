@@ -29,7 +29,7 @@ import { parseWithOptions } from "date-fns/fp";
 import { OnlinePredictionSharp } from "@mui/icons-material";
 import { addFederation } from "src/services/federationRequest";
 import DeleteIcon from '@mui/icons-material/Delete';
-import uploadFileToBlob ,{deleteBlob , handlePriview , getFileName} from "src/utils/azureBlob";
+import uploadFileToBlob, { deleteBlob, handlePriview, getFileName } from "src/utils/azureBlob";
 
 const sportsList = [
   {
@@ -50,76 +50,82 @@ export const AddFederationDialog = ({ open, handleClose, mutate }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState();
 
-//   logo upload
-  const [selectedLogo,setSelectedLogo] = useState(null);
-  const [selectedLogoName,setSelectedLogoName] = useState("");
-  
-  const [uploadedLogo,setUploadedLogo] = useState(false);
-  const [uploadedLogoName,setUploadedLogoName] = useState("");
-//  banner banner
-  const [selectedBanner,setSelectedBanner] = useState(null);
-  const [selectedBannerName,setSelectedBannerName] = useState("");
-  
-  const [uploadedBanner,setUploadedBanner] = useState(false);
-  const [uploadedBannerName,setUploadedBannerName] = useState("");
+  //   logo upload
+  const [selectedLogo, setSelectedLogo] = useState(null);
+  const [selectedLogoName, setSelectedLogoName] = useState("");
 
-  const onFileChnage =(e)=>{
-    if(e.target.name == "logo"){
-    setUploadedLogo(false)
-    setSelectedLogo(e.target.files[0])
-    setSelectedLogoName(e.target.files[0].name)}
-    
-    if(e.target.name == "banner"){
-    setUploadedBanner(false)
-    setSelectedBanner(e.target.files[0])
-    setSelectedBannerName(e.target.files[0].name)}
-}
-const onFileUpload = async (file, id) => {
+  const [uploadedLogo, setUploadedLogo] = useState(false);
+  const [uploadedLogoName, setUploadedLogoName] = useState("");
+  //  banner banner
+  const [selectedBanner, setSelectedBanner] = useState(null);
+  const [selectedBannerName, setSelectedBannerName] = useState("");
+
+  const [uploadedBanner, setUploadedBanner] = useState(false);
+  const [uploadedBannerName, setUploadedBannerName] = useState("");
+
+  const onFileChnage = (e) => {
+    if (e.target.name == "logo") {
+      setUploadedLogo(false)
+      setSelectedLogo(e.target.files[0])
+      setSelectedLogoName(e.target.files[0].name)
+    }
+
+    if (e.target.name == "banner") {
+      setUploadedBanner(false)
+      setSelectedBanner(e.target.files[0])
+      setSelectedBannerName(e.target.files[0].name)
+    }
+  }
+  const onFileUpload = async (file, id) => {
     setLoading(true)
-    
+
     // *** UPLOAD TO AZURE STORAGE ***
     const blobsInContainer = await uploadFileToBlob(file).then(() => {
-     
-      if(id == 1){ 
-    // prepare UI for results
-      setUploadedLogo(true);
-      setUploadedLogoName(selectedLogoName);
-    //   reseting selected files
-      setSelectedLogo(null);
-      setSelectedLogoName("");
+
+      if (id == 1) {
+        // prepare UI for results
+        setUploadedLogo(true);
+        setUploadedLogoName(selectedLogoName);
+        //   reseting selected files
+        setSelectedLogo(null);
+        setSelectedLogoName("");
       }
-      
-      if(id == 2){ 
-    // prepare UI for results
-      setUploadedBanner(true);
-      setUploadedBannerName(selectedBannerName);
-    //   reseting selected files
-      setSelectedBanner(null);
-      setSelectedBannerName("");
+
+      if (id == 2) {
+        // prepare UI for results
+        setUploadedBanner(true);
+        setUploadedBannerName(selectedBannerName);
+        //   reseting selected files
+        setSelectedBanner(null);
+        setSelectedBannerName("");
       }
-      
+
     });
 
 
     setLoading(false)
   };
 
-  const onDeleteFile = (fileName , id) =>{
+  const onDeleteFile = (fileName, id) => {
     deleteBlob(fileName)
-    .then(() => {
+      .then(() => {
 
-      if(id == 1){setSelectedLogo(null);
-      setUploadedLogoName("");
-      setUploadedLogo(false);}
-      
-      if(id == 2){setSelectedBanner(null);
-      setUploadedBannerName("");
-      setUploadedBanner(false);}
-    
-    })
-    
+        if (id == 1) {
+          setSelectedLogo(null);
+          setUploadedLogoName("");
+          setUploadedLogo(false);
+        }
 
-    
+        if (id == 2) {
+          setSelectedBanner(null);
+          setUploadedBannerName("");
+          setUploadedBanner(false);
+        }
+
+      })
+
+
+
   }
 
 
@@ -144,40 +150,45 @@ const onFileUpload = async (file, id) => {
       instagram: "ins",
       // sportsList: [],
       cnfpassword: "Monish@1995",
-      logo:"",
-      banner:""
+      logo: "",
+      banner: ""
     },
     validationSchema: Yup.object({
-      federation: Yup.string().max(100).required("Federation Name is required"),
-      address: Yup.string(),
-      // .required('Required')
+      federation: Yup.string().max(30, "Not more than 30 characters").required("Federation Name is required"),
+
+      address: Yup.string().max(50, "Not more than 50 characters").required('Address required'),
+
       phone: Yup.string()
         .length(10)
-        .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, "Phone number is not valid"),
-      // .required("Phone number is required")
-      email: Yup.string().email("Must be a valid Email").max(255),
-      // .required("Email is required")
-      // recoveryEMail:Yup
-      // .string()
-      // .email("Must be a valid Email")
-      // .max(255)
-      // .required("Email is required")
-      // ,
-      contactPersonName: Yup.string().max(100),
-      // .required("Contact Person Name is required")
-      accreditation: Yup.string().max(100),
-      accreditation: Yup.string().max(100),
-      facebook: Yup.string().max(100),
-      twitter: Yup.string().max(100),
-      instagram: Yup.string().max(100),
-      password: Yup.string().max(255).required("Password is required"),
+        // .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, "Phone number is not valid")
+        .required("Phone number is required"),
+
+      email: Yup.string().email("Must be a valid Email").max(35, "Not more than 35 characters").required("Email is required"),
+
+      recoveryEMail: Yup
+        .string()
+        .email("Must be a valid Email")
+        .max(35, "Not more than 35 characters")
+        .required("Recovery Email is required"),
+
+      contactPersonName: Yup.string().max(30, "Not more than 30 characters")
+        .required("Contact Person Name is required"),
+
+      accreditation: Yup.string().max(30, "Not more than 30 characters"),
+      facebook: Yup.string().max(30, "Not more than 30 characters"),
+      twitter: Yup.string().max(30, "Not more than 30 characters"),
+      instagram: Yup.string().max(30, "Not more than 30 characters"),
+
+      password: Yup.string().min(8, "Minimum 8 characters").max(20, "Maximum 20 characters")
+        .matches(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,20}$/, " Must have uppercase, lowecase, special character and no space allowed")
+        .required("Password is required"),
       cnfpassword: Yup.string().oneOf([Yup.ref("password"), null], "Passwords must match"),
     }),
 
     onSubmit: async (data) => {
       setLoading(true);
       try {
-      let finalData = {...data , logo:handlePriview(uploadedLogoName),banner:handlePriview(uploadedBannerName)} 
+        let finalData = { ...data, logo: handlePriview(uploadedLogoName), banner: handlePriview(uploadedBannerName) }
         await addFederation(finalData).then((resp) => {
           if (resp.status === "success") {
             handleClose();
@@ -463,19 +474,19 @@ const onFileUpload = async (file, id) => {
               <Button disabled>
                 <Typography>{selectedLogoName}</Typography>
               </Button>
-              {uploadedLogo?<Button disabled variant="contained">Uploaded &#10004; </Button>:<Button variant="contained" disabled={!selectedLogo} onClick={(e)=>{
-                onFileUpload(selectedLogo , 1)
+              {uploadedLogo ? <Button disabled variant="contained">Uploaded &#10004; </Button> : <Button variant="contained" disabled={!selectedLogo} onClick={(e) => {
+                onFileUpload(selectedLogo, 1)
               }} >Upload</Button>}
               <br></br>
-              {uploadedLogo?<><Button target="blank" href={handlePriview(uploadedLogoName)}>
+              {uploadedLogo ? <><Button target="blank" href={handlePriview(uploadedLogoName)}>
                 <Typography>{uploadedLogoName}</Typography>
               </Button>
-              <IconButton onClick={()=>{
-                onDeleteFile(uploadedLogoName , 1)
-              }}  aria-label="delete" size="large">
-                <DeleteIcon />
-              </IconButton></>:""}
-              
+                <IconButton onClick={() => {
+                  onDeleteFile(uploadedLogoName, 1)
+                }} aria-label="delete" size="large">
+                  <DeleteIcon />
+                </IconButton></> : ""}
+
             </Grid>
 
             <Grid item md={6} xs={12}>
@@ -505,18 +516,18 @@ const onFileUpload = async (file, id) => {
               <Button disabled>
                 <Typography>{selectedBannerName}</Typography>
               </Button>
-              {uploadedBanner?<Button disabled variant="contained">Uploaded &#10004; </Button>:<Button variant="contained" disabled={!selectedBanner} onClick={(e)=>{
-                onFileUpload(selectedBanner , 2)
+              {uploadedBanner ? <Button disabled variant="contained">Uploaded &#10004; </Button> : <Button variant="contained" disabled={!selectedBanner} onClick={(e) => {
+                onFileUpload(selectedBanner, 2)
               }} >Upload</Button>}
               <br></br>
-              {uploadedBanner?<><Button target="blank" href={handlePriview(uploadedBannerName)}>
+              {uploadedBanner ? <><Button target="blank" href={handlePriview(uploadedBannerName)}>
                 <Typography>{uploadedBannerName}</Typography>
               </Button>
-              <IconButton onClick={()=>{
-                onDeleteFile(uploadedBannerName , 2)
-              }}  aria-label="delete" size="large">
-                <DeleteIcon />
-              </IconButton></>:""}
+                <IconButton onClick={() => {
+                  onDeleteFile(uploadedBannerName, 2)
+                }} aria-label="delete" size="large">
+                  <DeleteIcon />
+                </IconButton></> : ""}
 
             </Grid>
             <Grid />

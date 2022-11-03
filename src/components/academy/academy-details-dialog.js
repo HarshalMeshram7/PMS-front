@@ -81,8 +81,8 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => 
             address: academy.Address || '',
             phone: academy.Phone || '',
             email: academy.Email,
-            password: academy.Password,
-            recoveryEMail: academy.RecoveryEMail,
+            password: academy.Password || '',
+            recoveryEMail: academy.RecoveryEMail || '',
             contactPersonName: academy.ContactPersonName || '',
             logo: "",
             banner: "",
@@ -92,37 +92,38 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => 
             instagram: academy.Instagram || '',
         },
         validationSchema: Yup.object({
-            Academy: Yup
-                .string()
-                .max(100)
-                .required("Academy Name is required"),
+            Academy: Yup.string().max(30, "Not more than 30 characters").required("Federation Name is required"),
+
             address: Yup
                 .string()
-            // .required('Required')
-            ,
+                .max(50, "Not more than 50 characters")
+                .required('Address required'),
+
             phone: Yup.string()
                 .length(10)
-                .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
-            // .required("Phone number is required")
-            ,
-            contactPersonName: Yup
-                .string()
-                .max(100)
-            // .required("Person Name is required")
-            ,
-            accrediation: Yup
-                .string()
-                .max(100),
+                // .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, "Phone number is not valid")
+                .required("Phone number is required"),
 
-            facebook: Yup
+            password: Yup.string().matches(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,20}$/, " Must have uppercase, lowecase, special character and no space allowed")
+                .required("Password is required").min(8, "Minimum 8 characters").max(20, "Maximum 20 characters")
+            ,
+            contactPersonName: Yup.string().max(30, "Not more than 30 characters").required("Contact Person Name is required"),
+
+            email: Yup
                 .string()
-                .max(100),
-            twitter: Yup
-                .string()
-                .max(100),
-            instagram: Yup
-                .string()
-                .max(100),
+                .email("Must be a valid Email")
+                .max(35, "Not more than 35 characters")
+                .required("Recovery Email is required"),
+
+                recoveryEMail: Yup.string()
+                .email("Must be a valid Email")
+                .max(35, "Not more than 35 characters")
+                .required("Recovery Email is required"),
+
+            accrediation: Yup.string().max(30, "Not more than 30 characters"),
+            facebook: Yup.string().max(30, "Not more than 30 characters"),
+            twitter: Yup.string().max(30, "Not more than 30 characters"),
+            instagram: Yup.string().max(30, "Not more than 30 characters"),
 
 
         }),

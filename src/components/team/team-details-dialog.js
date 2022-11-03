@@ -64,60 +64,57 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
         validationSchema: Yup.object({
             TeamName: Yup
                 .string()
-                .max(100)
-                .required("Team Name is required"),
+                .required("Team Name is required")
+                .max(30, "Not more than 30 characters"),
+
             TeamAddress: Yup
                 .string()
-            // .required('Required')
+                .max(50, "Not more than 50 characters")
+                .required('Required')
             ,
             TeamPhone: Yup.string()
                 .length(10)
-                .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
-            // .required("Phone number is required")
+                // .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
+                .required("Phone number is required")
             ,
             TeamEmail: Yup.string()
-                .email()
-            // .length(10)
-            // .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, 'Phone number is not valid')
-            // .required("Phone number is required")
-            ,
+                .max(35, "Not more than 35 characters")
+                .email("Must be a valid Email")
+                .required("Email is required"),
+
             TeamContactPerson: Yup
                 .string()
-                .max(100)
-            // .required("Person Name is required")
+                .max(30, "Not more than 30 characters")
+                .required("Person Name is required")
             ,
             TeamDivisions: Yup
                 .string()
-                .max(100)
-            // .required("Person Name is required")
+                .max(30, "Not more than 30 characters")
             ,
             TeamAdminManager: Yup
                 .string()
-                .max(100)
-            // .required("Person Name is required")
+                .max(30, "Not more than 30 characters")
             ,
             TeamCoordinatorTMS: Yup
                 .string()
-                .max(100)
-            // .required("Person Name is required")
+                .max(30, "Not more than 30 characters")
             ,
             TeamCoordinatorITMS: Yup
                 .string()
-                .max(100)
-            // .required("Person Name is required")
-            ,
+                .max(30, "Not more than 30 characters"),
+
             Accreditation: Yup
                 .string()
-                .max(100),
+                .max(30, "Not more than 30 characters"),
             Facebook: Yup
                 .string()
-                .max(100),
+                .max(30, "Not more than 30 characters"),
             Twitter: Yup
                 .string()
-                .max(100),
+                .max(30, "Not more than 30 characters"),
             LinkedIn: Yup
                 .string()
-                .max(100),
+                .max(30, "Not more than 30 characters"),
         }),
 
         onSubmit: async (data) => {

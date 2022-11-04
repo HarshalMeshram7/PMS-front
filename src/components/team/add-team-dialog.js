@@ -8,10 +8,12 @@ import {
     DialogTitle,
     TextField,
     FormControl,
+    Typography,
     Grid,
     InputLabel,
     Select,
     MenuItem,
+    IconButton,
     Box,
 } from "@mui/material";
 import { useSnackbar } from "notistack";
@@ -20,6 +22,10 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { addAcademy } from "src/services/academyRequest";
 import LoadingBox from "src/components/common/loading-box";
+import DeleteIcon from '@mui/icons-material/Delete';
+import uploadFileToBlob, { deleteBlob, handlePriview, getFileName } from "src/utils/azureBlob";
+import { addTeam } from "src/services/teamRequest";
+
 
 const sportsList = [
     {
@@ -40,22 +46,100 @@ export const AddTeamDialog = ({ open, handleClose }) => {
     const { enqueueSnackbar } = useSnackbar();
     const [loading, setLoading] = useState();
 
+    //   logo upload
+    const [selectedLogo, setSelectedLogo] = useState(null);
+    const [selectedLogoName, setSelectedLogoName] = useState("");
+
+    const [uploadedLogo, setUploadedLogo] = useState(false);
+    const [uploadedLogoName, setUploadedLogoName] = useState("");
+
+    //  banner banner
+    const [selectedBanner, setSelectedBanner] = useState(null);
+    const [selectedBannerName, setSelectedBannerName] = useState("");
+
+    const [uploadedBanner, setUploadedBanner] = useState(false);
+    const [uploadedBannerName, setUploadedBannerName] = useState("");
+
+    const onFileChnage = (e) => {
+        if (e.target.name == "logo") {
+            setUploadedLogo(false)
+            setSelectedLogo(e.target.files[0])
+            setSelectedLogoName(e.target.files[0].name)
+        }
+
+        if (e.target.name == "banner") {
+            setUploadedBanner(false)
+            setSelectedBanner(e.target.files[0])
+            setSelectedBannerName(e.target.files[0].name)
+        }
+    }
+    const onFileUpload = async (file, id) => {
+        setLoading(true)
+
+        // *** UPLOAD TO AZURE STORAGE ***
+        const blobsInContainer = await uploadFileToBlob(file).then(() => {
+
+            if (id == 1) {
+                // prepare UI for results
+                setUploadedLogo(true);
+                setUploadedLogoName(selectedLogoName);
+                //   reseting selected files
+                setSelectedLogo(null);
+                setSelectedLogoName("");
+            }
+
+            if (id == 2) {
+                // prepare UI for results
+                setUploadedBanner(true);
+                setUploadedBannerName(selectedBannerName);
+                //   reseting selected files
+                setSelectedBanner(null);
+                setSelectedBannerName("");
+            }
+
+        });
+
+
+        setLoading(false)
+    };
+
+    const onDeleteFile = (fileName, id) => {
+        deleteBlob(fileName)
+            .then(() => {
+
+                if (id == 1) {
+                    setSelectedLogo(null);
+                    setUploadedLogoName("");
+                    setUploadedLogo(false);
+                }
+
+                if (id == 2) {
+                    setSelectedBanner(null);
+                    setUploadedBannerName("");
+                    setUploadedBanner(false);
+                }
+
+            })
+
+    }
+
+
     const formik = useFormik({
         initialValues: {
-            teamName: "",
-            address: "",
-            phone: "",
-            email: "",
-            personName: "",
+            teamName: "Sultan 11",
+            address: "Nagpur",
+            phone: "9876543210",
+            email: "team@gmail.com",
+            personName: "Contact person",
             logo: "",
             banner: "",
-            accreditation: "",
-            facebook: "",
-            twitter: "",
-            instagram: "",
+            accreditation: "Accreditation",
+            facebook: "Face",
+            twitter: "Twitt",
+            instagram: "Insta",
             sportsList: [],
-            password: "",
-            cnfpassword: ""
+            password: "Wasif@1234",
+            cnfpassword: "Wasif@1234"
         },
         validationSchema: Yup.object({
             teamName:
@@ -116,29 +200,21 @@ export const AddTeamDialog = ({ open, handleClose }) => {
             setLoading(true);
 
             try {
-                // const data = {
-                //     teamName,
-                //     address,
-                //     phone,
-                //     email,
-                //     personName,
-                //     logo,
-                //     banner,
-                //     accreditation,
-                //     facebook,
-                //     twitter,
-                //     instagram,
-                //     sportsList,
-                //     password,
-                //     cnfpassword,
-                // };
-                console.log("*********");
-                console.log(data);
-                // await addTeam(data);
-                handleClose();
-                enqueueSnackbar("Team Added Succesfully", { variant: "success" });
-
-                setLoading(false);
+                let finalData = { ...data, logo: handlePriview(uploadedLogoName), banner: handlePriview(uploadedBannerName) }
+                console.log(finalData);
+                await addTeam(finalData).then((resp) => {
+                    if (resp.status === "success") {
+                        handleClose();
+                        enqueueSnackbar("Team Added Succesfully", { variant: "success" });
+                        mutate();
+                        setLoading(false);
+                    }
+                    if (resp.status === "failed") {
+                        handleClose();
+                        enqueueSnackbar("Team Not Added", { variant: "failed" });
+                        setLoading(false);
+                    }
+                });
             } catch (error) {
                 setLoading(false);
             }
@@ -447,13 +523,30 @@ export const AddTeamDialog = ({ open, handleClose }) => {
                                 id="uploadTeamLogo"
                                 margin="dense"
                                 name="logo"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
+                                // onBlur={formik.handleBlur}
+                                onChange={onFileChnage}
                                 type="file"
                                 value={formik.values.logo}
                                 variant="outlined"
                             />
                             <Button onClick={() => { document.getElementById("uploadTeamLogo").click() }}>Upload Logo</Button>
+
+                            <Button disabled>
+                                <Typography>{selectedLogoName}</Typography>
+                            </Button>
+                            {uploadedLogo ? <Button disabled variant="contained">Uploaded &#10004; </Button> : <Button variant="contained" disabled={!selectedLogo} onClick={(e) => {
+                                onFileUpload(selectedLogo, 1)
+                            }} >Upload</Button>}
+                            <br></br>
+                            {uploadedLogo ? <><Button target="blank" href={handlePriview(uploadedLogoName)}>
+                                <Typography>{uploadedLogoName}</Typography>
+                            </Button>
+                                <IconButton onClick={() => {
+                                    onDeleteFile(uploadedLogoName, 1)
+                                }} aria-label="delete" size="large">
+                                    <DeleteIcon />
+                                </IconButton></> : ""}
+
                         </Grid>
 
                         <Grid
@@ -470,12 +563,29 @@ export const AddTeamDialog = ({ open, handleClose }) => {
                                 margin="dense"
                                 name="banner"
                                 onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
+                                onChange={onFileChnage}
                                 type="file"
                                 value={formik.values.banner}
                                 variant="outlined"
                             />
                             <Button onClick={() => { document.getElementById("uploadTeamBanner").click() }}>Upload Banner</Button>
+
+                            <Button disabled>
+                                <Typography>{selectedBannerName}</Typography>
+                            </Button>
+                            {uploadedBanner ? <Button disabled variant="contained">Uploaded &#10004; </Button> : <Button variant="contained" disabled={!selectedBanner} onClick={(e) => {
+                                onFileUpload(selectedBanner, 2)
+                            }} >Upload</Button>}
+                            <br></br>
+                            {uploadedBanner ? <><Button target="blank" href={handlePriview(uploadedBannerName)}>
+                                <Typography>{uploadedBannerName}</Typography>
+                            </Button>
+                                <IconButton onClick={() => {
+                                    onDeleteFile(uploadedBannerName, 2)
+                                }} aria-label="delete" size="large">
+                                    <DeleteIcon />
+                                </IconButton></> : ""}
+
                         </Grid>
                     </Grid>
 

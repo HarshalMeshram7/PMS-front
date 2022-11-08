@@ -1,5 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
+import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import {
     Grid, TextField, Button, Card, CardContent, MenuItem, FormControl,
@@ -8,7 +9,89 @@ import {
 import { Divider, Typography } from "@material-ui/core";
 import { Male } from "@mui/icons-material";
 
+import DeleteIcon from '@mui/icons-material/Delete';
+import uploadFileToBlob, { deleteBlob, handlePriview, getFileName } from "src/utils/azureBlob";
+import { IconButton, } from "@mui/material";
+
 export default function PlayerDetailsTab() {
+
+    const [loading, setLoading] = useState();
+
+    //   Photo upload
+    const [selectedPhoto, setSelectedPhoto] = useState(null);
+    const [selectedPhotoName, setSelectedPhotoName] = useState("");
+
+    const [uploadedPhoto, setUploadedPhoto] = useState(false);
+    const [uploadedPhotoName, setUploadedPhotoName] = useState("");
+
+    //  Document banner
+    const [selectedDocument, setSelectedDocument] = useState(null);
+    const [selectedDocumentName, setSelectedDocumentName] = useState("");
+
+    const [uploadedDocument, setUploadedDocument] = useState(false);
+    const [uploadedDocumentName, setUploadedDocumentName] = useState("");
+
+    const onFileChnage = (e) => {
+        if (e.target.name == "photo") {
+            setUploadedPhoto(false)
+            setSelectedPhoto(e.target.files[0])
+            setSelectedPhotoName(e.target.files[0].name)
+        }
+
+        if (e.target.name == "document") {
+            setUploadedDocument(false)
+            setSelectedDocument(e.target.files[0])
+            setSelectedDocumentName(e.target.files[0].name)
+        }
+    }
+
+    const onFileUpload = async (file, id) => {
+        setLoading(true)
+
+        // *** UPLOAD TO AZURE STORAGE ***
+        const blobsInContainer = await uploadFileToBlob(file).then(() => {
+
+            if (id == 1) {
+                // prepare UI for results
+                setUploadedPhoto(true);
+                setUploadedPhotoName(selectedPhotoName);
+                //   reseting selected files
+                setSelectedPhoto(null);
+                setSelectedPhotoName("");
+            }
+
+            if (id == 2) {
+                // prepare UI for results
+                setUploadedDocument(true);
+                setUploadedDocumentName(selectedDocumentName);
+                //   reseting selected files
+                setSelectedDocument(null);
+                setSelectedDocumentName("");
+            }
+        });
+        setLoading(false)
+    };
+
+    const onDeleteFile = (fileName, id) => {
+        deleteBlob(fileName)
+            .then(() => {
+
+                if (id == 1) {
+                    setSelectedPhoto(null);
+                    setUploadedPhotoName("");
+                    setUploadedPhoto(false);
+                }
+
+                if (id == 2) {
+                    setSelectedDocument(null);
+                    setUploadedDocumentName("");
+                    setUploadedDocument(false);
+                }
+            })
+    }
+
+
+
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
@@ -21,8 +104,8 @@ export default function PlayerDetailsTab() {
             Address: "",
             Phone: "",
             EducationQualification: "",
-            Documents: "",
-            Photo: "",
+            document: "",
+            photo: "",
             PlayerTeam: "",
             Facebook: "",
             Twitter: "",
@@ -40,7 +123,8 @@ export default function PlayerDetailsTab() {
 
         onSubmit: async (data) => {
             try {
-                console.log(data);
+                let finalData = { ...data, photo: handlePriview(uploadedPhotoName), document: handlePriview(uploadedDocumentName) }
+                console.log(finalData);
             } catch (error) {
                 console.log(error);
             }
@@ -253,27 +337,6 @@ export default function PlayerDetailsTab() {
                                 xs={12}
                             >
                                 <TextField
-                                    error={Boolean(formik.touched.Documents && formik.errors.Documents)}
-                                    fullWidth
-                                    helperText={formik.touched.Documents && formik.errors.Documents}
-                                    label="Documents"
-                                    margin="dense"
-                                    name="Documents"
-                                    InputLabelProps={{ shrink: true }}
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="file"
-                                    value={formik.values.Documents}
-                                    variant="outlined"
-                                />
-                            </Grid>
-
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
                                     error={Boolean(formik.touched.PlayerTeam && formik.errors.PlayerTeam)}
                                     fullWidth
                                     helperText={formik.touched.PlayerTeam && formik.errors.PlayerTeam}
@@ -284,27 +347,6 @@ export default function PlayerDetailsTab() {
                                     onChange={formik.handleChange}
                                     type="text"
                                     value={formik.values.PlayerTeam}
-                                    variant="outlined"
-                                />
-                            </Grid>
-
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    error={Boolean(formik.touched.Photo && formik.errors.Photo)}
-                                    fullWidth
-                                    helperText={formik.touched.Photo && formik.errors.Photo}
-                                    label="Photo"
-                                    margin="dense"
-                                    name="Photo"
-                                    InputLabelProps={{ shrink: true }}
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="file"
-                                    value={formik.values.Photo}
                                     variant="outlined"
                                 />
                             </Grid>
@@ -447,6 +489,109 @@ export default function PlayerDetailsTab() {
                                     value={formik.values.TMSITMSApplicable}
                                     variant="outlined"
                                 />
+                            </Grid>
+
+                            <Grid
+                                item
+                                md={6}
+                                xs={12}
+                            ></Grid>
+
+
+                            <Grid
+                                item
+                                md={6}
+                                xs={12}
+                            >
+                                <TextField
+                                    style={{ display: "none" }}
+                                    error={Boolean(formik.touched.photo && formik.errors.photo)}
+                                    fullWidth
+                                    helperText={formik.touched.photo && formik.errors.photo}
+                                    label="Photo"
+                                    margin="dense"
+                                    name="photo"
+                                    InputLabelProps={{ shrink: true }}
+                                    onBlur={formik.handleBlur}
+                                    onChange={onFileChnage}
+                                    id="uploadPlayerPersonalDetailPhoto"
+                                    type="file"
+                                    value={formik.values.photo}
+                                    variant="outlined"
+                                />
+
+                                <Button
+                                    onClick={() => {
+                                        document.getElementById("uploadPlayerPersonalDetailPhoto").click();
+                                    }}
+                                >
+                                    Upload Photo
+                                </Button>
+
+                                <Button disabled>
+                                    <Typography>{selectedPhotoName}</Typography>
+                                </Button>
+                                {uploadedPhoto ? <Button disabled variant="contained">Uploaded &#10004; </Button> : <Button variant="contained" disabled={!selectedPhoto} onClick={(e) => {
+                                    onFileUpload(selectedPhoto, 1)
+                                }} >Upload</Button>}
+                                <br></br>
+                                {uploadedPhoto ? <><Button target="blank" href={handlePriview(uploadedPhotoName)}>
+                                    <Typography>{uploadedPhotoName}</Typography>
+                                </Button>
+                                    <IconButton onClick={() => {
+                                        onDeleteFile(uploadedPhotoName, 1)
+                                    }} aria-label="delete" size="large">
+                                        <DeleteIcon />
+                                    </IconButton></> : ""}
+                            </Grid>
+
+
+                            <Grid
+                                item
+                                md={6}
+                                xs={12}
+                            >
+                                <TextField
+
+                                    style={{ display: "none" }}
+                                    error={Boolean(formik.touched.document && formik.errors.document)}
+                                    fullWidth
+                                    helperText={formik.touched.document && formik.errors.document}
+                                    label="Documents"
+                                    margin="dense"
+                                    name="document"
+                                    id="uploadPlayerPersonalDetailDocument"
+                                    InputLabelProps={{ shrink: true }}
+                                    onBlur={formik.handleBlur}
+                                    onChange={onFileChnage}
+                                    type="file"
+                                    value={formik.values.document}
+                                    variant="outlined"
+                                />
+                                
+                                <Button
+                                    onClick={() => {
+                                        document.getElementById("uploadPlayerPersonalDetailDocument").click();
+                                    }}
+                                >
+                                    Upload Document
+                                </Button>
+
+                                <Button disabled>
+                                    <Typography>{selectedDocumentName}</Typography>
+                                </Button>
+                                {uploadedDocument ? <Button disabled variant="contained">Uploaded &#10004; </Button> : <Button variant="contained" disabled={!selectedDocument} onClick={(e) => {
+                                    onFileUpload(selectedDocument, 2)
+                                }} >Upload</Button>}
+                                <br></br>
+                                {uploadedDocument ? <><Button target="blank" href={handlePriview(uploadedDocumentName)}>
+                                    <Typography>{uploadedDocumentName}</Typography>
+                                </Button>
+                                    <IconButton onClick={() => {
+                                        onDeleteFile(uploadedDocumentName, 2)
+                                    }} aria-label="delete" size="large">
+                                        <DeleteIcon />
+                                    </IconButton></> : ""}
                             </Grid>
 
                         </Grid>

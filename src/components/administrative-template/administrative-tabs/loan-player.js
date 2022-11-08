@@ -106,7 +106,8 @@ export default function AdministrativeLoanPlayerTab({sports}) {
 
         onSubmit: async (data) => {
             try {
-                console.log(data);
+              let finalData = {...data,AgreementWithPlayer:handlePriview(selectedAgreementName),DocumentAgreementOrgClub:handlePriview(selectedOrgClubName)}
+                console.log(finalData);
             } catch (error) {
                 console.log(error);
             }

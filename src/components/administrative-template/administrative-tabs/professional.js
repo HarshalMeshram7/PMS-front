@@ -150,8 +150,11 @@ export default function AdministrativeProfessionalTab({ sports }) {
 
     onSubmit: async (data) => {
       try {
-        
-        console.log(data);
+        let finalData = {...data,DocumentationAgreement: handlePriview(selectedDocument1Name),
+          FinancialAgreement: handlePriview(selectedDocument2Name),
+          TMSITMS: handlePriview(selectedDocument3Name),
+          NonDocNonAgreement: handlePriview(selectedDocument4Name) }
+        console.log(finalData);
       } catch (error) {
         console.log(error);
       }
@@ -164,8 +167,8 @@ export default function AdministrativeProfessionalTab({ sports }) {
         <Card>
           <CardContent>
             <Grid container spacing={3} sx={{ marginBottom: 2 }}>
-              {/* <Grid
-                                item
+              {/* <Grid  
+                    item
                                 md={6}
                                 xs={12}
                             >

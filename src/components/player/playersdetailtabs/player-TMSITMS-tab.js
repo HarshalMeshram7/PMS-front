@@ -19,6 +19,18 @@ export default function PlayerTMSITMSTab() {
 
   const [uploadedDocument, setUploadedDocument] = useState(false);
   const [uploadedDocumentName, setUploadedDocumentName] = useState("");
+  //  Document2 Upload
+  const [selectedDocument2, setSelectedDocument2] = useState(null);
+  const [selectedDocument2Name, setSelectedDocument2Name] = useState("");
+
+  const [uploadedDocument2, setUploadedDocument2] = useState(false);
+  const [uploadedDocument2Name, setUploadedDocument2Name] = useState("");
+  //  Document3 Upload
+  const [selectedDocument3, setSelectedDocument3] = useState(null);
+  const [selectedDocument3Name, setSelectedDocument3Name] = useState("");
+
+  const [uploadedDocument3, setUploadedDocument3] = useState(false);
+  const [uploadedDocument3Name, setUploadedDocument3Name] = useState("");
 
   const onFileChnage = (e) => {
    
@@ -26,6 +38,16 @@ export default function PlayerTMSITMSTab() {
       setUploadedDocument(false)
       setSelectedDocument(e.target.files[0])
       setSelectedDocumentName(e.target.files[0].name)
+    }
+    if (e.target.name == "MOU") {
+      setUploadedDocument2(false)
+      setSelectedDocument2(e.target.files[0])
+      setSelectedDocument2Name(e.target.files[0].name)
+    }
+    if (e.target.name == "Agreement") {
+      setUploadedDocument3(false)
+      setSelectedDocument3(e.target.files[0])
+      setSelectedDocument3Name(e.target.files[0].name)
     }
   }
 
@@ -36,13 +58,29 @@ export default function PlayerTMSITMSTab() {
     const blobsInContainer = await uploadFileToBlob(file).then(() => {
 
       
-      if (id == 2) {
+      if (id == 1) {
         // prepare UI for results
         setUploadedDocument(true);
         setUploadedDocumentName(selectedDocumentName);
         //   reseting selected files
         setSelectedDocument(null);
         setSelectedDocumentName("");
+      }
+      if (id == 2) {
+        // prepare UI for results
+        setUploadedDocument2(true);
+        setUploadedDocument2Name(selectedDocument2Name);
+        //   reseting selected files
+        setSelectedDocument2(null);
+        setSelectedDocument2Name("");
+      }
+      if (id == 3) {
+        // prepare UI for results
+        setUploadedDocument3(true);
+        setUploadedDocument3Name(selectedDocument3Name);
+        //   reseting selected files
+        setSelectedDocument3(null);
+        setSelectedDocument3Name("");
       }
 
     });
@@ -54,10 +92,20 @@ export default function PlayerTMSITMSTab() {
     deleteBlob(fileName)
       .then(() => {
 
-        if (id == 2) {
+        if (id == 1) {
           setSelectedDocument(null);
           setUploadedDocumentName("");
           setUploadedDocument(false);
+        }
+        if (id == 2) {
+          setSelectedDocument2(null);
+          setUploadedDocument2Name("");
+          setUploadedDocument2(false);
+        }
+        if (id == 3) {
+          setSelectedDocument3(null);
+          setUploadedDocument3Name("");
+          setUploadedDocument3(false);
         }
 
       })
@@ -71,8 +119,8 @@ export default function PlayerTMSITMSTab() {
             TransferredToWhichClub: "",
             PeriodOfTransfer: "",
             documentation: "",
-            MOU: "",
-            Agreement: "",
+            MOU: null,
+            Agreement: null,
             PaymentDetails: "",
 
         },
@@ -144,7 +192,7 @@ export default function PlayerTMSITMSTab() {
                                 md={6}
                                 xs={12}
                             >
-                                <TextField
+                                {/* <TextField
                                     error={Boolean(formik.touched.MOU && formik.errors.MOU)}
                                     fullWidth
                                     helperText={formik.touched.MOU && formik.errors.MOU}
@@ -156,7 +204,46 @@ export default function PlayerTMSITMSTab() {
                                     type="text"
                                     value={formik.values.MOU}
                                     variant="outlined"
+                                /> */}
+                                <Typography>MOU</Typography>
+                                <TextField
+                                    style={{ display: "none" }}
+                                    error={Boolean(formik.touched.MOU && formik.errors.MOU)}
+                                    fullWidth
+                                    helperText={formik.touched.MOU && formik.errors.MOU}
+                                    label="MOU"
+                                    id="MOU"
+                                    margin="dense"
+                                    InputLabelProps={{ shrink: true }}
+                                    name="MOU"
+                                    onChange={onFileChnage}
+                                    type="file"
+                                    value={formik.values.MOU}
+                                    variant="outlined"
                                 />
+                                <Button
+                                    onClick={() => {
+                                        document.getElementById("MOU").click();
+                                    }}
+                                >
+                                    Upload Document
+                                </Button>
+
+                                <Button disabled>
+                                    <Typography>{selectedDocument2Name}</Typography>
+                                </Button>
+                                {uploadedDocument2 ? <Button disabled variant="contained">Uploaded &#10004; </Button> : <Button variant="contained" disabled={!selectedDocument2} onClick={(e) => {
+                                    onFileUpload(selectedDocument2, 2)
+                                }} >Upload</Button>}
+                                <br></br>
+                                {uploadedDocument2 ? <><Button target="blank" href={handlePriview(uploadedDocument2Name)}>
+                                    <Typography>{uploadedDocument2Name}</Typography>
+                                </Button>
+                                    <IconButton onClick={() => {
+                                        onDeleteFile(uploadedDocument2Name, 2)
+                                    }} aria-label="delete" size="large">
+                                        <DeleteIcon />
+                                    </IconButton></> : ""}
                             </Grid>
 
                             <Grid
@@ -164,7 +251,7 @@ export default function PlayerTMSITMSTab() {
                                 md={6}
                                 xs={12}
                             >
-                                <TextField
+                                {/* <TextField
                                     error={Boolean(formik.touched.Agreement && formik.errors.Agreement)}
                                     fullWidth
                                     helperText={formik.touched.Agreement && formik.errors.Agreement}
@@ -176,7 +263,46 @@ export default function PlayerTMSITMSTab() {
                                     type="text"
                                     value={formik.values.Agreement}
                                     variant="outlined"
+                                /> */}
+                                <Typography>Agreement</Typography>
+                                <TextField
+                                    style={{ display: "none" }}
+                                    error={Boolean(formik.touched.Agreement && formik.errors.Agreement)}
+                                    fullWidth
+                                    helperText={formik.touched.Agreement && formik.errors.Agreement}
+                                    label="Agreement"
+                                    id="Agreement"
+                                    margin="dense"
+                                    InputLabelProps={{ shrink: true }}
+                                    name="Agreement"
+                                    onChange={onFileChnage}
+                                    type="file"
+                                    value={formik.values.Agreement}
+                                    variant="outlined"
                                 />
+                                <Button
+                                    onClick={() => {
+                                        document.getElementById("Agreement").click();
+                                    }}
+                                >
+                                    Upload Document
+                                </Button>
+
+                                <Button disabled>
+                                    <Typography>{selectedDocument3Name}</Typography>
+                                </Button>
+                                {uploadedDocument3 ? <Button disabled variant="contained">Uploaded &#10004; </Button> : <Button variant="contained" disabled={!selectedDocument3} onClick={(e) => {
+                                    onFileUpload(selectedDocument3, 3)
+                                }} >Upload</Button>}
+                                <br></br>
+                                {uploadedDocument3 ? <><Button target="blank" href={handlePriview(uploadedDocument3Name)}>
+                                    <Typography>{uploadedDocument3Name}</Typography>
+                                </Button>
+                                    <IconButton onClick={() => {
+                                        onDeleteFile(uploadedDocument3Name, 3)
+                                    }} aria-label="delete" size="large">
+                                        <DeleteIcon />
+                                    </IconButton></> : ""}
                             </Grid>
 
                             <Grid
@@ -204,6 +330,7 @@ export default function PlayerTMSITMSTab() {
                                 md={6}
                                 xs={12}
                             >
+                                <Typography>Documentation</Typography>
                                 <TextField
                                     style={{ display: "none" }}
                                     error={Boolean(formik.touched.documentation && formik.errors.documentation)}
@@ -232,14 +359,14 @@ export default function PlayerTMSITMSTab() {
                                     <Typography>{selectedDocumentName}</Typography>
                                 </Button>
                                 {uploadedDocument ? <Button disabled variant="contained">Uploaded &#10004; </Button> : <Button variant="contained" disabled={!selectedDocument} onClick={(e) => {
-                                    onFileUpload(selectedDocument, 2)
+                                    onFileUpload(selectedDocument, 1)
                                 }} >Upload</Button>}
                                 <br></br>
                                 {uploadedDocument ? <><Button target="blank" href={handlePriview(uploadedDocumentName)}>
                                     <Typography>{uploadedDocumentName}</Typography>
                                 </Button>
                                     <IconButton onClick={() => {
-                                        onDeleteFile(uploadedDocumentName, 2)
+                                        onDeleteFile(uploadedDocumentName, 1)
                                     }} aria-label="delete" size="large">
                                         <DeleteIcon />
                                     </IconButton></> : ""}

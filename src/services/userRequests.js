@@ -40,25 +40,44 @@ export const getUserDetails = async (params) => {
     throw error;
   }
 };
-
-//UPDATE USER DETAILS
-export const updateUser = async (id, data) => {
+// Add User
+export const addUser = async (data) => {
   const { token } = useStorage();
-  if (!id || !data || !token) {
-    return;
+  if (!token) {
+      throw "No Token";
   }
   try {
-    const res = await axios.put(`${MAIN_URL}/admin/${id}/update_admin/`, data, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
-    return res.data
+      const res = await axios.post(`${MAIN_URL2}/adduser`, data, {
+          headers: {
+              Authorization: "Bearer " + token,
+          },
+      });
+      return res.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+      console.log(error);
+      throw error;
   }
 };
+
+
+//UPDATE USER DETAILS
+// export const updateUser = async (id, data) => {
+//   const { token } = useStorage();
+//   if (!id || !data || !token) {
+//     return;
+//   }
+//   try {
+//     const res = await axios.put(`${MAIN_URL}/admin/${id}/update_admin/`, data, {
+//       headers: {
+//         Authorization: "Bearer " + token,
+//       },
+//     });
+//     return res.data
+//   } catch (error) {
+//     console.log(error);
+//     throw error;
+//   }
+// };
 
 //UPDATE USER DETAILS
 // export const addUser = async (data) => {

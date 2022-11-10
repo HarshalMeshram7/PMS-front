@@ -25,6 +25,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { addAcademy } from "src/services/academyRequest";
 import LoadingBox from "src/components/common/loading-box";
+import { addUser } from "src/services/userRequests";
 
 const userRole = [
   {
@@ -66,8 +67,9 @@ export const AddUserAccessDialog = ({ open, handleClose ,user }) => {
       userName: "",
       password: "",
       cnfpassword: "",
-      fullName: "",
-      address: "",
+      firstName: "",
+      lastName: "",
+      organization: "",
       email: "",
       phone: "",
       userRole: [],
@@ -79,8 +81,9 @@ export const AddUserAccessDialog = ({ open, handleClose ,user }) => {
       userName: Yup.string().max(100).required("User Name is required"),
       password: Yup.string().max(255).required("Password is required"),
       cnfpassword: Yup.string().oneOf([Yup.ref("password"), null], "Passwords must match"),
-      fullName: Yup.string().max(100).required("User Name is required"),
-      address: Yup.string(),
+      firstName: Yup.string().max(100).required("First Name is required"),
+      lastName: Yup.string().max(100).required("Last Name is required"),
+      organization: Yup.string(),
       // .required('Required')
       email: Yup.string().email("Must be a valid Email").max(255).required("Email is required"),
       phone: Yup.string()
@@ -88,8 +91,8 @@ export const AddUserAccessDialog = ({ open, handleClose ,user }) => {
         .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, "Phone number is not valid")
         .required("Phone number is required"),
 
-      userRole: Yup.string().max(100).required("Sport List is required"),
-      federationClubAccess: Yup.string().max(100).required("Federation / Club is required"),
+      // userRole: Yup.string().max(100).required("Sport List is required"),
+      // federationClubAccess: Yup.string().max(100).required("Federation / Club is required"),
     }),
 
     onSubmit: async (data) => {
@@ -98,12 +101,28 @@ export const AddUserAccessDialog = ({ open, handleClose ,user }) => {
       try {
         console.log("**********");
         console.log(data);
-        // await addAcademy(data);
         handleClose();
         enqueueSnackbar("User Added Succesfully", { variant: "success" });
-
         setLoading(false);
+        
+        // console.log("**********");
+        //         console.log(data);
+        //         await addUser(data).then((resp) => {
+        //           console.log(resp);
+        //             if (resp.status === "success") {
+        //                 handleClose();
+        //                 enqueueSnackbar("user Added Succesfully", { variant: "success" });
+        //                 mutate();
+        //                 setLoading(false);
+        //             }
+        //             if (resp.status === "failed") {
+        //                 handleClose();
+        //                 enqueueSnackbar("user Not Added", { variant: "failed" });
+        //                 setLoading(false);
+        //             }
+        //         })
       } catch (error) {
+        console.log(error);
         setLoading(false);
       }
     },
@@ -185,6 +204,21 @@ export const AddUserAccessDialog = ({ open, handleClose ,user }) => {
                 variant="outlined"
               />
             </Grid>
+            <Grid item md={6} xs={12}>
+              <TextField
+                error={Boolean(formik.touched.email && formik.errors.email)}
+                fullWidth
+                helperText={formik.touched.email && formik.errors.email}
+                label="Email"
+                margin="dense"
+                name="email"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                type="email"
+                value={formik.values.email}
+                variant="outlined"
+              />
+            </Grid>
 
             <Grid item md={6} xs={12}>
               <TextField
@@ -220,48 +254,47 @@ export const AddUserAccessDialog = ({ open, handleClose ,user }) => {
 
             <Grid item md={6} xs={12}>
               <TextField
-                error={Boolean(formik.touched.fullName && formik.errors.fullName)}
+                error={Boolean(formik.touched.firstName && formik.errors.firstName)}
                 fullWidth
-                helperText={formik.touched.fullName && formik.errors.fullName}
-                label="Full Name"
+                helperText={formik.touched.firstName && formik.errors.firstName}
+                label="First Name"
                 margin="dense"
-                name="fullName"
+                name="firstName"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
                 type="text"
-                value={formik.values.fullName}
+                value={formik.values.firstName}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <TextField
+                error={Boolean(formik.touched.lastName && formik.errors.lastName)}
+                fullWidth
+                helperText={formik.touched.lastName && formik.errors.lastName}
+                label="First Name"
+                margin="dense"
+                name="lastName"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                type="text"
+                value={formik.values.lastName}
                 variant="outlined"
               />
             </Grid>
 
             <Grid item md={6} xs={12}>
               <TextField
-                error={Boolean(formik.touched.address && formik.errors.address)}
+                error={Boolean(formik.touched.organization && formik.errors.organization)}
                 fullWidth
-                helperText={formik.touched.address && formik.errors.address}
-                label="Address"
+                helperText={formik.touched.organization && formik.errors.organization}
+                label="Organization"
                 margin="dense"
-                name="address"
+                name="organization"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
-                type="address"
-                value={formik.values.address}
-                variant="outlined"
-              />
-            </Grid>
-
-            <Grid item md={6} xs={12}>
-              <TextField
-                error={Boolean(formik.touched.email && formik.errors.email)}
-                fullWidth
-                helperText={formik.touched.email && formik.errors.email}
-                label="Email"
-                margin="dense"
-                name="email"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                type="email"
-                value={formik.values.email}
+                type="organization"
+                value={formik.values.organization}
                 variant="outlined"
               />
             </Grid>

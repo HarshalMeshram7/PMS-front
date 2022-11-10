@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { Divider, Typography } from "@material-ui/core";
 import { Male } from "@mui/icons-material";
+import IconButton from '@mui/material/IconButton';
 import DeleteIcon from "@mui/icons-material/Delete";
 import uploadFileToBlob, { deleteBlob, handlePriview, getFileName } from "src/utils/azureBlob";
 

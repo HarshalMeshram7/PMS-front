@@ -13,9 +13,8 @@ import {
   DialogTitle,
   InputLabel,
 } from "@mui/material";
-import { Divider, Typography } from "@material-ui/core";
+import { Divider, IconButton, Typography } from "@material-ui/core";
 import { Male } from "@mui/icons-material";
-import IconButton from '@material-ui/icons/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 export default function AdministrativeAcademyPlayerTab() {

@@ -14,6 +14,15 @@ import {
     Box,
     Grid,
     Typography,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemText,
+    Divider,
+    Card,
+    CardContent,
+    Stack,
+    Chip
 } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
@@ -51,15 +60,20 @@ export const AddFixturesDialog = ({ open, handleClose }) => {
 
 
     const handleSelectTeam = (e) => {
-        console.log(formik.values.teamList.length, formik.values.NOG, formik.values.NOTIG);
-        if (formik.values.teamList.length >> (formik.values.NOG * formik.values.NOTIG)) {
-            setNumberOfTeams(formik.values.teamList)
-            setNumberOfGroups(formik.values.NOG)
-            setNumberOfTeamsInGroup(formik.values.NOTIG)
-            setTeamsFixed(true)
+        setNumberOfTeams(formik.values.teamList)
+        setTeamsFixed(true)
+        let groups = [];
+        let teamsingroup = [];
+        for (let i = 0; i < formik.values.NOG; i++) {
+            groups.push(`Group${i + 1}`);
         }
+        for (let i = 0; i < formik.values.NOTIG; i++) {
+            teamsingroup.push(`Team${i + 1}`);
+        }
+        setNumberOfGroups(groups)
+        setNumberOfTeamsInGroup(teamsingroup)
     }
-
+    // console.log(groups ,teamsingroup );
     const { teams, error, mutate } = useAllTeams();
     return (
         <Dialog
@@ -67,7 +81,7 @@ export const AddFixturesDialog = ({ open, handleClose }) => {
             open={open}
             onClose={!loading && handleClose}
             fullWidth
-            maxWidth="lg"
+            maxWidth="xl"
             BackdropProps={{
                 style: { backgroundColor: "#121212dd", },
             }}
@@ -78,105 +92,145 @@ export const AddFixturesDialog = ({ open, handleClose }) => {
                 <DialogContentText sx={{ marginBottom: 2 }}>
                     {/* Enter the required basic details of the Administrative Template below. */}
                 </DialogContentText>
-                <form onSubmit={formik.handleSubmit}>
+                <Grid
+                    container
+                    spacing={3}
+                >
                     <Grid
-                        container
-                        spacing={3}
+                        item
+                        md={3}
+                        xs={12}
                     >
-                        <Grid
-                            item
-                            md={3}
-                            xs={12}
-                        >
-                            <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-helper-label">Select teams for tournament</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-helper-label"
-                                    id="demo-simple-select-helper"
-                                    value={formik.values.teamList}
-                                    name="teamList"
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    multiple
-                                    label="Team List"
-                                >{teams?.map((item, key) => (
-                                    <MenuItem key={key} value={item.name}>{item.name}</MenuItem>)
-                                )}
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                        <Grid
-                            item
-                            md={3}
-                            xs={12}
-                        >
-                            <TextField
-                                error={Boolean(formik.touched.NOG && formik.errors.NOG)}
-                                fullWidth
-                                helperText={formik.touched.NOG && formik.errors.NOG}
-                                label="Select Number of Groups"
-                                margin="dense"
-                                name="NOG"
-                                type="number"
-                                variant="outlined"
-                                onChange={(e) => { formik.handleChange(e) }}
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-helper-label">Select teams for tournament</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-helper-label"
+                                id="demo-simple-select-helper"
+                                value={formik.values.teamList}
+                                name="teamList"
+                                onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                value={formik.values.NOG}
-                            />
-                        </Grid>
-                        <Grid
-                            item
-                            md={3}
-                            xs={12}
-                        >
-                            <TextField
-                                error={Boolean(formik.touched.NOTIG && formik.errors.NOTIG)}
-                                fullWidth
-                                helperText={formik.touched.NOTIG && formik.errors.NOTIG}
-                                label="Select MAX Number of Teams in a Group"
-                                margin="dense"
-                                name="NOTIG"
-                                type="number"
-                                variant="outlined"
-                                value={formik.values.NOTIG}
-                                onChange={(e) => {
-                                    if (formik.values.teamList.length >= (formik.values.NOG * e.target.value)) {
-                                        formik.touched.NOTIG = true;
-                                        formik.errors.NOTIG = "Please choose greater number"
-                                    } else {
-                                        formik.touched.NOTIG = false;
-                                        formik.errors.NOTIG = ""
-                                    }
-                                    formik.handleChange(e)
-                                }}
-                                onBlur={formik.handleBlur}
-
-                            />
-                        </Grid>
-                        <Grid
-                            item
-                            md={3}
-                            xs={12}
-                        >
-                            <Button
-                                variant="contained"
-                                onClick={handleSelectTeam}
-                            >Next</Button>
-                        </Grid>
+                                multiple
+                                label="Team List"
+                            >{teams?.map((item, key) => (
+                                <MenuItem key={key} value={item.name}>{item.name}</MenuItem>)
+                            )}
+                            </Select>
+                        </FormControl>
                     </Grid>
-                </form>
+                    <Grid
+                        item
+                        md={3}
+                        xs={12}
+                    >
+                        <TextField
+                            error={Boolean(formik.touched.NOG && formik.errors.NOG)}
+                            fullWidth
+                            helperText={formik.touched.NOG && formik.errors.NOG}
+                            label="Select Number of Groups"
+                            margin="dense"
+                            name="NOG"
+                            type="number"
+                            variant="outlined"
+                            onChange={(e) => { formik.handleChange(e) }}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.NOG}
+                        />
+                    </Grid>
+                    <Grid
+                        item
+                        md={3}
+                        xs={12}
+                    >
+                        <TextField
+                            error={Boolean(formik.touched.NOTIG && formik.errors.NOTIG)}
+                            fullWidth
+                            helperText={formik.touched.NOTIG && formik.errors.NOTIG}
+                            label="Select MAX Number of Teams in a Group"
+                            margin="dense"
+                            name="NOTIG"
+                            type="number"
+                            variant="outlined"
+                            value={formik.values.NOTIG}
+                            onChange={(e) => {
+                                if (formik.values.teamList.length >= (formik.values.NOG * e.target.value)) {
+                                    formik.touched.NOTIG = true;
+                                    formik.errors.NOTIG = "Please choose greater number"
+                                } else {
+                                    formik.touched.NOTIG = false;
+                                    formik.errors.NOTIG = ""
+                                }
+                                formik.handleChange(e)
+                            }}
+                            onBlur={formik.handleBlur}
+
+                        />
+                    </Grid>
+                    <Grid
+                        item
+                        md={3}
+                        xs={12}
+                    >
+                        <Button
+                            variant="contained"
+                            onClick={handleSelectTeam}
+                        >Next</Button>
+                    </Grid>
+                </Grid>
+                {/* creating teams chips */}
+                <Grid
+                    container
+                    style={{justifyContent:"center", marginTop:50 , marginBottom:50}}
+                >
+                    <Stack direction="row" spacing={5}>
+                        {numberOfTeams?.map((totolteams , teamskey)=>{
+                            return(
+                            <Chip onClick={()=>alert(totolteams)} label={totolteams} key={teamskey} />
+                            )
+                        })}
+                    </Stack>
+                </Grid>
+
+
+                {/* Creating Groups */}
                 {teamsFixed &&
                     <Grid
                         container
                         spacing={3}
                     >
-                        <Grid
-                            item
-                            md={3}
-                            xs={12}
-                        >
-                                works
-                        </Grid>
+                        {numberOfGroups.map((group, groupkey) => {
+                            return (
+                                <>
+                                    <Grid
+                                        item
+                                        md={3}
+                                        xs={12}
+                                    >
+                                        {/* <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}> */}
+                                        <Card variant="outlined">
+                                            <CardContent style={{ minHeight: 300 }}>
+                                                <List subheader={group} key={groupkey}>
+
+                                                    {numberOfTeamsInGroup?.map((noOfteams, teamkey) => (
+                                                        <>
+                                                            <ListItem disablePadding key={teamkey} >
+                                                                <ListItemButton>
+                                                                    <ListItemText primary={noOfteams} />
+                                                                </ListItemButton>
+                                                            </ListItem>
+                                                            < Divider />
+                                                        </>
+                                                    ))}
+
+                                                </List>
+                                            </CardContent>
+                                        </Card>
+                                        {/* </Box> */}
+                                    </Grid>
+                                </>
+                            )
+                        })}
+
 
                     </Grid>
                 }

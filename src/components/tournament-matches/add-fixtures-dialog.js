@@ -43,15 +43,40 @@ export const AddFixturesDialog = ({ open, handleClose }) => {
     const [numberOfTeamsInGroup, setNumberOfTeamsInGroup] = useState([]);
     const [teamsFixed, setTeamsFixed] = useState(false);
 
+
+    const Venue = [
+        {
+            value: "Dubai",
+            label: "Dubai"
+        },
+        {
+            value: "Qatar",
+            label: "Qatar"
+        },
+        {
+            value: "Abu Dhabi",
+            label: "Abu Dhabi"
+        },
+        {
+            value: "Other",
+            label: "Other"
+        }
+    ];
+
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
             teamList: [],
             NOG: "",
             NOTIG: "",
+            TournamentName: "",
+            TournamentStartDate: "",
+            TournamentEndDate: "",
         },
+
         validationSchema: Yup.object({
         }),
+
         onSubmit: async (data) => {
             console.log(data);
         },
@@ -60,6 +85,7 @@ export const AddFixturesDialog = ({ open, handleClose }) => {
 
 
     const handleSelectTeam = (e) => {
+        console.log(formik.values);
         setNumberOfTeams(formik.values.teamList)
         setTeamsFixed(true)
         let groups = [];
@@ -101,6 +127,93 @@ export const AddFixturesDialog = ({ open, handleClose }) => {
                         md={3}
                         xs={12}
                     >
+                        <TextField
+                            error={Boolean(formik.touched.TournamentName && formik.errors.TournamentName)}
+                            fullWidth
+                            helperText={formik.touched.TournamentName && formik.errors.TournamentName}
+                            label="Name of Tournament"
+                            margin="dense"
+                            name="TournamentName"
+                            type="text"
+                            variant="outlined"
+                            onChange={(e) => { formik.handleChange(e) }}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.TournamentName}
+                        />
+                    </Grid>
+                    <Grid
+                        item
+                        md={3}
+                        xs={12}
+                    >
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-helper-label">Venue</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-helper-label"
+                                id="demo-simple-select-helper"
+                                value={formik.values.Venue}
+                                name="Venue"
+                                label="Venue"
+                                onChange={formik.handleChange}
+                            >
+                                {Venue?.map((option, key) => (
+                                    <MenuItem key={key}
+                                        value={option.label}>
+                                        {option.label}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </Grid>
+
+
+                    <Grid
+                        item
+                        md={3}
+                        xs={12}
+                    >
+                        <TextField
+                            error={Boolean(formik.touched.TournamentStartDate && formik.errors.TournamentStartDate)}
+                            fullWidth
+                            helperText={formik.touched.TournamentStartDate && formik.errors.TournamentStartDate}
+                            name="TournamentStartDate"
+                            label="Tournament Start Date"
+                            InputLabelProps={{ shrink: true }}
+                            margin="dense"
+                            onBlur={formik.handleBlur}
+                            value={formik.values.TournamentStartDate}
+                            onChange={formik.handleChange}
+                            type="date"
+                            variant="outlined"
+                        />
+                    </Grid>
+
+                    <Grid
+                        item
+                        md={3}
+                        xs={12}
+                    >
+                        <TextField
+                            error={Boolean(formik.touched.TournamentEndDate && formik.errors.TournamentEndDate)}
+                            fullWidth
+                            helperText={formik.touched.TournamentEndDate && formik.errors.TournamentEndDate}
+                            name="TournamentEndDate"
+                            label="Tournament End Date"
+                            InputLabelProps={{ shrink: true }}
+                            margin="dense"
+                            onBlur={formik.handleBlur}
+                            value={formik.values.TournamentEndDate}
+                            onChange={formik.handleChange}
+                            type="date"
+                            variant="outlined"
+                        />
+                    </Grid>
+
+                    <Grid
+                        item
+                        md={3}
+                        xs={12}
+                    >
                         <FormControl fullWidth>
                             <InputLabel id="demo-simple-select-helper-label">Select teams for tournament</InputLabel>
                             <Select
@@ -118,6 +231,13 @@ export const AddFixturesDialog = ({ open, handleClose }) => {
                             </Select>
                         </FormControl>
                     </Grid>
+
+
+
+
+
+
+
                     <Grid
                         item
                         md={3}
@@ -137,6 +257,7 @@ export const AddFixturesDialog = ({ open, handleClose }) => {
                             value={formik.values.NOG}
                         />
                     </Grid>
+
                     <Grid
                         item
                         md={3}
@@ -166,6 +287,7 @@ export const AddFixturesDialog = ({ open, handleClose }) => {
 
                         />
                     </Grid>
+
                     <Grid
                         item
                         md={3}
@@ -180,12 +302,14 @@ export const AddFixturesDialog = ({ open, handleClose }) => {
                 {/* creating teams chips */}
                 <Grid
                     container
-                    style={{justifyContent:"center", marginTop:50 , marginBottom:50}}
+                    style={{ justifyContent: "center", marginTop: 50, marginBottom: 50 }}
                 >
                     <Stack direction="row" spacing={5}>
-                        {numberOfTeams?.map((totolteams , teamskey)=>{
-                            return(
-                            <Chip onClick={()=>alert(totolteams)} label={totolteams} key={teamskey} />
+                        {numberOfTeams?.map((totolteams, teamskey) => {
+                            return (
+                                <Chip onClick=
+                                    {() => alert(totolteams)}
+                                    label={totolteams} key={teamskey} />
                             )
                         })}
                     </Stack>

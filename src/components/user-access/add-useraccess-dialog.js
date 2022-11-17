@@ -57,7 +57,22 @@ const federationClubAccess = [
   },
 ];
 
-export const AddUserAccessDialog = ({ open, handleClose ,user }) => {
+const gender = [
+  {
+    value: "1",
+    label: "Male"
+  },
+  {
+    value: "2",
+    label: "Female"
+  },
+  {
+    value: "0",
+    label: "Other"
+  }
+];
+
+export const AddUserAccessDialog = ({ open, handleClose, user }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState();
   const [access, setAccess] = useState([]);
@@ -73,8 +88,10 @@ export const AddUserAccessDialog = ({ open, handleClose ,user }) => {
       email: "",
       phone: "",
       userRole: [],
-      userAccess: []
-    
+      userAccess: [],
+      address: "",
+      gender: []
+
     },
 
     validationSchema: Yup.object({
@@ -104,7 +121,7 @@ export const AddUserAccessDialog = ({ open, handleClose ,user }) => {
         handleClose();
         enqueueSnackbar("User Added Succesfully", { variant: "success" });
         setLoading(false);
-        
+
         // console.log("**********");
         //         console.log(data);
         //         await addUser(data).then((resp) => {
@@ -128,38 +145,38 @@ export const AddUserAccessDialog = ({ open, handleClose ,user }) => {
     },
   });
 
-  const handleRoleChange = (e , value) =>{
+  const handleRoleChange = (e, value) => {
 
-    if(!e.target.value){
-        setAccess([]);
+    if (!e.target.value) {
+      setAccess([]);
     }
-    if(e.target.value === 1 ){
-        setAccess([{"ID":0,"name":"All Access"}]);
+    if (e.target.value === 1) {
+      setAccess([{ "ID": 0, "name": "All Access" }]);
     }
-    if(e.target.value === 2 || e.target.value === 3){
-        setAccess(user?.federation_list);
+    if (e.target.value === 2 || e.target.value === 3) {
+      setAccess(user?.federation_list);
     }
-    
-    if(e.target.value === 4 || e.target.value === 5){
-        setAccess(user?.club_list);
-    }
-    
-    if(e.target.value === 6 || e.target.value === 7){
-        setAccess(user?.team_list);
-    }
-    
-    if(e.target.value === 8){
-        setAccess(user?.federation_list);
-    }
-    if(e.target.value === 9){
-        setAccess(user?.federation_list);
-    }
-    if(e.target.value === 10){
-        setAccess(user?.federation_list);
-    }
-    
 
- }
+    if (e.target.value === 4 || e.target.value === 5) {
+      setAccess(user?.club_list);
+    }
+
+    if (e.target.value === 6 || e.target.value === 7) {
+      setAccess(user?.team_list);
+    }
+
+    if (e.target.value === 8) {
+      setAccess(user?.federation_list);
+    }
+    if (e.target.value === 9) {
+      setAccess(user?.federation_list);
+    }
+    if (e.target.value === 10) {
+      setAccess(user?.federation_list);
+    }
+
+
+  }
 
 
 
@@ -218,6 +235,47 @@ export const AddUserAccessDialog = ({ open, handleClose ,user }) => {
                 value={formik.values.email}
                 variant="outlined"
               />
+            </Grid>
+
+            <Grid item md={6} xs={12}>
+              <TextField
+                error={Boolean(formik.touched.address && formik.errors.address)}
+                fullWidth
+                helperText={formik.touched.address && formik.errors.address}
+                label="Address"
+                margin="dense"
+                name="address"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                type="text"
+                value={formik.values.address}
+                variant="outlined"
+              />
+            </Grid>
+
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-helper-label">Gender</InputLabel>
+                <Select
+                  labelId="demo-simple-select-helper-label"
+                  id="demo-simple-select-helper"
+                  value={formik.values.gender}
+                  name="gender"
+                  label="Gender"
+                  onChange={formik.handleChange}
+                >
+                  {gender?.map((option, key) => (
+                    <MenuItem key={key}
+                      value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
 
             <Grid item md={6} xs={12}>

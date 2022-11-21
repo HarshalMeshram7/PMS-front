@@ -40,6 +40,38 @@ const sportsList = [
   },
 ];
 
+const Gender = [
+  {
+      value: "1",
+      label: "Male"
+  },
+  {
+      value: "2",
+      label: "Female"
+  },
+  {
+      value: "0",
+      label: "Other"
+  }
+];
+
+
+const TypeOfPlayerID = [
+  {
+      value: "1",
+      label: "Professional"
+  },
+  {
+      value: "2",
+      label: "Non-Professional"
+  },
+  {
+      value: "0",
+      label: "Loan-Player"
+  }
+];
+
+
 export const AddPlayerDialog = ({ open, handleClose }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState();
@@ -57,12 +89,12 @@ export const AddPlayerDialog = ({ open, handleClose }) => {
   const [uploadedDocuments, setUploadedDocuments] = useState(false);
   const [uploadedDocumentsName, setUploadedDocumentsName] = useState("");
 
-//   educational document
-const [selectedEduDocument, setSelectedEduDocument] = useState(null);
-const [selectedEduDocumentName, setSelectedEduDocumentName] = useState("");
+  //   educational document
+  const [selectedEduDocument, setSelectedEduDocument] = useState(null);
+  const [selectedEduDocumentName, setSelectedEduDocumentName] = useState("");
 
-const [uploadedEduDocument, setUploadedEduDocument] = useState(false);
-const [uploadedEduDocumentName, setUploadedEduDocumentName] = useState("");
+  const [uploadedEduDocument, setUploadedEduDocument] = useState(false);
+  const [uploadedEduDocumentName, setUploadedEduDocumentName] = useState("");
 
   const onFileChnage = (e) => {
     if (e.target.name == "photo") {
@@ -138,31 +170,26 @@ const [uploadedEduDocumentName, setUploadedEduDocumentName] = useState("");
     });
   };
 
-  let localTypeOfPlayer = [
-    { item: "Professional" },
-    { item: "Non-Professional" },
-    { item: "Loan-Player" },
-  ];
 
   const formik = useFormik({
     initialValues: {
       FirstName: "",
       LastName: "",
       AcademyClub: "",
-      TypeOfPlayer: null,
+      TypeOfPlayerID: "",
       Gender: "",
       DateOfBirth: "",
       Address: "",
       Phone: "",
       EducationQualification: "",
-      documents: null,
-      photo: null,
+      documents: "",
+      photo: "",
       PlayerTeam: "",
       Email: "",
       BasePrice: "",
       PlayingPosition: "",
       TMSITMSApplicable: "",
-      edudocuments:null,
+      edudocuments: "",
     },
     validationSchema: Yup.object({
       FirstName: Yup.string().max(100).required("Player's First Name is required"),
@@ -170,7 +197,7 @@ const [uploadedEduDocumentName, setUploadedEduDocumentName] = useState("");
       AcademyClub: Yup.string(),
       // .required('Required')
       // ,
-      // TypeOfPlayer: Yup
+      // TypeOfPlayerID: Yup
       //     .string()
       // .required('Required')
       Address: Yup.string(),
@@ -293,55 +320,54 @@ const [uploadedEduDocumentName, setUploadedEduDocumentName] = useState("");
               />
             </Grid>
 
-            <Grid item md={6} xs={12}>
-              {/* <TextField
-                                error={Boolean(formik.touched.TypeOfPlayer && formik.errors.TypeOfPlayer)}
-                                fullWidth
-                                helperText={formik.touched.TypeOfPlayer && formik.errors.TypeOfPlayer}
-                                label="Type Of Player"
-                                margin="dense"
-                                name="TypeOfPlayer"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="text"
-                                value={formik.values.TypeOfPlayer}
-                                variant="outlined"
-                            /> */}
-
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
               <FormControl fullWidth>
-                <InputLabel id="TypeOfPlayer">Type Of Player</InputLabel>
+                <InputLabel id="demo-simple-select-helper-label">Type Of Player</InputLabel>
                 <Select
-                  // multiple
-                  labelId="TypeOfPlayer"
-                  id="TypeOfPlayer"
-                  value={formik.values.TypeOfPlayer}
+                  labelId="TypeOfPlayerID"
+                  id="TypeOfPlayerID"
+                  value={formik.values.TypeOfPlayerID}
+                  name="TypeOfPlayerID"
                   label="Type Of Player"
-                  name="TypeOfPlayer"
                   onChange={formik.handleChange}
                 >
-                  {localTypeOfPlayer?.map((item, key) => (
-                    <MenuItem key={key} value={item.item}>
-                      {item.item}
+                  {TypeOfPlayerID?.map((option, key) => (
+                    <MenuItem key={key}
+                      value={option.value}>
+                      {option.label}
                     </MenuItem>
                   ))}
                 </Select>
               </FormControl>
             </Grid>
 
-            <Grid item md={6} xs={12}>
-              <TextField
-                error={Boolean(formik.touched.Gender && formik.errors.Gender)}
-                fullWidth
-                helperText={formik.touched.Gender && formik.errors.Gender}
-                label="Gender"
-                margin="dense"
-                name="Gender"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                type="text"
-                value={formik.values.Gender}
-                variant="outlined"
-              />
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-helper-label">Gender</InputLabel>
+                <Select
+                  labelId="demo-simple-select-helper-label"
+                  id="demo-simple-select-helper"
+                  value={formik.values.Gender}
+                  name="Gender"
+                  label="Gender"
+                  onChange={formik.handleChange}
+                >
+                  {Gender?.map((option, key) => (
+                    <MenuItem key={key}
+                      value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
 
             <Grid item md={6} xs={12}>
@@ -408,10 +434,10 @@ const [uploadedEduDocumentName, setUploadedEduDocumentName] = useState("");
                 variant="outlined"
               />
             </Grid>
-           
+
             <Grid item md={6} xs={12}>
-              
-            <TextField
+
+              <TextField
                 style={{ display: "none" }}
                 error={Boolean(formik.touched.edudocuments && formik.errors.edudocuments)}
                 fullWidth

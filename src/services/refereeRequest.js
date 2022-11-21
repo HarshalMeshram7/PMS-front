@@ -3,11 +3,33 @@ import useStorage from "src/hooks/useStorage";
 import { MAIN_URL , MAIN_URL2 } from "./apiConfig";
 
 
+//ADD REFEREE DETAILS
+export const addReferee = async ( data) => {
+  const { token } = useStorage();
+  if ( !data || !token) {
+    return;
+  }
+  try {
+    const res = await axios.post(`${MAIN_URL2}/SaveReferee/`, data, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    return res.data
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+
+
+
 //GET All REFEREE 
 export const getAllReferee = async ( params) => {
   const { token } = useStorage();
   try {
-    let res = await axios.get(`${MAIN_URL2}/getRefereeList/`, {
+    let res = await axios.get(`${MAIN_URL2}/getRefereebypattern/`, {
       params: params,
       headers: {
         Authorization: "Bearer " + token,

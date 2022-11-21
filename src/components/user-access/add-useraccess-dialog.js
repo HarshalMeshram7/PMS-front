@@ -18,64 +18,57 @@ import {
   Divider,
   Container,
   Autocomplete,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
 } from "@mui/material";
 import { useSnackbar } from "notistack";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useReducer } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { addAcademy } from "src/services/academyRequest";
 import LoadingBox from "src/components/common/loading-box";
 import { addUser } from "src/services/userRequests";
-
-const userRole = [
-  {
-    value: "clubAdmin",
-    label: "Club Admin",
-  },
-  {
-    value: "federationAdmin",
-    label: "Federation Admin",
-  },
-];
-
-const federationClubAccess = [
-  {
-    value: "club1",
-    label: "Club 1",
-  },
-  {
-    value: "club2",
-    label: "Club 2",
-  },
-  {
-    value: "federation1",
-    label: "Federation 1",
-  },
-  {
-    value: "federation2",
-    label: "Federation 2",
-  },
-];
 
 const gender = [
   {
     value: "1",
-    label: "Male"
+    label: "Male",
   },
   {
     value: "2",
-    label: "Female"
+    label: "Female",
   },
   {
     value: "0",
-    label: "Other"
-  }
+    label: "Other",
+  },
 ];
 
 export const AddUserAccessDialog = ({ open, handleClose, user }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState();
   const [access, setAccess] = useState([]);
+  const [finalAccessForTable, setFinalAccessForTable] = useState([]);
+  const [_, forceUpdate] = useReducer((x) => x + 1, 0);
+  
+  const [finalroles, setFinalroles] = useState({
+    userFed: {
+      userRole: "",
+      userAccess: [],
+    },
+    userClub: {
+      userRole: "",
+      userAccess: [],
+    },
+    userTeam: {
+      userRole: "",
+      userAccess: [],
+    },
+  });
+
+  let userRoles = finalroles;
 
   const formik = useFormik({
     initialValues: {
@@ -90,8 +83,7 @@ export const AddUserAccessDialog = ({ open, handleClose, user }) => {
       userRole: [],
       userAccess: [],
       address: "",
-      gender: []
-
+      gender: [],
     },
 
     validationSchema: Yup.object({
@@ -101,23 +93,19 @@ export const AddUserAccessDialog = ({ open, handleClose, user }) => {
       firstName: Yup.string().max(100).required("First Name is required"),
       lastName: Yup.string().max(100).required("Last Name is required"),
       organization: Yup.string(),
-      // .required('Required')
       email: Yup.string().email("Must be a valid Email").max(255).required("Email is required"),
       phone: Yup.string()
         .length(10)
         .matches(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/, "Phone number is not valid")
         .required("Phone number is required"),
 
-      // userRole: Yup.string().max(100).required("Sport List is required"),
-      // federationClubAccess: Yup.string().max(100).required("Federation / Club is required"),
-    }),
+     }),
 
     onSubmit: async (data) => {
       setLoading(true);
-
       try {
-        console.log("**********");
-        console.log(data);
+        let finalData = {...data,userRoles:finalroles ,userRole:"",userAccess:""}
+        console.log(finalData);
         handleClose();
         enqueueSnackbar("User Added Succesfully", { variant: "success" });
         setLoading(false);
@@ -146,12 +134,11 @@ export const AddUserAccessDialog = ({ open, handleClose, user }) => {
   });
 
   const handleRoleChange = (e, value) => {
-
     if (!e.target.value) {
       setAccess([]);
     }
     if (e.target.value === 1) {
-      setAccess([{ "ID": 0, "name": "All Access" }]);
+      setAccess([{ ID: 0, name: "All Access" }]);
     }
     if (e.target.value === 2 || e.target.value === 3) {
       setAccess(user?.federation_list);
@@ -174,11 +161,51 @@ export const AddUserAccessDialog = ({ open, handleClose, user }) => {
     if (e.target.value === 10) {
       setAccess(user?.federation_list);
     }
+  };
 
+  const handleAddRole = async () => {
+   
+    // for UI
+    let newArray = [];
+    formik.values.userAccess?.map((item) => {
+      if (item.name == null || item.name == undefined) {
+      } else {
+        newArray.push(item.name);
+      }
+    });
+    let newValue = finalAccessForTable;
+    newValue.push({
+      userRole: formik.values.userRole,
+      userAccess: newArray,
+    });
+    setFinalAccessForTable(newValue);
+    forceUpdate();
 
-  }
+    // for final payload
+    if(formik.values.userRole == 1 ||formik.values.userRole == 2 || formik.values.userRole == 8 ||formik.values.userRole == 9 ||formik.values.userRole == 10){
+      userRoles.userFed.userRole = formik.values.userRole; 
+      userRoles.userFed.userAccess = newArray; 
+      setFinalroles(userRoles);
+    }
+    if(formik.values.userRole == 4 ||formik.values.userRole == 5 ){
+      userRoles.userClub.userRole = formik.values.userRole; 
+      userRoles.userClub.userAccess = newArray; 
+      setFinalroles(userRoles);
+    }
+    if(formik.values.userRole == 6 ||formik.values.userRole == 7 ){
+      userRoles.userTeam.userRole = formik.values.userRole; 
+      userRoles.userTeam.userAccess = newArray; 
+      setFinalroles(userRoles);
+    }
+  };
 
-
+  const handleRoleRemove = (row, index) => {
+    console.log(row)
+    let newValue = finalAccessForTable;
+    newValue.splice(index, 1)
+    setFinalAccessForTable(newValue);
+    forceUpdate();
+  };
 
   useEffect(() => {
     if (!open) {
@@ -253,11 +280,7 @@ export const AddUserAccessDialog = ({ open, handleClose, user }) => {
               />
             </Grid>
 
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+            <Grid item md={6} xs={12}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-helper-label">Gender</InputLabel>
                 <Select
@@ -269,8 +292,7 @@ export const AddUserAccessDialog = ({ open, handleClose, user }) => {
                   onChange={formik.handleChange}
                 >
                   {gender?.map((option, key) => (
-                    <MenuItem key={key}
-                      value={option.value}>
+                    <MenuItem key={key} value={option.value}>
                       {option.label}
                     </MenuItem>
                   ))}
@@ -330,7 +352,7 @@ export const AddUserAccessDialog = ({ open, handleClose, user }) => {
                 error={Boolean(formik.touched.lastName && formik.errors.lastName)}
                 fullWidth
                 helperText={formik.touched.lastName && formik.errors.lastName}
-                label="First Name"
+                label="Last Name"
                 margin="dense"
                 name="lastName"
                 onBlur={formik.handleBlur}
@@ -379,7 +401,40 @@ export const AddUserAccessDialog = ({ open, handleClose, user }) => {
 
         <DialogContent>
           <Grid container spacing={3}>
-            <Grid item md={6} xs={12}>
+            <Grid item md={12} xs={12}>
+             {finalAccessForTable.length !== 0 && <Table aria-label="caption table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Roles</TableCell>
+                    <TableCell>Access</TableCell>
+                    <TableCell align="right">Action</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {finalAccessForTable?.map((row, rowkey) => {
+                    return (
+                      <TableRow key={rowkey}>
+                        <TableCell>{row.userRole}</TableCell>
+                        <TableCell>
+                          {row.userAccess?.map((item, key) => {
+                            return (
+                              <p style={{ display: "inline" }} key={key}>
+                                {item},
+                              </p>
+                            );
+                          })}
+                        </TableCell>
+                        <TableCell style={{ cursor: "pointer" }} onClick={()=>{handleRoleRemove(row,rowkey)}} align="right">
+                          X
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>}
+            </Grid>
+
+            <Grid item md={4} xs={12}>
               {/* <Autocomplete
                                 disablePortal
                                 id="combo-box-demo"
@@ -408,7 +463,7 @@ export const AddUserAccessDialog = ({ open, handleClose, user }) => {
               </FormControl>
             </Grid>
 
-            <Grid item md={6} xs={12}>
+            <Grid item md={4} xs={12}>
               {/* <Autocomplete
                 multiple
                 id="tags-outlined"
@@ -437,12 +492,17 @@ export const AddUserAccessDialog = ({ open, handleClose, user }) => {
                   }}
                 >
                   {access?.map((item, key) => (
-                    <MenuItem key={key} value={item.ID}>
+                    <MenuItem key={key} value={item}>
                       {item.name}
                     </MenuItem>
                   ))}
                 </Select>
               </FormControl>
+            </Grid>
+            <Grid item md={4} xs={12}>
+              <Button onClick={handleAddRole} variant="contained">
+                Save Roll
+              </Button>
             </Grid>
           </Grid>
         </DialogContent>

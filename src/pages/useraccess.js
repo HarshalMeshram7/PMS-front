@@ -65,6 +65,7 @@ const Useraccess = () => {
           user={user}
           open={showAddUserAccessDialog}
           handleClose={handleCloseAddUserAccess}
+          mutate={mutate}
         />
         <UserAccessDetailsDialog
           user={user}

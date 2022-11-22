@@ -46,7 +46,7 @@ const gender = [
   },
 ];
 
-export const AddUserAccessDialog = ({ open, handleClose, user }) => {
+export const AddUserAccessDialog = ({ open, handleClose, user ,mutate }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState();
   const [access, setAccess] = useState([]);
@@ -84,6 +84,7 @@ export const AddUserAccessDialog = ({ open, handleClose, user }) => {
       userAccess: [],
       address: "",
       gender: [],
+      DateOfBirth: "",
     },
 
     validationSchema: Yup.object({
@@ -106,26 +107,23 @@ export const AddUserAccessDialog = ({ open, handleClose, user }) => {
       try {
         let finalData = {...data,userRoles:finalroles ,userRole:"",userAccess:""}
         console.log(finalData);
-        handleClose();
-        enqueueSnackbar("User Added Succesfully", { variant: "success" });
-        setLoading(false);
-
-        // console.log("**********");
-        //         console.log(data);
-        //         await addUser(data).then((resp) => {
-        //           console.log(resp);
-        //             if (resp.status === "success") {
-        //                 handleClose();
-        //                 enqueueSnackbar("user Added Succesfully", { variant: "success" });
-        //                 mutate();
-        //                 setLoading(false);
-        //             }
-        //             if (resp.status === "failed") {
-        //                 handleClose();
-        //                 enqueueSnackbar("user Not Added", { variant: "failed" });
-        //                 setLoading(false);
-        //             }
-        //         })
+        // handleClose();
+        // enqueueSnackbar("User Added Succesfully", { variant: "success" });
+        // setLoading(false);
+                await addUser(finalData).then((resp) => {
+                  console.log(resp);
+                    if (resp.status === "success") {
+                        handleClose();
+                        enqueueSnackbar("user Added Succesfully", { variant: "success" });
+                        mutate();
+                        setLoading(false);
+                    }
+                    if (resp.status === "failed") {
+                        handleClose();
+                        enqueueSnackbar("user Not Added", { variant: "failed" });
+                        setLoading(false);
+                    }
+                })
       } catch (error) {
         console.log(error);
         setLoading(false);
@@ -166,17 +164,20 @@ export const AddUserAccessDialog = ({ open, handleClose, user }) => {
   const handleAddRole = async () => {
    
     // for UI
-    let newArray = [];
+    let newNameArray = [];
+    let newIDArray = [];
     formik.values.userAccess?.map((item) => {
+      console.log(item);
       if (item.name == null || item.name == undefined) {
       } else {
-        newArray.push(item.name);
+        newNameArray.push(item.name);
+        newIDArray.push(item.ID);
       }
     });
     let newValue = finalAccessForTable;
     newValue.push({
       userRole: formik.values.userRole,
-      userAccess: newArray,
+      userAccess: newNameArray,
     });
     setFinalAccessForTable(newValue);
     forceUpdate();
@@ -184,23 +185,24 @@ export const AddUserAccessDialog = ({ open, handleClose, user }) => {
     // for final payload
     if(formik.values.userRole == 1 ||formik.values.userRole == 2 || formik.values.userRole == 8 ||formik.values.userRole == 9 ||formik.values.userRole == 10){
       userRoles.userFed.userRole = formik.values.userRole; 
-      userRoles.userFed.userAccess = newArray; 
+      userRoles.userFed.userAccess = newIDArray; 
       setFinalroles(userRoles);
     }
     if(formik.values.userRole == 4 ||formik.values.userRole == 5 ){
       userRoles.userClub.userRole = formik.values.userRole; 
-      userRoles.userClub.userAccess = newArray; 
+      userRoles.userClub.userAccess = newIDArray; 
       setFinalroles(userRoles);
     }
     if(formik.values.userRole == 6 ||formik.values.userRole == 7 ){
       userRoles.userTeam.userRole = formik.values.userRole; 
-      userRoles.userTeam.userAccess = newArray; 
+      userRoles.userTeam.userAccess = newIDArray; 
       setFinalroles(userRoles);
     }
+    formik.values.userRole = [];
+    formik.values.userAccess = [];
   };
 
   const handleRoleRemove = (row, index) => {
-    console.log(row)
     let newValue = finalAccessForTable;
     newValue.splice(index, 1)
     setFinalAccessForTable(newValue);
@@ -365,6 +367,22 @@ export const AddUserAccessDialog = ({ open, handleClose, user }) => {
 
             <Grid item md={6} xs={12}>
               <TextField
+                error={Boolean(formik.touched.DateOfBirth && formik.errors.DateOfBirth)}
+                fullWidth
+                helperText={formik.touched.DateOfBirth && formik.errors.DateOfBirth}
+                label="Date Of Birth"
+                InputLabelProps={{ shrink: true }}
+                margin="dense"
+                name="DateOfBirth"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                type="date"
+                value={formik.values.DateOfBirth}
+                variant="outlined"
+              />
+            </Grid>
+            {/* <Grid item md={6} xs={12}>
+              <TextField
                 error={Boolean(formik.touched.organization && formik.errors.organization)}
                 fullWidth
                 helperText={formik.touched.organization && formik.errors.organization}
@@ -377,7 +395,7 @@ export const AddUserAccessDialog = ({ open, handleClose, user }) => {
                 value={formik.values.organization}
                 variant="outlined"
               />
-            </Grid>
+            </Grid> */}
 
             <Grid item md={6} xs={12}>
               <TextField
@@ -501,7 +519,7 @@ export const AddUserAccessDialog = ({ open, handleClose, user }) => {
             </Grid>
             <Grid item md={4} xs={12}>
               <Button onClick={handleAddRole} variant="contained">
-                Save Roll
+                Save Role
               </Button>
             </Grid>
           </Grid>

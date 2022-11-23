@@ -66,6 +66,10 @@ export const AddUserAccessDialog = ({ open, handleClose, user ,mutate }) => {
       userRole: "",
       userAccess: [],
     },
+    userAcademy: {
+      userRole: "",
+      userAccess: [],
+    },
   });
 
   let userRoles = finalroles;
@@ -149,6 +153,9 @@ export const AddUserAccessDialog = ({ open, handleClose, user ,mutate }) => {
     if (e.target.value === 6 || e.target.value === 7) {
       setAccess(user?.team_list);
     }
+    if (e.target.value === 14 || e.target.value === 15) {
+      setAccess(user?.academy_list);
+    }
 
     if (e.target.value === 8) {
       setAccess(user?.federation_list);
@@ -196,6 +203,11 @@ export const AddUserAccessDialog = ({ open, handleClose, user ,mutate }) => {
     if(formik.values.userRole == 6 ||formik.values.userRole == 7 ){
       userRoles.userTeam.userRole = formik.values.userRole; 
       userRoles.userTeam.userAccess = newIDArray; 
+      setFinalroles(userRoles);
+    }
+    if(formik.values.userRole == 14 ||formik.values.userRole == 15 ){
+      userRoles.userAcademy.userRole = formik.values.userRole; 
+      userRoles.userAcademy.userAccess = newIDArray; 
       setFinalroles(userRoles);
     }
     formik.values.userRole = [];

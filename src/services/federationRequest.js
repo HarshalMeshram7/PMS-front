@@ -87,7 +87,6 @@ export const deleteFederation = async (data) => {
         throw "No Token";
     }
     try {
-
         const res = await axios.post(`${MAIN_URL2}/Deletefederation/`,data, {
             headers: {
                 Authorization: "Bearer " + token,

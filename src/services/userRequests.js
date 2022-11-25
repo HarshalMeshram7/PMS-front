@@ -98,15 +98,17 @@ export const addUser = async (data) => {
 //DELETE USER
 export const deleteUser = async (data) => {
   const { token } = useStorage();
-  if (!id || !token) {
+  if (!token) {
     return;
   }
   try {
-    const res = await axios.delete(`${MAIN_URL2}/deleteuser`,{data},{
+    const res = await axios.delete(`${MAIN_URL2}/deleteuser`,{
       headers: {
         Authorization: "Bearer " + token,
       },
+      data
     });
+    return res.data;
   } catch (error) {
     console.log(error);
     throw error;

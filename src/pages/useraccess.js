@@ -51,7 +51,7 @@ const Useraccess = () => {
   const handleDeleteUser = (id) => {
     try{
       deleteUser({"Id":id}).then((res)=>{
-        if(res?.status === "SUCCESS"){
+        if(res?.status === "success"){
           setOpenDeleteDialogue(false)
           mutate();
         }

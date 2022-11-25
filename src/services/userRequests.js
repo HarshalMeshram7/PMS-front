@@ -96,13 +96,13 @@ export const addUser = async (data) => {
 // };
 
 //DELETE USER
-export const deleteUser = async (id) => {
+export const deleteUser = async (data) => {
   const { token } = useStorage();
   if (!id || !token) {
     return;
   }
   try {
-    const res = await axios.delete(`${MAIN_URL}/admin/${id}/delete_admin/`, {
+    const res = await axios.delete(`${MAIN_URL2}/deleteuser`,{data},{
       headers: {
         Authorization: "Bearer " + token,
       },

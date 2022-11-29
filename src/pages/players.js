@@ -6,15 +6,20 @@ import { PlayerListToolbar } from '../components/player/player-list-toolbar.js';
 import { DashboardLayout } from '../components/dashboard-layout.js';
 import { useState } from 'react';
 import { PlayerDetailsDialog } from 'src/components/player/player-details-dialog.js';
+import { useAllPlayers } from 'src/adapters/playersAdapter.js';
 
 const Players = () => {
   const [showAddPlayerDialog, setShowAddPlayerDialog] = useState(false);
   const [showPlayerDetailsDialog, setShowPlayerDetailsDialog] = useState(false);
+  const [params, setParams] = useState({});
+  
   const handleOpenAddPlayer = () => setShowAddPlayerDialog(true);
   const handleCloseAddPlayer = () => setShowAddPlayerDialog(false);
   
   const handleOpenPlayerDetails = () => setShowPlayerDetailsDialog(true);
   const handleClosePlayerDetails = () => setShowPlayerDetailsDialog(false);
+
+  const {players, loading, mutate} = useAllPlayers({ ...params });
 
 let playerslist =
 [
@@ -47,6 +52,12 @@ let playerslist =
     phone: '712-351-5711'
   },
 ]
+const handleSearch = (value) => {
+  setParams((p) => ({ ...p, searchpattern: value }))
+};
+
+console.log(players);
+console.log(playerslist);
 
 
 return(
@@ -70,14 +81,18 @@ return(
     <AddPlayerDialog
           open={showAddPlayerDialog}
           handleClose={handleCloseAddPlayer}
+          
+          mutate={mutate}
         />
       <Container maxWidth={false}>
       <PlayerListToolbar
+           search={handleSearch}
+                        
             handleOpenAddPlayer={handleOpenAddPlayer}
             open={showAddPlayerDialog}
              />
         <Box sx={{ mt: 3 }}>
-          <PlayerListResults players={playerslist} handleOpenPlayerDetails={handleOpenPlayerDetails}
+          <PlayerListResults players={players} handleOpenPlayerDetails={handleOpenPlayerDetails}
              />
         </Box>
       </Container>

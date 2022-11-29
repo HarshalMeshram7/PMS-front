@@ -7,7 +7,7 @@ import { MAIN_URL , MAIN_URL2 } from "./apiConfig";
 export const getAllUser2 = async ( params) => {
   const { token } = useStorage();
   try {
-    let res = await axios.get(`${MAIN_URL2}/getUserList/`, {
+    let res = await axios.get(`${MAIN_URL2}/getUserList`, {
       params: params,
       headers: {
         Authorization: "Bearer " + token,

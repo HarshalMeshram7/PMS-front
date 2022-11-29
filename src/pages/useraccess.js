@@ -7,7 +7,7 @@ import { DashboardLayout } from "../components/dashboard-layout";
 import { useState } from "react";
 import { useAllUser2 } from "src/adapters/usersAdapters";
 import { UserAccessDetailsDialog } from "src/components/user-access/useraccess-details-dialog";
-import { getUserDetails ,deleteUser } from "src/services/userRequests";
+import { getUserDetails, deleteUser } from "src/services/userRequests";
 import DeleteDialog from "src/components/common/deleteDialog";
 
 
@@ -17,17 +17,17 @@ const Useraccess = () => {
   const [openDeleteDialogue, setOpenDeleteDialogue] = useState(false);
   const [user, setUser] = useState({});
   const [params, setParams] = useState({});
-  
+
   const handleOpenAddUserAccess = () => {
-    try{
-      getUserDetails({id:"1"}).then((res)=>{
-        if(res?.status === "SUCCESS"){
+    try {
+      getUserDetails({ id: "1" }).then((res) => {
+        if (res?.status === "SUCCESS") {
           setUser(res.result);
         }
         setShowAddUserAccessDialog(true)
       })
     }
-    catch(error){
+    catch (error) {
       console.log(error);
     }
   };
@@ -35,34 +35,34 @@ const Useraccess = () => {
 
   const handleCloseUserAccessDetails = () => setShowUserAccessDetailsDialog(false);
   const handleOpenUserAccessDetails = (user) => {
-    try{
-      getUserDetails({id:user.ID}).then((res)=>{
-        if(res?.status === "SUCCESS"){
-          let Senduser = {...res.result,fullName:user.FullName}
+    try {
+      getUserDetails({ id: user.ID }).then((res) => {
+        if (res?.status === "SUCCESS") {
+          let Senduser = { ...res.result, fullName: user.FullName }
           setUser(Senduser);
           setShowUserAccessDetailsDialog(true)
         }
       })
     }
-    catch(error){
+    catch (error) {
       console.log(error);
     }
   };
   const handleDeleteUser = (id) => {
-    try{
-      deleteUser({"Id":id}).then((res)=>{
-        if(res?.status === "success"){
+    try {
+      deleteUser({ "Id": id }).then((res) => {
+        if (res?.status === "success") {
           setOpenDeleteDialogue(false)
           mutate();
         }
       })
     }
-    catch(error){
+    catch (error) {
       console.log(error);
     }
   };
 
-  
+
   const handleOpenDeleteDialogue = (user) => {
     setUser(user)
     setOpenDeleteDialogue(true);
@@ -70,6 +70,9 @@ const Useraccess = () => {
 
   const handleCloseDeleteDialogue = () => {
     setOpenDeleteDialogue(false);
+  };
+  const handleSearch = (value) => {
+    setParams((p) => ({ ...p, searchpattern: value }))
   };
 
 
@@ -88,7 +91,7 @@ const Useraccess = () => {
           py: 8,
         }}
       >
-        <DeleteDialog 
+        <DeleteDialog
           handleDelete={handleDeleteUser}
           name={user.FullName}
           ID={user.ID}
@@ -108,13 +111,14 @@ const Useraccess = () => {
         />
         <Container maxWidth={false}>
           <UserAccessListToolbar
+            search={handleSearch}
             handleOpenAddUserAccess={handleOpenAddUserAccess}
             open={showAddUserAccessDialog}
           />
           <Box sx={{ mt: 3 }}>
-            <UserAccessListResults userAccess={users || []} 
-            handleOpenUserAccessDetails={handleOpenUserAccessDetails}
-            handleOpenDeleteDialogue={handleOpenDeleteDialogue} />
+            <UserAccessListResults userAccess={users || []}
+              handleOpenUserAccessDetails={handleOpenUserAccessDetails}
+              handleOpenDeleteDialogue={handleOpenDeleteDialogue} />
           </Box>
         </Container>
       </Box>

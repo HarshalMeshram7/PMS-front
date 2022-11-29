@@ -19,7 +19,7 @@ import { getInitials } from '../../utils/get-initials';
 
 
 
-export const PlayerListResults = ({ players,handleOpenPlayerDetails, ...rest }) => {
+export const PlayerListResults = ({ players, handleOpenPlayerDetails, ...rest }) => {
   const [selectedPlayerIds, setSelectedPlayerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -64,6 +64,8 @@ export const PlayerListResults = ({ players,handleOpenPlayerDetails, ...rest }) 
     setPage(newPage);
   };
 
+  console.log(players);
+
   return (
     <Card {...rest}>
       <PerfectScrollbar>
@@ -83,31 +85,29 @@ export const PlayerListResults = ({ players,handleOpenPlayerDetails, ...rest }) 
                   />
                 </TableCell> */}
                 <TableCell>
-                  Name
+                  Full Name
                 </TableCell>
                 <TableCell>
                   Email
                 </TableCell>
                 <TableCell>
-                  Location
-                </TableCell>
-                <TableCell>
                   Phone
                 </TableCell>
-                <TableCell>
-                  Registration date
-                </TableCell>
+                {/* <TableCell>
+                  Photo
+                </TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
-              {players.slice(0, limit).map((player, key) => (
+              {players?.slice(0, limit).map((players, key) => (
                 <TableRow
-                 onClick = {handleOpenPlayerDetails}
+                  onClick={handleOpenPlayerDetails}
                   hover
-                  style={{cursor:"pointer"}}
+                  style={{ cursor: "pointer" }}
                   key={key}
-                  selected={selectedPlayerIds.indexOf(player.id) !== -1}
+                  selected={selectedPlayerIds.indexOf(players.id) !== -1}
                 >
+
                   {/* <TableCell padding="checkbox">
                     <Checkbox
                       checked={selectedPlayerIds.indexOf(player.id) !== -1}
@@ -115,6 +115,7 @@ export const PlayerListResults = ({ players,handleOpenPlayerDetails, ...rest }) 
                       value="true"
                     />
                   </TableCell> */}
+
                   <TableCell>
                     <Box
                       sx={{
@@ -123,38 +124,43 @@ export const PlayerListResults = ({ players,handleOpenPlayerDetails, ...rest }) 
                       }}
                     >
                       <Avatar
-                        src={player.avatarUrl}
+                        src={players.Photo}
                         sx={{ mr: 2 }}
                       >
-                        {getInitials(player.name)}
+                        {getInitials(players.FullName)}
                       </Avatar>
                       <Typography
                         color="textPrimary"
                         variant="body1"
                       >
-                        {player.name}
+                        {players.FullName}
                       </Typography>
                     </Box>
                   </TableCell>
+
                   <TableCell>
-                    {player.email}
+                    {players.Email}
                   </TableCell>
+
                   <TableCell>
+                    {players.ContactNo}
+                  </TableCell>
+
+                  {/* <TableCell>
                     {`${player.address.city}, ${player.address.state}, ${player.address.country}`}
-                  </TableCell>
-                  <TableCell>
-                    {player.phone}
-                  </TableCell>
-                  <TableCell>
+                  </TableCell> */}
+
+                  {/* <TableCell>
                     {format(player.createdAt, 'dd/MM/yyyy')}
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
+
               ))}
             </TableBody>
           </Table>
         </Box>
       </PerfectScrollbar>
-      <TablePagination
+      {/* <TablePagination
         component="div"
         count={players.length}
         onPageChange={handlePageChange}
@@ -162,7 +168,7 @@ export const PlayerListResults = ({ players,handleOpenPlayerDetails, ...rest }) 
         page={page}
         rowsPerPage={limit}
         rowsPerPageOptions={[5, 10, 25]}
-      />
+      /> */}
     </Card>
   );
 };

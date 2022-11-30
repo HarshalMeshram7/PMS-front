@@ -16,10 +16,9 @@ export default function DeleteDialog({open,handleClose,handleDelete,ID,name,...r
           open={open}
           onClose={handleClose}
           aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
+          aria-describedby="alert-dialog-description">
           <DialogTitle align='center' id="alert-dialog-title">
-            Delete "{name}"
+            Delete {name}
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">

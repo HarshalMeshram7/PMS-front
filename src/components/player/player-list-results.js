@@ -9,6 +9,7 @@ import {
   Checkbox,
   Table,
   TableBody,
+  Button,
   TableCell,
   TableHead,
   TablePagination,
@@ -19,7 +20,7 @@ import { getInitials } from '../../utils/get-initials';
 
 
 
-export const PlayerListResults = ({ players, handleOpenPlayerDetails, ...rest }) => {
+export const PlayerListResults = ({ players, handleOpenPlayerDetails, handleOpenDeleteDialogue,  ...rest }) => {
   const [selectedPlayerIds, setSelectedPlayerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -93,15 +94,14 @@ export const PlayerListResults = ({ players, handleOpenPlayerDetails, ...rest })
                 <TableCell>
                   Phone
                 </TableCell>
-                {/* <TableCell>
-                  Photo
-                </TableCell> */}
+                <TableCell>
+                  Action
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {players?.slice(0, limit).map((players, key) => (
                 <TableRow
-                  onClick={handleOpenPlayerDetails}
                   hover
                   style={{ cursor: "pointer" }}
                   key={key}
@@ -116,7 +116,9 @@ export const PlayerListResults = ({ players, handleOpenPlayerDetails, ...rest })
                     />
                   </TableCell> */}
 
-                  <TableCell>
+                  <TableCell
+                  onClick={handleOpenPlayerDetails}
+                  >
                     <Box
                       sx={{
                         alignItems: 'center',
@@ -138,12 +140,23 @@ export const PlayerListResults = ({ players, handleOpenPlayerDetails, ...rest })
                     </Box>
                   </TableCell>
 
-                  <TableCell>
+                  <TableCell onClick={handleOpenPlayerDetails}                  >
                     {players.Email}
                   </TableCell>
 
-                  <TableCell>
+                  <TableCell onClick={handleOpenPlayerDetails}
+                  >
                     {players.ContactNo}
+                  </TableCell>
+
+                  <TableCell>
+                    <Button
+                      onClick={() => {
+                        handleOpenDeleteDialogue(players);
+                      }}
+                    >
+                      X
+                    </Button>
                   </TableCell>
 
                   {/* <TableCell>

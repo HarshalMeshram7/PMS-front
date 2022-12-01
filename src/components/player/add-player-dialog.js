@@ -24,6 +24,7 @@ import { addAcademy } from "src/services/academyRequest";
 import LoadingBox from "src/components/common/loading-box";
 import DeleteIcon from "@mui/icons-material/Delete";
 import uploadFileToBlob, { deleteBlob, handlePriview, getFileName } from "src/utils/azureBlob";
+import { addPlayers } from "src/services/playersRequest";
 
 const sportsList = [
   {
@@ -42,15 +43,15 @@ const sportsList = [
 
 const Gender = [
   {
-      value: "1",
+      value: "Male",
       label: "Male"
   },
   {
-      value: "2",
+      value: "Female",
       label: "Female"
   },
   {
-      value: "0",
+      value: "Other",
       label: "Other"
   }
 ];
@@ -72,7 +73,7 @@ const TypeOfPlayerID = [
 ];
 
 
-export const AddPlayerDialog = ({ open, handleClose }) => {
+export const AddPlayerDialog = ({ open, handleClose, mutate }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState();
 
@@ -237,9 +238,11 @@ export const AddPlayerDialog = ({ open, handleClose }) => {
           edudocuments: handlePriview(uploadedEduDocumentName),
         };
         console.log(finalData);
-        // await addAcademy(data);
+        
+        await addPlayers(finalData);
         handleClose();
         enqueueSnackbar("Player Added Succesfully", { variant: "success" });
+        mutate();
         setLoading(false);
       } catch (error) {
         setLoading(false);

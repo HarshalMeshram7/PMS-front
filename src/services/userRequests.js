@@ -40,6 +40,26 @@ export const getUserDetails = async (params) => {
     throw error;
   }
 };
+//GET USER DETAILS
+export const getUserTypeList = async (params) => {
+  const { token  } = useStorage();
+  if (!token) {
+    throw new Error("No token");
+  }
+  try {
+    let res = await axios.get(`${MAIN_URL2}/getUserTypeList`, {
+      params: params,
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+
+    throw error;
+  }
+};
 // Add User
 export const addUser = async (data) => {
   const { token } = useStorage();

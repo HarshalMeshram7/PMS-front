@@ -7,7 +7,7 @@ import { DashboardLayout } from "../components/dashboard-layout";
 import { useState } from "react";
 import { useAllUser2 } from "src/adapters/usersAdapters";
 import { UserAccessDetailsDialog } from "src/components/user-access/useraccess-details-dialog";
-import { getUserDetails, deleteUser } from "src/services/userRequests";
+import { getUserDetails, deleteUser ,getUserTypeList} from "src/services/userRequests";
 import DeleteDialog from "src/components/common/deleteDialog";
 
 
@@ -20,7 +20,7 @@ const Useraccess = () => {
 
   const handleOpenAddUserAccess = () => {
     try {
-      getUserDetails({ id: "1" }).then((res) => {
+      getUserTypeList().then((res) => {
         if (res?.status === "SUCCESS") {
           setUser(res.result);
         }

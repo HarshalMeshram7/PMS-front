@@ -243,7 +243,6 @@ export const AcademyDetailsDialog = ({ open, handleClose, academy, mutate }) => 
         onSubmit: async (data) => {
             setLoading(true);
             try {
-                console.log(data);
                 let finalData = {
                     ...data,
                     logo: handlePriview(uploadedLogoName),

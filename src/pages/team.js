@@ -2,11 +2,9 @@ import React from "react";
 import Head from 'next/head';
 import { DashboardLayout } from "src/components/dashboard-layout";
 import { Box, Container, Grid, keyframes, Pagination } from '@mui/material';
-import { teams } from "src/__mocks__/teams";
 import { TeamListToolbar } from "src/components/team/team-list-toolbar";
 import { TeamCard } from "src/components/team/team-card";
 import { useState } from 'react';
-import { useAllAcademies } from "src/adapters/academyAdapter";
 import { useAllTeams } from "src/adapters/teamAdapter";
 import { AddTeamDialog } from "src/components/team/add-team-dialog";
 import { TeamDetailsDialog } from "src/components/team/team-details-dialog";
@@ -25,7 +23,6 @@ const Team = () => {
 
   const handleOpenTeamDetails = (team) => {
     getTeam({id:team.ID}).then((res)=>{
-      console.log(res);
       setTeam(res)
       setShowTeamDetailsDialog(true)
 
@@ -36,7 +33,6 @@ const Team = () => {
   const handleOpenTeamFinance = (team) => {
 
     getTeam({id:team.ID}).then((res)=>{
-      console.log(res);
       setTeam(res)
       setShowTeamFinanceDialog(true)
     })

@@ -87,8 +87,6 @@ const Players = () => {
   };
 
 
-  // console.log(players);
-  // console.log(playerslist);
 
 
   return (
@@ -105,7 +103,6 @@ const Players = () => {
           py: 8
         }}
       >
-        {/* {console.log(player)} */}
         <DeleteDialog
           handleDelete={handleDeletePlayer}
           name={player.FullName}

@@ -32,7 +32,6 @@ import uploadFileToBlob, { deleteBlob, handlePriview, getFileName } from "src/ut
 
 export const FederationDetailsDialog = ({ open, handleClose, federation, mutate }) => {
   const { enqueueSnackbar } = useSnackbar();
-  console.log(federation);
   const user = {
     avatar: federation.Logo,
     city: federation.Address,

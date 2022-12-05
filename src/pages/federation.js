@@ -6,7 +6,6 @@ import { DashboardLayout } from '../components/dashboard-layout';
 import { AddFederationDialog } from 'src/components/federation/add-federation-dialog';
 import { useState, useEffect } from 'react';
 import { FederationDetailsDialog } from 'src/components/federation/federation-details-dialog';
-import { useAllAcademies } from 'src/adapters/academyAdapter';
 import { useAllFederations } from 'src/adapters/federationAdapter';
 import { FederationFinanceDialog } from 'src/components/federation/federation-finance-dialog';
 import { getFederation } from 'src/services/federationRequest';

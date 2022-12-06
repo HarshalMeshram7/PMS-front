@@ -22,13 +22,11 @@ import {
 import { useEffect, useState } from "react";
 import LoadingBox from "src/components/common/loading-box";
 import { PlayerListResults } from "src/components/player/player-list-results";
-import { players } from "../../__mocks__/players.js";
 import { useFormik } from "formik";
 import DeleteIcon from "@mui/icons-material/Delete";
 import uploadFileToBlob, { deleteBlob, handlePriview, getFileName } from "src/utils/azureBlob";
 import * as Yup from "yup";
 import { useSnackbar } from "notistack";
-import { deleteAcademy } from "src/services/academyRequest.js";
 import banner from '../../../public/static/images/background/register.jpg';
 import { deleteTeam } from "src/services/teamRequest.js";
 
@@ -37,14 +35,7 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
     const { enqueueSnackbar } = useSnackbar();
 
     console.log(team);
-    const user = {
-        avatar: team.logo,
-        city: team.address,
-        country: 'USA',
-        jobTitle: 'Senior Developer',
-        name: team.academyName,
-        timezone: 'GTM-7'
-    };
+    
     const [loading, setLoading] = useState();
 
     //   logo upload
@@ -321,7 +312,7 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
                                                 }}
                                             >
                                                 <Avatar
-                                                    src={user.avatar}
+                                                    src={team?.logo}
                                                     sx={{
                                                         height: 64,
                                                         mb: 2,
@@ -333,20 +324,20 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
                                                     gutterBottom
                                                     variant="h5"
                                                 >
-                                                    {user.name}
+                                                    {team?.Team}
                                                 </Typography>
-                                                <Typography
+                                                {/* <Typography
                                                     color="textSecondary"
                                                     variant="body2"
                                                 >
-                                                    {team.email}
-                                                </Typography>
-                                                <Typography
+                                                    {team?.email}
+                                                </Typography> */}
+                                                {/* <Typography
                                                     color="textSecondary"
                                                     variant="body2"
                                                 >
-                                                    {`${user.city}`}
-                                                </Typography>
+                                                    {team.address}
+                                                </Typography> */}
                                                 {/* <Typography
                                                     color="textSecondary"
                                                     variant="body2"
@@ -818,10 +809,10 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
                                 </Grid>
                             </Grid>
                             {/* Teams List */}
-                            <Typography>Teams - Teams </Typography>
+                            {/* <Typography>Teams - Teams </Typography>
                             <Box sx={{ mt: 3 }}>
                                 <PlayerListResults players={players} />
-                            </Box>
+                            </Box> */}
 
                         </Container>
                     </Box>

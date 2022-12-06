@@ -18,45 +18,18 @@ const Players = () => {
   const handleOpenAddPlayer = () => setShowAddPlayerDialog(true);
   const handleCloseAddPlayer = () => setShowAddPlayerDialog(false);
 
-  const handleOpenPlayerDetails = () => setShowPlayerDetailsDialog(true);
+  const handleOpenPlayerDetails = () => {
+    setShowPlayerDetailsDialog(true)
+  };
+  
+  
   const handleClosePlayerDetails = () => setShowPlayerDetailsDialog(false);
-
   const [player, setPlayer] = useState({});
   const [openDeleteDialogue, setOpenDeleteDialogue] = useState(false);
 
   const { players, loading, mutate } = useAllPlayers({ ...params });
 
-  let playerslist =
-    [
-      {
-        id: "1",
-        address: {
-          country: 'USA',
-          state: 'West Virginia',
-          city: 'Parkersburg',
-          street: '2849 Fulton Street'
-        },
-        avatarUrl: '/static/images/avatars/avatar_3.png',
-        createdAt: 1555016400000,
-        email: 'ekaterina.tankova@devias.io',
-        name: 'Ekaterina Tankova',
-        phone: '304-428-3097'
-      },
-      {
-        id: "2",
-        address: {
-          country: 'USA',
-          state: 'Bristow',
-          city: 'Iowa',
-          street: '1865  Pleasant Hill Road'
-        },
-        avatarUrl: '/static/images/avatars/avatar_4.png',
-        createdAt: 1555016400000,
-        email: 'cao.yu@devias.io',
-        name: 'Cao Yu',
-        phone: '712-351-5711'
-      },
-    ]
+ 
 
   const handleSearch = (value) => {
     setParams((p) => ({ ...p, searchpattern: value }))
@@ -85,8 +58,6 @@ const Players = () => {
   const handleCloseDeleteDialogue = () => {
     setOpenDeleteDialogue(false);
   };
-
-
 
 
   return (

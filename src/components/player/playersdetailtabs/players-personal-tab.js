@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormik } from "formik";
+// import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import {
@@ -13,7 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import uploadFileToBlob, { deleteBlob, handlePriview, getFileName } from "src/utils/azureBlob";
 import { IconButton, } from "@mui/material";
 
-export default function PlayerDetailsTab() {
+export default function PlayerDetailsTab({formik}) {
 
     const [loading, setLoading] = useState();
 
@@ -92,48 +92,48 @@ export default function PlayerDetailsTab() {
 
 
 
-    const formik = useFormik({
-        enableReinitialize: true,
-        initialValues: {
-            FirstName: "",
-            LastName: "",
-            AcademyClub: "",
-            TypeOfPlayer: "",
-            Gender: "",
-            DateOfBirth: "",
-            Address: "",
-            Phone: "",
-            EducationQualification: "",
-            document: "",
-            photo: "",
-            PlayerTeam: "",
-            Facebook: "",
-            Twitter: "",
-            LinkedIn: "",
-            Email: "",
-            BasePrice: "",
-            PlayingPosition: "",
-            TMSITMSApplicable: "",
-            ParentName: "",
-            ParentAddress: "",
-            ParentEmail: "",
-            ParentPhone: "",
-        },
-        validationSchema: Yup.object({}),
+    // const formik = useFormik({
+    //     enableReinitialize: true,
+    //     initialValues: {
+    //         FirstName: "",
+    //         LastName: "",
+    //         AcademyClub: "",
+    //         TypeOfPlayer: "",
+    //         Gender: "",
+    //         DateOfBirth: "",
+    //         Address: "",
+    //         Phone: "",
+    //         EducationQualification: "",
+    //         document: "",
+    //         photo: "",
+    //         PlayerTeam: "",
+    //         Facebook: "",
+    //         Twitter: "",
+    //         LinkedIn: "",
+    //         Email: "",
+    //         BasePrice: "",
+    //         PlayingPosition: "",
+    //         TMSITMSApplicable: "",
+    //         ParentName: "",
+    //         ParentAddress: "",
+    //         ParentEmail: "",
+    //         ParentPhone: "",
+    //     },
+    //     validationSchema: Yup.object({}),
 
-        onSubmit: async (data) => {
-            try {
-                let finalData = { ...data, photo: handlePriview(uploadedPhotoName), document: handlePriview(uploadedDocumentName) }
-                console.log(finalData);
-            } catch (error) {
-                console.log(error);
-            }
-        },
-    });
+    //     onSubmit: async (data) => {
+    //         try {
+    //             let finalData = { ...data, photo: handlePriview(uploadedPhotoName), document: handlePriview(uploadedDocumentName) }
+    //             console.log(finalData);
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     },
+    // });
 
     return (
         <>
-            <form onSubmit={formik.handleSubmit}>
+            {/* <form onSubmit={formik.handleSubmit}> */}
                 <Card>
                     <CardContent>
 
@@ -182,7 +182,7 @@ export default function PlayerDetailsTab() {
                                 />
                             </Grid>
 
-                            <Grid
+                            {/* <Grid
                                 item
                                 md={6}
                                 xs={12}
@@ -200,7 +200,7 @@ export default function PlayerDetailsTab() {
                                     value={formik.values.AcademyClub}
                                     variant="outlined"
                                 />
-                            </Grid>
+                            </Grid> */}
 
                             <Grid
                                 item
@@ -208,16 +208,16 @@ export default function PlayerDetailsTab() {
                                 xs={12}
                             >
                                 <TextField
-                                    error={Boolean(formik.touched.TypeOfPlayer && formik.errors.TypeOfPlayer)}
+                                    error={Boolean(formik.touched.TypeOfPlayerID && formik.errors.TypeOfPlayerID)}
                                     fullWidth
-                                    helperText={formik.touched.TypeOfPlayer && formik.errors.TypeOfPlayer}
+                                    helperText={formik.touched.TypeOfPlayerID && formik.errors.TypeOfPlayerID}
                                     label="Type Of Player"
                                     margin="dense"
-                                    name="TypeOfPlayer"
+                                    name="TypeOfPlayerID"
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
                                     type="text"
-                                    value={formik.values.TypeOfPlayer}
+                                    value={formik.values.TypeOfPlayerID}
                                     variant="outlined"
                                 />
                             </Grid>
@@ -277,16 +277,16 @@ export default function PlayerDetailsTab() {
                                 xs={12}
                             >
                                 <TextField
-                                    error={Boolean(formik.touched.Address && formik.errors.Address)}
+                                    error={Boolean(formik.touched.Address1 && formik.errors.Address1)}
                                     fullWidth
-                                    helperText={formik.touched.Address && formik.errors.Address}
+                                    helperText={formik.touched.Address1 && formik.errors.Address1}
                                     label="Address"
                                     margin="dense"
-                                    name="Address"
+                                    name="Address1"
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
                                     type="text"
-                                    value={formik.values.Address}
+                                    value={formik.values.Address1}
                                     variant="outlined"
                                 />
                             </Grid>
@@ -331,7 +331,7 @@ export default function PlayerDetailsTab() {
                                 />
                             </Grid>
 
-                            <Grid
+                            {/* <Grid
                                 item
                                 md={6}
                                 xs={12}
@@ -349,7 +349,7 @@ export default function PlayerDetailsTab() {
                                     value={formik.values.PlayerTeam}
                                     variant="outlined"
                                 />
-                            </Grid>
+                            </Grid> */}
 
                             <Grid
                                 item
@@ -554,18 +554,18 @@ export default function PlayerDetailsTab() {
                                 <TextField
 
                                     style={{ display: "none" }}
-                                    error={Boolean(formik.touched.document && formik.errors.document)}
+                                    error={Boolean(formik.touched.documents && formik.errors.documents)}
                                     fullWidth
-                                    helperText={formik.touched.document && formik.errors.document}
+                                    helperText={formik.touched.documents && formik.errors.documents}
                                     label="Documents"
                                     margin="dense"
-                                    name="document"
+                                    name="documents"
                                     id="uploadPlayerPersonalDetailDocument"
                                     InputLabelProps={{ shrink: true }}
                                     onBlur={formik.handleBlur}
                                     onChange={onFileChnage}
                                     type="file"
-                                    value={formik.values.document}
+                                    value={formik.values.documents}
                                     variant="outlined"
                                 />
                                 
@@ -611,16 +611,16 @@ export default function PlayerDetailsTab() {
                                 xs={12}
                             >
                                 <TextField
-                                    error={Boolean(formik.touched.ParentName && formik.errors.ParentName)}
+                                    error={Boolean(formik.touched.familyinfoName && formik.errors.familyinfoName)}
                                     fullWidth
-                                    helperText={formik.touched.ParentName && formik.errors.ParentName}
+                                    helperText={formik.touched.familyinfoName && formik.errors.familyinfoName}
                                     label="Parents Name"
                                     margin="dense"
-                                    name="ParentName"
+                                    name="familyinfoName"
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
                                     type="text"
-                                    value={formik.values.ParentName}
+                                    value={formik.values.familyinfoName}
                                     variant="outlined"
                                 />
                             </Grid>
@@ -631,16 +631,16 @@ export default function PlayerDetailsTab() {
                                 xs={12}
                             >
                                 <TextField
-                                    error={Boolean(formik.touched.ParentAddress && formik.errors.ParentAddress)}
+                                    error={Boolean(formik.touched.familyinfo.City && formik.errors.familyinfo.City)}
                                     fullWidth
-                                    helperText={formik.touched.ParentAddress && formik.errors.ParentAddress}
+                                    helperText={formik.touched.familyinfo.City && formik.errors.familyinfo.City}
                                     label="Parents Address"
                                     margin="dense"
-                                    name="ParentAddress"
+                                    name="familyinfo.City"
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
                                     type="text"
-                                    value={formik.values.ParentAddress}
+                                    value={formik.values.familyinfo.City}
                                     variant="outlined"
                                 />
                             </Grid>
@@ -651,16 +651,16 @@ export default function PlayerDetailsTab() {
                                 xs={12}
                             >
                                 <TextField
-                                    error={Boolean(formik.touched.ParentEmail && formik.errors.ParentEmail)}
+                                    error={Boolean(formik.touched.familyinfo.Email && formik.errors.familyinfo.Email)}
                                     fullWidth
-                                    helperText={formik.touched.ParentEmail && formik.errors.ParentEmail}
+                                    helperText={formik.touched.familyinfo.Email && formik.errors.familyinfo.Email}
                                     label="Parents Email"
                                     margin="dense"
-                                    name="ParentEmail"
+                                    name="familyinfo.Email"
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
                                     type="email"
-                                    value={formik.values.ParentEmail}
+                                    value={formik.values.familyinfo.Email}
                                     variant="outlined"
                                 />
                             </Grid>
@@ -671,16 +671,16 @@ export default function PlayerDetailsTab() {
                                 xs={12}
                             >
                                 <TextField
-                                    error={Boolean(formik.touched.ParentPhone && formik.errors.ParentPhone)}
+                                    error={Boolean(formik.touched.familyinfo.MobileNo && formik.errors.familyinfo.MobileNo)}
                                     fullWidth
-                                    helperText={formik.touched.ParentPhone && formik.errors.ParentPhone}
+                                    helperText={formik.touched.familyinfo.MobileNo && formik.errors.familyinfo.MobileNo}
                                     label="Parents Phone Number"
                                     margin="dense"
-                                    name="ParentPhone"
+                                    name="familyinfo.MobileNo"
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
                                     type="number"
-                                    value={formik.values.ParentPhone}
+                                    value={formik.values.familyinfo.MobileNo}
                                     variant="outlined"
                                 />
                             </Grid>
@@ -693,7 +693,7 @@ export default function PlayerDetailsTab() {
                         </Grid>
                     </CardContent>
                 </Card>
-            </form>
+            {/* </form> */}
         </>
     );
 }

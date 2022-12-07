@@ -1,6 +1,6 @@
 import axios from "axios";
 import useStorage from "src/hooks/useStorage";
-import { MAIN_URL,MAIN_URL2 } from "./apiConfig";
+import { MAIN_URL2 } from "./apiConfig";
 
 // Add Players
 export const addPlayers = async (data) => {

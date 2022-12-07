@@ -1,7 +1,7 @@
 import axios from "axios";
 import useStorage from "src/hooks/useStorage";
 import jwtDecode from "src/utils/jwt-decode";
-import { MAIN_URL, MAIN_URL2 } from "./apiConfig";
+import { MAIN_URL2 } from "./apiConfig";
 
 //ADMIN LOGIN
 export const login = async ({ email, password }) => {
@@ -89,7 +89,7 @@ export const updateAdmin = async (data) => {
     throw "No User Id";
   }
   try {
-    const res = await axios.put(`${MAIN_URL}/admin/${user_id}/update_admin/`, data, {
+    const res = await axios.put(`${MAIN_URL2}/updateAdmin`, data, {
       headers: {
         Authorization: "Bearer " + token,
       },

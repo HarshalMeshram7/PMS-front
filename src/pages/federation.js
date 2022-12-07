@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { FederationDetailsDialog } from 'src/components/federation/federation-details-dialog';
 import { useAllFederations } from 'src/adapters/federationAdapter';
 import { FederationFinanceDialog } from 'src/components/federation/federation-finance-dialog';
-import { getFederation } from 'src/services/federationRequest';
+import { getFederationDetailsByid ,getFederationFinanceById } from 'src/services/federationRequest';
 
 const Federation = () => {   
    
@@ -23,6 +23,7 @@ const Federation = () => {
     
     //to store single federation data which is clicked from detail detail or finance button
     const [federation, setFederation] = useState([])
+    const [federationFinance, setFederationFinance] = useState({})
     
     //to store parameters required to send with get req
     const [params, setParams] = useState({searchpattern: ""})
@@ -32,7 +33,7 @@ const Federation = () => {
     const handleCloseAddFederation = () => setShowAddFederationDialog(false);
 
     const handleOpenFederationDetails = (federation) => {
-        getFederation({id:federation.ID}).then((res)=>{
+        getFederationDetailsByid({id:federation.ID}).then((res)=>{
             setFederation(res)
             setShowFederationDetailsDialog(true)
         })
@@ -40,10 +41,17 @@ const Federation = () => {
     const handleCloseFederationDetails = () => setShowFederationDetailsDialog(false);
 
     const handleOpenFederationFinance = (federation) => {
-        getFederation({id:federation.ID}).then((res)=>{
+       try {
+        getFederationDetailsByid({id:federation.ID}).then((res)=>{
             setFederation(res)
-            setShowFederationFinanceDialog(true)
         })
+        getFederationFinanceById({id:federation.ID}).then((res)=>{
+            setFederationFinance(res)
+        })
+        setShowFederationFinanceDialog(true)
+       } catch (error) {
+        console.log(error);
+       } 
     };
     const handleCloseFederationFinance = () => setShowFederationFinanceDialog(false);
     const handleSearch = (value) => {
@@ -77,6 +85,7 @@ const Federation = () => {
                     handleClose={handleCloseFederationDetails} />
 
                 <FederationFinanceDialog
+                    federationFinance={federationFinance}
                     federation={federation}
                     mutate={mutate}
                     open={showFederationFinanceDialog}

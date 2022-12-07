@@ -1,6 +1,6 @@
 import axios from "axios";
 import useStorage from "src/hooks/useStorage";
-import { MAIN_URL, MAIN_URL2 } from "./apiConfig";
+import {  MAIN_URL2 } from "./apiConfig";
 
 // Add Staff
 export const addStaff = async (data) => {
@@ -138,7 +138,7 @@ export const deleteStaff = async (ID) => {
 export const changeStaffPassword = async (id, data) => {
   const { token } = useStorage();
   try {
-    const res = await axios.post(`${MAIN_URL}/admin/${id}/reset_password/`, data, {
+    const res = await axios.post(`${MAIN_URL2}/admin/${id}/reset_password/`, data, {
       headers: {
         Authorization: "Bearer " + token,
       },

@@ -66,7 +66,7 @@ export const deleteClub = async (ID) => {
     }
     try {
 
-        const res = await axios.post(`${MAIN_URL}/deleteclub/`,{club:ID}, {
+        const res = await axios.post(`${MAIN_URL2}/deleteclub/`,{club:ID}, {
             headers: {
                 Authorization: "Bearer " + token,
             },

@@ -55,8 +55,9 @@ import PlayerStatisticTab from "./playersdetailtabs/player-statistic.js";
 import PlayerCommunicationTab from "./playersdetailtabs/player-communication.js";
 import PlayerProfileTab from "./playersdetailtabs/player-profile.js";
 import PlayerTMSITMSTab from "./playersdetailtabs/player-TMSITMS-tab.js";
-import { initialValues } from "./PlayerDetailsData.js";
+import { DataModel, initialValues } from "./PlayerDetailsData.js";
 import { getFullName } from "src/utils/getFullName.js";
+import { updatePlayers } from "src/services/playersRequest.js";
 
 export const PlayerDetailsDialog = ({ open, handleClose }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -95,12 +96,13 @@ export const PlayerDetailsDialog = ({ open, handleClose }) => {
     onSubmit: async (data) => {
       setLoading(true);
       try {
-        console.log("called");
-        console.log(data);
-        // await updateAcademy(data);
-        // handleClose();
-        enqueueSnackbar("Club Updated Succesfully", { variant: "success" });
-        setLoading(false);
+        DataModel(data).then(async (DataModel) => {
+          updatePlayers(DataModel).then((res)=>{
+            handleClose();
+            enqueueSnackbar("Player Updated Succesfully", { variant: "success" });
+            setLoading(false);
+          })
+        })
       } catch (error) {
         console.log(error);
         setLoading(false);
@@ -181,7 +183,7 @@ export const PlayerDetailsDialog = ({ open, handleClose }) => {
                         }}
                       />
                       <Typography color="textPrimary" gutterBottom variant="h5">
-                        {getFullName(formik.values.FirstName, formik.values.LastName)}
+                        {getFullName(formik.values.PersonalFirstName, formik.values.PersonalLastName)}
                       </Typography>
                       <Typography color="textSecondary" variant="body2">
                         {formik.values.City}
@@ -239,7 +241,7 @@ export const PlayerDetailsDialog = ({ open, handleClose }) => {
                       <Grid
                         item
                         md={12}
-                        // xs={12}
+                      // xs={12}
                       >
                         <Typography>
                           Cristiano Ronaldo dos Santos Aveiro GOIH ComM (Portuguese pronunciation:
@@ -287,23 +289,23 @@ export const PlayerDetailsDialog = ({ open, handleClose }) => {
                   <LinkTab value="8" label="Statistic" />
                   <LinkTab value="9" label="Evaluation" />
                   <LinkTab value="10" label="Communication" />
-                 
+
                 </Tabs>
               </Box>
             </Grid>
             <Container maxWidth="md">
-              
-              {value == "0" && <PlayerDetailsTab formik={formik}/>}
+
+              {value == "0" && <PlayerDetailsTab formik={formik} />}
               {value == "1" && <PlayerPaymnetTab />}
               {value == "2" && <PlayerContractType />}
-              {value == "3" && <PlayerTMSITMSTab formik={formik}/>}
-              {value == "4" && <PlayerFitnessTab formik={formik}/>}
-              {value == "5" && <PlayerTrainingModuleTab formik={formik}/>}
-              {value == "6" && <PlayerTrainingManagementTab formik={formik}/>}
+              {value == "3" && <PlayerTMSITMSTab formik={formik} />}
+              {value == "4" && <PlayerFitnessTab formik={formik} />}
+              {value == "5" && <PlayerTrainingModuleTab formik={formik} />}
+              {value == "6" && <PlayerTrainingManagementTab formik={formik} />}
               {value == "7" && <PlayerProfileTab />}
-              {value == "8" && <PlayerStatisticTab formik={formik}/>}
+              {value == "8" && <PlayerStatisticTab formik={formik} />}
               {value == "9" && <>Evaluation</>}
-              {value == "10" && <PlayerCommunicationTab formik={formik}/>}
+              {value == "10" && <PlayerCommunicationTab formik={formik} />}
             </Container>
           </Container>
         </Box>

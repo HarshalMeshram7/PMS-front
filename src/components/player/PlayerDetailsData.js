@@ -67,52 +67,141 @@ export const initialValues = {
   TMS_ITMSMOUDocument: "mou",
   TMS_ITMSAgreementDocument: "agree",
   TMS_ITMSOtherDocuments: "other",
-  TMS_ITMSPaymentDetails: "other ok",
+  TMS_ITMSPaymentDetails: "other ok",      // not in data base table
 
 
   // Fitness
   FitnessPhysicalFitnessInfo: "physical ok",
   FitnessLaboratoryInfo: "labinfo ok",
   FitnessPastMedication: "no past med ok",
-  FitnessCurrentMedication: "no past med ok",
+  FitnessCurrentMedication: "no past med ok",  // not in data base table
   FitnessPlayersInjuryID: 1,
   FitnessDietPlan: 1,
-  FitnessTestDetails: "tested ok",
-  FitnessTestConductedDate: "2021-06-13",
-  FitnessTestResult: "tested",
+  FitnessTestDetails: "tested ok",    // not in data base table
+  FitnessTestConductedDate: "2021-06-13",    // not in data base table
+  FitnessTestResult: "tested",   // not in data base table
 
 
   // Training Module
-  TrainingShortTerm: "ok",
-  TrainingLongTerm: "ok",
-  TrainingSpecial: "ok",
+  TrainingShortTerm: "ok",  // not in data base table
+  TrainingLongTerm: "ok",   // not in data base table
+  TrainingSpecial: "ok",    // not in data base table
 
 
   //Training Management
-  ManagementPlan: "tested",
-  ManagementGoalSetting: "tested",
+  ManagementPlan: "tested",    // not in data base table
+  ManagementGoalSetting: "tested",   // not in data base table
 
 
   //Profile
 
 
   //Player Statistic
-  StaticMatchesPlayed: "checked",
-  StaticPointScore: "checked",
-  StaticPenaltyScore: "checked",
-  StaticVoilations: "checked",
-  StaticDisqualification: "checked",
+  StaticMatchesPlayed: "checked",     // not in data base table
+  StaticPointScore: "checked",      // not in data base table
+  StaticPenaltyScore: "checked",      // not in data base table
+  StaticVoilations: "checked",      // not in data base table
+  StaticDisqualification: "checked",      // not in data base table
 
 
   //Evaluation
 
 
   //Communication
-  CommunicationCoaches: "checked",
-  CommunicationTeamMember: "checked",
-  CommunicationGroupMessaging: "checked",
-  CommunicationLiveChat: "checked",
-  CommunicationNotificationRemainder: "checked",
+  CommunicationCoaches: "checked",      // not in data base table
+  CommunicationTeamMember: "checked",     // not in data base table
+  CommunicationGroupMessaging: "checked",     // not in data base table
+  CommunicationLiveChat: "checked",     // not in data base table
+  CommunicationNotificationRemainder: "checked",      // not in data base table
 
 
 };
+
+export const DataModel = (data) => {
+  console.log(data)
+  return new Promise(function (resolve, reject) {
+    let DataModel =
+    {
+      "ID": data.ID,
+      "FirstName": data.PersonalFirstName,
+      "LastName": data.PersonalLastName,
+      "Gender": data.PersonalGender,
+      "DateOfBirth": data.PersonalDateOfBirth,
+      "Phone": data.PersonalPhone,
+      "Email": data.PersonalEmail,
+      "Password": data.PersonalPassword,
+      "RecoveryEMail": data.PersonalRecoveryEMail,
+      "TypeOfPlayerID": data.PersonalTypeOfPlayerID,
+      "EducationQualification": data.PersonalEducationQualification,
+      "edudocuments": data.Personaledudocuments,
+      "photo": data.Personalphoto,
+      "BasePrice": data.PersonalBasePrice,
+      "PlayingPosition": data.PersonalPlayingPosition,
+      "TMSITMSApplicable": data.PersonalTMSITMSApplicable,
+      "documents": data.Personaldocuments,
+      "LongDescription": data.PersonalLongDescription,
+      "Facebook": data.PersonalFacebook,
+      "Twitter": data.PersonalTwitter,
+      "Linkedin": data.PersonalLinkedIn,
+
+      "playersacademyclub": {
+        "AcademyID": [0, 49],
+        "ClubID": []
+      },
+
+      "Address":
+      {
+        "Address1": data.Address1,
+        "Address2": data.Address2,
+        "City": data.City,
+        "Country": data.Country,
+        "Nationality": data.Nationality,
+        "ZipCode": data.ZipCode,
+        "IsLocal": data.IsLocal,
+      },
+
+      "Document":
+      {
+        "DocumentTypeID": "1",
+        "StatusID": "1",
+        "FilePath": "documents.pdf"
+      },
+
+      "familyinfo":
+      {
+        "Name": data.familyinfoName,
+        "City": data.familyinfoCity,
+        "Country": data.familyinfoCountry,
+        "JobTelNo": data.familyinfoJobTelNo,
+        "HomeTelNo": data.familyinfoHomeTelNo,
+        "MobileNo": data.familyinfoMobileNo,
+        "Email": data.familyinfoEmail,
+        "FamilyMember": data.familyinfoFamilyMember,
+      },
+
+      "TMS_ITMS":
+      {
+        "TransferdClubID": data.TMS_ITMSTransferdClubID,
+        "TransferFromDate": data.TMS_ITMSTransferFromDate,
+        "TransferToDate": data.TMS_ITMSTransferToDate,
+        "MOUDocument": data.TMS_ITMSMOUDocument,
+        "AgreementDocument": data.TMS_ITMSAgreementDocument,
+        "OtherDocuments": data.TMS_ITMSOtherDocuments,
+      },
+
+      "Fitness":
+      {
+        "PhysicalFitness": data.FitnessPhysicalFitnessInfo,
+        "LabInfo": data.FitnessLaboratoryInfo,
+        "PastMedication": data.FitnessPastMedication,
+        "DietPlan": data.FitnessDietPlan,
+        "PlayersInjuryID": data.FitnessPlayersInjuryID,
+      },
+    }
+    resolve(DataModel)
+  })
+
+
+}
+
+

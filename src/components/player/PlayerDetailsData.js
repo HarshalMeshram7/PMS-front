@@ -1,32 +1,32 @@
 export const initialValues = {
-  // personal info
+  // Personal Information
   ID: 6,
-  FirstName: "Monish",
-  LastName: "Barse",
-  Gender: "Male",
-  DateOfBirth: "1990/01/01",
-  Phone: "9876543210",
-  Email: "a@gmail.com",
-  Password: "Password",
-  RecoveryEMail: "a@gmail.com",
-  TypeOfPlayerID: 1,
-  EducationQualification: "EducationQualification",
-  edudocuments: "edudocuments",
-  photo: "photo",
-  BasePrice: "req.body.BasePrice",
-  PlayingPosition: "req.body.PlayingPosition",
-  TMSITMSApplicable: 1,
-  documents: "req.body.documents",
-  LongDescription: "req.body.LongDescription",
-  Facebook: "req.body.Facebook",
-  Twitter: "req.body.Twitter",
-  Linkedin: "req.body.Linkedin",
+  PersonalFirstName: "Monish",
+  PersonalLastName: "Barse",
+  PersonalGender: "Male",
+  PersonalDateOfBirth: "1990-01-01",
+  PersonalPhone: "9876543210",
+  PersonalEmail: "a@gmail.com",
+  PersonalPassword: "Password",
+  PersonalRecoveryEMail: "a@gmail.com",
+  PersonalTypeOfPlayerID: 1,
+  PersonalEducationQualification: "EducationQualification",
+  Personaledudocuments: "edudocuments",
+  Personalphoto: "photo",
+  PersonalBasePrice: "5555",
+  PersonalPlayingPosition: "req.body.PlayingPosition",
+  PersonalTMSITMSApplicable: 1,
+  Personaldocuments: "req.body.documents",
+  PersonalLongDescription: "req.body.LongDescription",
+  PersonalFacebook: "req.body.Facebook",
+  PersonalTwitter: "req.body.Twitter",
+  PersonalLinkedIn: "req.body.Linkedin",
 
   // Address
   Address1: "Address1",
   Address2: "Address2",
-  City: "City",
-  Country: "Country",
+  City: "Nagpur",
+  Country: "India",
   Nationality: "Nationality",
   ZipCode: "ZipCode",
   IsLocal: "0",
@@ -38,41 +38,81 @@ export const initialValues = {
   },
 
   // Document
+  DocumentTypeID: "1",
+  DocumentStatusID: "1",
+  DocumentFilePath: "documents.pdf",
+
   Document: {
     DocumentTypeID: "1",
     StatusID: "1",
     FilePath: "documents.pdf",
   },
 
-  // 
-  familyinfoName: "",
-  familyinfo: {
-    Name: "family name",
-    City: "nagpur",
-    Country: "ind",
-    JobTelNo: "1234567890",
-    HomeTelNo: "07125683",
-    MobileNo: "9823000000",
-    Email: "monish@gmail.vom",
-    FamilyMember: "2",
-  },
+  // Parents Information
+  familyinfoName: "Family name ok",
+  familyinfoCity: "Family City ok",
+  familyinfoCountry: "Family country ok",
+  familyinfoJobTelNo: "",
+  familyinfoHomeTelNo: "",
+  familyinfoMobileNo: "78888",
+  familyinfoEmail: "Family mail ok",
+  familyinfoFamilyMember: "",
 
-  // fitness
-  Fitness: {
-    PhysicalFitness: "physical",
-    LabInfo: "labinfo",
-    PastMedication: "no past med",
-    DietPlan: "good plan",
-    PlayersInjuryID: "1",
-  },
 
   // TMS_ITMS
-  TMS_ITMS: {
-    TransferdClubID: 1,
-    TransferFromDate: "2021-06-13",
-    TransferToDate: "2022-06-13",
-    MOUDocument: "mou",
-    AgreementDocument: "agree",
-    OtherDocuments: "other",
-  },
+  TMS_ITMSTransferdClubID: 1,
+  TMS_ITMSTransferredToWhichClub: "to india 11",
+  TMS_ITMSTransferFromDate: "2021-06-13",
+  TMS_ITMSTransferToDate: "2022-06-14",
+  TMS_ITMSMOUDocument: "mou",
+  TMS_ITMSAgreementDocument: "agree",
+  TMS_ITMSOtherDocuments: "other",
+  TMS_ITMSPaymentDetails: "other ok",
+
+
+  // Fitness
+  FitnessPhysicalFitnessInfo: "physical ok",
+  FitnessLaboratoryInfo: "labinfo ok",
+  FitnessPastMedication: "no past med ok",
+  FitnessCurrentMedication: "no past med ok",
+  FitnessPlayersInjuryID: 1,
+  FitnessDietPlan: 1,
+  FitnessTestDetails: "tested ok",
+  FitnessTestConductedDate: "2021-06-13",
+  FitnessTestResult: "tested",
+
+
+  // Training Module
+  TrainingShortTerm: "ok",
+  TrainingLongTerm: "ok",
+  TrainingSpecial: "ok",
+
+
+  //Training Management
+  ManagementPlan: "tested",
+  ManagementGoalSetting: "tested",
+
+
+  //Profile
+
+
+  //Player Statistic
+  StaticMatchesPlayed: "checked",
+  StaticPointScore: "checked",
+  StaticPenaltyScore: "checked",
+  StaticVoilations: "checked",
+  StaticDisqualification: "checked",
+
+
+  //Evaluation
+
+
+  //Communication
+  CommunicationCoaches: "checked",
+  CommunicationTeamMember: "checked",
+  CommunicationGroupMessaging: "checked",
+  CommunicationLiveChat: "checked",
+  CommunicationNotificationRemainder: "checked",
+
+
 };

@@ -13,7 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import uploadFileToBlob, { deleteBlob, handlePriview, getFileName } from "src/utils/azureBlob";
 import { IconButton, } from "@mui/material";
 
-export default function PlayerDetailsTab({formik}) {
+export default function PlayerDetailsTab({ formik }) {
 
     const [loading, setLoading] = useState();
 
@@ -134,55 +134,55 @@ export default function PlayerDetailsTab({formik}) {
     return (
         <>
             {/* <form onSubmit={formik.handleSubmit}> */}
-                <Card>
-                    <CardContent>
+            <Card>
+                <CardContent>
+
+                    <Grid
+                        container
+                        spacing={3}
+                        sx={{ marginBottom: 2 }}
+                    >
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <TextField
+                                error={Boolean(formik.touched.PersonalFirstName && formik.errors.PersonalFirstName)}
+                                fullWidth
+                                helperText={formik.touched.PersonalFirstName && formik.errors.PersonalFirstName}
+                                label="First Name"
+                                margin="dense"
+                                name="PersonalFirstName"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="text"
+                                value={formik.values.PersonalFirstName}
+                                variant="outlined"
+                            />
+                        </Grid>
 
                         <Grid
-                            container
-                            spacing={3}
-                            sx={{ marginBottom: 2 }}
+                            item
+                            md={6}
+                            xs={12}
                         >
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    error={Boolean(formik.touched.FirstName && formik.errors.FirstName)}
-                                    fullWidth
-                                    helperText={formik.touched.FirstName && formik.errors.FirstName}
-                                    label="First Name"
-                                    margin="dense"
-                                    name="FirstName"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="text"
-                                    value={formik.values.FirstName}
-                                    variant="outlined"
-                                />
-                            </Grid>
+                            <TextField
+                                error={Boolean(formik.touched.PersonalLastName && formik.errors.PersonalLastName)}
+                                fullWidth
+                                helperText={formik.touched.PersonalLastName && formik.errors.PersonalLastName}
+                                label="Last Name"
+                                margin="dense"
+                                name="PersonalLastName"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="text"
+                                value={formik.values.PersonalLastName}
+                                variant="outlined"
+                            />
+                        </Grid>
 
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    error={Boolean(formik.touched.LastName && formik.errors.LastName)}
-                                    fullWidth
-                                    helperText={formik.touched.LastName && formik.errors.LastName}
-                                    label="Last Name"
-                                    margin="dense"
-                                    name="LastName"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="text"
-                                    value={formik.values.LastName}
-                                    variant="outlined"
-                                />
-                            </Grid>
-
-                            {/* <Grid
+                        {/* <Grid
                                 item
                                 md={6}
                                 xs={12}
@@ -202,136 +202,144 @@ export default function PlayerDetailsTab({formik}) {
                                 />
                             </Grid> */}
 
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    error={Boolean(formik.touched.TypeOfPlayerID && formik.errors.TypeOfPlayerID)}
-                                    fullWidth
-                                    helperText={formik.touched.TypeOfPlayerID && formik.errors.TypeOfPlayerID}
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">Type Of Player</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
                                     label="Type Of Player"
-                                    margin="dense"
-                                    name="TypeOfPlayerID"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="text"
-                                    value={formik.values.TypeOfPlayerID}
-                                    variant="outlined"
-                                />
-                            </Grid>
-
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <FormControl fullWidth>
-                                    <InputLabel id="demo-simple-select-label">Gender</InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        label="Gender"
-                                        error={Boolean(formik.touched.Gender && formik.errors.Gender)}
-                                        fullWidth
-                                        helperText={formik.touched.Gender && formik.errors.Gender}
-                                        margin="dense"
-                                        name="Gender"
-                                        onBlur={formik.handleBlur}
-                                        onChange={formik.handleChange}
-                                        value={formik.values.Gender}
-                                        variant="outlined"
-                                    >
-                                        <MenuItem value="male">Male</MenuItem>
-                                        <MenuItem value="female">Female</MenuItem>
-                                        <MenuItem value="other">Other</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    error={Boolean(formik.touched.DateOfBirth && formik.errors.DateOfBirth)}
+                                    error={Boolean(formik.touched.PersonalTypeOfPlayerID && formik.errors.PersonalTypeOfPlayerID)}
                                     fullWidth
-                                    helperText={formik.touched.DateOfBirth && formik.errors.DateOfBirth}
-                                    label="Date Of Birth"
+                                    helperText={formik.touched.PersonalTypeOfPlayerID && formik.errors.PersonalTypeOfPlayerID}
                                     margin="dense"
-                                    name="DateOfBirth"
-                                    InputLabelProps={{ shrink: true }}
+                                    name="PersonalTypeOfPlayerID"
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
-                                    type="date"
-                                    value={formik.values.DateOfBirth}
+                                    value={formik.values.PersonalTypeOfPlayerID}
                                     variant="outlined"
-                                />
-                            </Grid>
+                                >
+                                    <MenuItem value="1">Professional</MenuItem>
+                                    <MenuItem value="1">Non Professional</MenuItem>
+                                    <MenuItem value="3">Other</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
 
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    error={Boolean(formik.touched.Address1 && formik.errors.Address1)}
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    label="Gender"
+                                    error={Boolean(formik.touched.PersonalGender && formik.errors.PersonalGender)}
                                     fullWidth
-                                    helperText={formik.touched.Address1 && formik.errors.Address1}
-                                    label="Address"
+                                    helperText={formik.touched.PersonalGender && formik.errors.PersonalGender}
                                     margin="dense"
-                                    name="Address1"
+                                    name="PersonalGender"
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
-                                    type="text"
-                                    value={formik.values.Address1}
+                                    value={formik.values.PersonalGender}
                                     variant="outlined"
-                                />
-                            </Grid>
+                                >
+                                    <MenuItem value="Male">Male</MenuItem>
+                                    <MenuItem value="Female">Female</MenuItem>
+                                    <MenuItem value="Other">Other</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
 
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    error={Boolean(formik.touched.Phone && formik.errors.Phone)}
-                                    fullWidth
-                                    helperText={formik.touched.Phone && formik.errors.Phone}
-                                    label="Phone Number"
-                                    margin="dense"
-                                    name="Phone"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="number"
-                                    value={formik.values.Phone}
-                                    variant="outlined"
-                                />
-                            </Grid>
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <TextField
+                                error={Boolean(formik.touched.PersonalDateOfBirth && formik.errors.PersonalDateOfBirth)}
+                                fullWidth
+                                helperText={formik.touched.PersonalDateOfBirth && formik.errors.PersonalDateOfBirth}
+                                label="Date Of Birth"
+                                margin="dense"
+                                name="PersonalDateOfBirth"
+                                InputLabelProps={{ shrink: true }}
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="date"
+                                value={formik.values.PersonalDateOfBirth}
+                                variant="outlined"
+                            />
+                        </Grid>
 
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    error={Boolean(formik.touched.EducationQualification && formik.errors.edu)}
-                                    fullWidth
-                                    helperText={formik.touched.EducationQualification && formik.errors.edu}
-                                    label="Educational Qualification"
-                                    margin="dense"
-                                    name="EducationQualification"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="text"
-                                    value={formik.values.EducationQualification}
-                                    variant="outlined"
-                                />
-                            </Grid>
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <TextField
+                                error={Boolean(formik.touched.Address1 && formik.errors.Address1)}
+                                fullWidth
+                                helperText={formik.touched.Address1 && formik.errors.Address1}
+                                label="Address"
+                                margin="dense"
+                                name="Address1"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="text"
+                                value={formik.values.Address1}
+                                variant="outlined"
+                            />
+                        </Grid>
 
-                            {/* <Grid
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <TextField
+                                error={Boolean(formik.touched.PersonalPhone && formik.errors.PersonalPhone)}
+                                fullWidth
+                                helperText={formik.touched.PersonalPhone && formik.errors.PersonalPhone}
+                                label="Phone Number"
+                                margin="dense"
+                                name="PersonalPhone"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="number"
+                                value={formik.values.PersonalPhone}
+                                variant="outlined"
+                            />
+                        </Grid>
+
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <TextField
+                                error={Boolean(formik.touched.PersonalEducationQualification && formik.errors.PersonalEducationQualification)}
+                                fullWidth
+                                helperText={formik.touched.PersonalEducationQualification && formik.errors.PersonalEducationQualification}
+                                label="Educational Qualification"
+                                margin="dense"
+                                name="PersonalEducationQualification"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="text"
+                                value={formik.values.PersonalEducationQualification}
+                                variant="outlined"
+                            />
+                        </Grid>
+
+                        {/* <Grid
                                 item
                                 md={6}
                                 xs={12}
@@ -351,154 +359,154 @@ export default function PlayerDetailsTab({formik}) {
                                 />
                             </Grid> */}
 
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    error={Boolean(formik.touched.Email && formik.errors.Email)}
-                                    fullWidth
-                                    helperText={formik.touched.Email && formik.errors.Email}
-                                    label="Email"
-                                    margin="dense"
-                                    name="Email"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="email"
-                                    value={formik.values.Email}
-                                    variant="outlined"
-                                />
-                            </Grid>
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <TextField
+                                error={Boolean(formik.touched.PersonalEmail && formik.errors.PersonalEmail)}
+                                fullWidth
+                                helperText={formik.touched.PersonalEmail && formik.errors.PersonalEmail}
+                                label="Email"
+                                margin="dense"
+                                name="PersonalEmail"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="email"
+                                value={formik.values.PersonalEmail}
+                                variant="outlined"
+                            />
+                        </Grid>
 
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    error={Boolean(formik.touched.Facebook && formik.errors.Facebook)}
-                                    fullWidth
-                                    helperText={formik.touched.Facebook && formik.errors.Facebook}
-                                    label="Facebook"
-                                    margin="dense"
-                                    name="Facebook"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="text"
-                                    value={formik.values.Facebook}
-                                    variant="outlined"
-                                />
-                            </Grid>
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <TextField
+                                error={Boolean(formik.touched.PersonalFacebook && formik.errors.PersonalFacebook)}
+                                fullWidth
+                                helperText={formik.touched.PersonalFacebook && formik.errors.PersonalFacebook}
+                                label="Facebook"
+                                margin="dense"
+                                name="PersonalFacebook"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="text"
+                                value={formik.values.PersonalFacebook}
+                                variant="outlined"
+                            />
+                        </Grid>
 
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    error={Boolean(formik.touched.Twitter && formik.errors.Twitter)}
-                                    fullWidth
-                                    helperText={formik.touched.Twitter && formik.errors.Twitter}
-                                    label="Twitter"
-                                    margin="dense"
-                                    name="Twitter"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="text"
-                                    value={formik.values.Twitter}
-                                    variant="outlined"
-                                />
-                            </Grid>
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <TextField
+                                error={Boolean(formik.touched.PersonalTwitter && formik.errors.PersonalTwitter)}
+                                fullWidth
+                                helperText={formik.touched.PersonalTwitter && formik.errors.PersonalTwitter}
+                                label="Twitter"
+                                margin="dense"
+                                name="PersonalTwitter"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="text"
+                                value={formik.values.PersonalTwitter}
+                                variant="outlined"
+                            />
+                        </Grid>
 
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    error={Boolean(formik.touched.LinkedIn && formik.errors.Linked)}
-                                    fullWidth
-                                    helperText={formik.touched.LinkedIn && formik.errors.Linked}
-                                    label="LinkedIn"
-                                    margin="dense"
-                                    name="LinkedIn"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="text"
-                                    value={formik.values.LinkedIn}
-                                    variant="outlined"
-                                />
-                            </Grid>
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <TextField
+                                error={Boolean(formik.touched.PersonalLinkedIn && formik.errors.PersonalLinked)}
+                                fullWidth
+                                helperText={formik.touched.PersonalLinkedIn && formik.errors.PersonalLinked}
+                                label="LinkedIn"
+                                margin="dense"
+                                name="PersonalLinkedIn"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="text"
+                                value={formik.values.PersonalLinkedIn}
+                                variant="outlined"
+                            />
+                        </Grid>
 
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    error={Boolean(formik.touched.BasePrice && formik.errors.BasePrice)}
-                                    fullWidth
-                                    helperText={formik.touched.BasePrice && formik.errors.BasePrice}
-                                    label="Base Price"
-                                    margin="dense"
-                                    name="BasePrice"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="number"
-                                    value={formik.values.BasePrice}
-                                    variant="outlined"
-                                />
-                            </Grid>
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <TextField
+                                error={Boolean(formik.touched.PersonalBasePrice && formik.errors.PersonalBasePrice)}
+                                fullWidth
+                                helperText={formik.touched.PersonalBasePrice && formik.errors.PersonalBasePrice}
+                                label="Base Price"
+                                margin="dense"
+                                name="PersonalBasePrice"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="number"
+                                value={formik.values.PersonalBasePrice}
+                                variant="outlined"
+                            />
+                        </Grid>
 
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    error={Boolean(formik.touched.PlayingPosition && formik.errors.PlayingPosition)}
-                                    fullWidth
-                                    helperText={formik.touched.PlayingPosition && formik.errors.PlayingPosition}
-                                    label="Playing Position"
-                                    margin="dense"
-                                    name="PlayingPosition"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="text"
-                                    value={formik.values.PlayingPosition}
-                                    variant="outlined"
-                                />
-                            </Grid>
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <TextField
+                                error={Boolean(formik.touched.PersonalPlayingPosition && formik.errors.PersonalPlayingPosition)}
+                                fullWidth
+                                helperText={formik.touched.PersonalPlayingPosition && formik.errors.PersonalPlayingPosition}
+                                label="Playing Position"
+                                margin="dense"
+                                name="PersonalPlayingPosition"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="text"
+                                value={formik.values.PersonalPlayingPosition}
+                                variant="outlined"
+                            />
+                        </Grid>
 
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    error={Boolean(formik.touched.TMSITMSApplicable && formik.errors.TMSITMSApplicable)}
-                                    fullWidth
-                                    helperText={formik.touched.TMSITMSApplicable && formik.errors.TMSITMSApplicable}
-                                    label=" TMS / ITMS Applicable"
-                                    margin="dense"
-                                    name="TMSITMSApplicable"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="text"
-                                    value={formik.values.TMSITMSApplicable}
-                                    variant="outlined"
-                                />
-                            </Grid>
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <TextField
+                                error={Boolean(formik.touched.PersonalTMSITMSApplicable && formik.errors.PersonalTMSITMSApplicable)}
+                                fullWidth
+                                helperText={formik.touched.PersonalTMSITMSApplicable && formik.errors.PersonalTMSITMSApplicable}
+                                label=" TMS / ITMS Applicable"
+                                margin="dense"
+                                name="PersonalTMSITMSApplicable"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="text"
+                                value={formik.values.PersonalTMSITMSApplicable}
+                                variant="outlined"
+                            />
+                        </Grid>
 
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            ></Grid>
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        ></Grid>
 
 
-                            <Grid
+                        {/* <Grid
                                 item
                                 md={6}
                                 xs={12}
@@ -543,10 +551,10 @@ export default function PlayerDetailsTab({formik}) {
                                     }} aria-label="delete" size="large">
                                         <DeleteIcon />
                                     </IconButton></> : ""}
-                            </Grid>
+                            </Grid> */}
 
 
-                            <Grid
+                        {/* <Grid
                                 item
                                 md={6}
                                 xs={12}
@@ -592,107 +600,107 @@ export default function PlayerDetailsTab({formik}) {
                                     }} aria-label="delete" size="large">
                                         <DeleteIcon />
                                     </IconButton></> : ""}
-                            </Grid>
+                            </Grid> */}
 
+                    </Grid>
+                    <Divider />
+
+                    <DialogTitle
+                        textAlign="center">
+                        Parents Details (Optional)
+                    </DialogTitle>
+
+                    <Grid container
+                        spacing={3}>
+
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <TextField
+                                error={Boolean(formik.touched.familyinfoName && formik.errors.familyinfoName)}
+                                fullWidth
+                                helperText={formik.touched.familyinfoName && formik.errors.familyinfoName}
+                                label="Parents Name"
+                                margin="dense"
+                                name="familyinfoName"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="text"
+                                value={formik.values.familyinfoName}
+                                variant="outlined"
+                            />
                         </Grid>
-                        <Divider />
 
-                        <DialogTitle
-                            textAlign="center">
-                            Parents Details (Optional)
-                        </DialogTitle>
-
-                        <Grid container
-                            spacing={3}>
-
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    error={Boolean(formik.touched.familyinfoName && formik.errors.familyinfoName)}
-                                    fullWidth
-                                    helperText={formik.touched.familyinfoName && formik.errors.familyinfoName}
-                                    label="Parents Name"
-                                    margin="dense"
-                                    name="familyinfoName"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="text"
-                                    value={formik.values.familyinfoName}
-                                    variant="outlined"
-                                />
-                            </Grid>
-
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    error={Boolean(formik.touched.familyinfo.City && formik.errors.familyinfo.City)}
-                                    fullWidth
-                                    helperText={formik.touched.familyinfo.City && formik.errors.familyinfo.City}
-                                    label="Parents Address"
-                                    margin="dense"
-                                    name="familyinfo.City"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="text"
-                                    value={formik.values.familyinfo.City}
-                                    variant="outlined"
-                                />
-                            </Grid>
-
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    error={Boolean(formik.touched.familyinfo.Email && formik.errors.familyinfo.Email)}
-                                    fullWidth
-                                    helperText={formik.touched.familyinfo.Email && formik.errors.familyinfo.Email}
-                                    label="Parents Email"
-                                    margin="dense"
-                                    name="familyinfo.Email"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="email"
-                                    value={formik.values.familyinfo.Email}
-                                    variant="outlined"
-                                />
-                            </Grid>
-
-                            <Grid
-                                item
-                                md={6}
-                                xs={12}
-                            >
-                                <TextField
-                                    error={Boolean(formik.touched.familyinfo.MobileNo && formik.errors.familyinfo.MobileNo)}
-                                    fullWidth
-                                    helperText={formik.touched.familyinfo.MobileNo && formik.errors.familyinfo.MobileNo}
-                                    label="Parents Phone Number"
-                                    margin="dense"
-                                    name="familyinfo.MobileNo"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="number"
-                                    value={formik.values.familyinfo.MobileNo}
-                                    variant="outlined"
-                                />
-                            </Grid>
-
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <TextField
+                                error={Boolean(formik.touched.familyinfoCity && formik.errors.familyinfoCity)}
+                                fullWidth
+                                helperText={formik.touched.familyinfoCity && formik.errors.familyinfoCity}
+                                label="Parents Address"
+                                margin="dense"
+                                name="familyinfoCity"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="text"
+                                value={formik.values.familyinfoCity}
+                                variant="outlined"
+                            />
                         </Grid>
-                        <Grid item md={12} xs={12} textAlign="center">
-                            <Button sx={{ marginTop: 2 }} type="submit" variant="outlined" color="primary">
-                                Save
-                            </Button>
+
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <TextField
+                                error={Boolean(formik.touched.familyinfoEmail && formik.errors.familyinfoEmail)}
+                                fullWidth
+                                helperText={formik.touched.familyinfoEmail && formik.errors.familyinfoEmail}
+                                label="Parents Email"
+                                margin="dense"
+                                name="familyinfoEmail"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="email"
+                                value={formik.values.familyinfoEmail}
+                                variant="outlined"
+                            />
                         </Grid>
-                    </CardContent>
-                </Card>
+
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <TextField
+                                error={Boolean(formik.touched.familyinfoMobileNo && formik.errors.familyinfoMobileNo)}
+                                fullWidth
+                                helperText={formik.touched.familyinfoMobileNo && formik.errors.familyinfoMobileNo}
+                                label="Parents Phone Number"
+                                margin="dense"
+                                name="familyinfoMobileNo"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="number"
+                                value={formik.values.familyinfoMobileNo}
+                                variant="outlined"
+                            />
+                        </Grid>
+
+                    </Grid>
+                    <Grid item md={12} xs={12} textAlign="center">
+                        <Button sx={{ marginTop: 2 }} onClick={formik.handleSubmit} variant="outlined" color="primary">
+                            Save
+                        </Button>
+                    </Grid>
+                </CardContent>
+            </Card>
             {/* </form> */}
         </>
     );

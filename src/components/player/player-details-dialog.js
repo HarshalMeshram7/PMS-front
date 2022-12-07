@@ -57,7 +57,6 @@ import PlayerProfileTab from "./playersdetailtabs/player-profile.js";
 import PlayerTMSITMSTab from "./playersdetailtabs/player-TMSITMS-tab.js";
 import { initialValues } from "./PlayerDetailsData.js";
 import { getFullName } from "src/utils/getFullName.js";
-import TestTab from "./playersdetailtabs/test.js";
 
 export const PlayerDetailsDialog = ({ open, handleClose }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -185,10 +184,10 @@ export const PlayerDetailsDialog = ({ open, handleClose }) => {
                         {getFullName(formik.values.FirstName, formik.values.LastName)}
                       </Typography>
                       <Typography color="textSecondary" variant="body2">
-                        {formik.values?.Address?.City}
+                        {formik.values.City}
                       </Typography>
                       <Typography color="textSecondary" variant="body2">
-                        {formik.values?.Address?.Country}
+                        {formik.values.Country}
                       </Typography>
                     </Box>
                   </CardContent>
@@ -288,23 +287,23 @@ export const PlayerDetailsDialog = ({ open, handleClose }) => {
                   <LinkTab value="8" label="Statistic" />
                   <LinkTab value="9" label="Evaluation" />
                   <LinkTab value="10" label="Communication" />
-                  <LinkTab value="11" label="test" />
+                 
                 </Tabs>
               </Box>
             </Grid>
             <Container maxWidth="md">
-              {value == "11" && <TestTab formik={formik} />}
+              
               {value == "0" && <PlayerDetailsTab formik={formik}/>}
               {value == "1" && <PlayerPaymnetTab />}
               {value == "2" && <PlayerContractType />}
-              {value == "3" && <PlayerTMSITMSTab />}
-              {value == "4" && <PlayerFitnessTab />}
-              {value == "5" && <PlayerTrainingModuleTab />}
-              {value == "6" && <PlayerTrainingManagementTab />}
+              {value == "3" && <PlayerTMSITMSTab formik={formik}/>}
+              {value == "4" && <PlayerFitnessTab formik={formik}/>}
+              {value == "5" && <PlayerTrainingModuleTab formik={formik}/>}
+              {value == "6" && <PlayerTrainingManagementTab formik={formik}/>}
               {value == "7" && <PlayerProfileTab />}
-              {value == "8" && <PlayerStatisticTab />}
+              {value == "8" && <PlayerStatisticTab formik={formik}/>}
               {value == "9" && <>Evaluation</>}
-              {value == "10" && <PlayerCommunicationTab />}
+              {value == "10" && <PlayerCommunicationTab formik={formik}/>}
             </Container>
           </Container>
         </Box>

@@ -49,7 +49,7 @@ const Federation = () => {
             setFederationFinance(res)
         })
         setShowFederationFinanceDialog(true)
-       } catch (error) {
+       } catch (error) { 
         console.log(error);
        } 
     };

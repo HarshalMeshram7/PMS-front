@@ -24,7 +24,6 @@ const Clubs = () => {
     const handleOpenClubDetails = (club) => {
         
         getClub({id:club.ID}).then((res)=>{
-            console.log(res);
             setClub(res)
             setShowClubDetailsDialog(true)
         })

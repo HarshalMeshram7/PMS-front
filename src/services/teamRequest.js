@@ -1,6 +1,6 @@
 import axios from "axios";
 import useStorage from "src/hooks/useStorage";
-import { MAIN_URL,MAIN_URL2 } from "./apiConfig";
+import { MAIN_URL2 } from "./apiConfig";
 
 // Add Team
 export const addTeam = async (data) => {
@@ -9,7 +9,7 @@ export const addTeam = async (data) => {
         throw "No Token";
     }
     try {
-        const res = await axios.post(`${MAIN_URL}/api/team/addTeam/`, data, {
+        const res = await axios.post(`${MAIN_URL2}/api/team/addTeam/`, data, {
             headers: {
                 Authorization: "Bearer " + token,
             },
@@ -66,7 +66,7 @@ export const deleteTeam = async (email) => {
     }
     try {
 
-        const res = await axios.post(`${MAIN_URL}/api/team/deleteteam/`,{email:email}, {
+        const res = await axios.post(`${MAIN_URL2}/api/team/deleteteam/`,{email:email}, {
             headers: {
                 Authorization: "Bearer " + token,
             },

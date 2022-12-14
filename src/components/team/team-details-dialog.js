@@ -11,6 +11,7 @@ import {
     Divider,
     Card,
     CardContent,
+    IconButton,
     CardActions,
     FormControl,
     InputLabel,
@@ -21,42 +22,146 @@ import {
 import { useEffect, useState } from "react";
 import LoadingBox from "src/components/common/loading-box";
 import { PlayerListResults } from "src/components/player/player-list-results";
-import { players } from "../../__mocks__/players.js";
 import { useFormik } from "formik";
+import DeleteIcon from "@mui/icons-material/Delete";
+import uploadFileToBlob, { deleteBlob, handlePriview, getFileName } from "src/utils/azureBlob";
 import * as Yup from "yup";
 import { useSnackbar } from "notistack";
-import { deleteAcademy } from "src/services/academyRequest.js";
 import banner from '../../../public/static/images/background/register.jpg';
+import { deleteTeam } from "src/services/teamRequest.js";
 
 
 export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
     const { enqueueSnackbar } = useSnackbar();
-    const user = {
-        avatar: team.logo,
-        city: team.address,
-        country: 'USA',
-        jobTitle: 'Senior Developer',
-        name: team.academyName,
-        timezone: 'GTM-7'
-    };
+
+    console.log(team);
+    
     const [loading, setLoading] = useState();
+
+    //   logo upload
+    const [selectedLogo, setSelectedLogo] = useState(null);
+    const [selectedLogoName, setSelectedLogoName] = useState("");
+
+    const [uploadedLogo, setUploadedLogo] = useState(false);
+    const [uploadedLogoName, setUploadedLogoName] = useState("");
+    //  banner banner
+    const [selectedBanner, setSelectedBanner] = useState(null);
+    const [selectedBannerName, setSelectedBannerName] = useState("");
+
+    const [uploadedBanner, setUploadedBanner] = useState(false);
+    const [uploadedBannerName, setUploadedBannerName] = useState("");
+
+    useEffect(() => {
+        if (team?.Logo !== "") {
+            if (team?.Logo !== null) {
+                if (team?.Logo !== undefined) {
+                    setUploadedLogoName(getFileName(team?.Logo));
+                    setUploadedLogo(true);
+                } else {
+                    setUploadedLogoName("");
+                    setUploadedLogo(false);
+                }
+            } else {
+                setUploadedLogoName("");
+                setUploadedLogo(false);
+            }
+        } else {
+            setUploadedLogoName("");
+            setUploadedLogo(false);
+        }
+
+        if (team?.Banner !== "" || team?.Banner !== undefined) {
+            if (team?.Banner !== null) {
+                if (team?.Banner !== undefined) {
+                    setUploadedBannerName(getFileName(team?.Banner));
+                    setUploadedBanner(true);
+                } else {
+                    setUploadedBannerName("");
+                    setUploadedBanner(false);
+                }
+            } else {
+                setUploadedBannerName("");
+                setUploadedBanner(false);
+            }
+        } else {
+            setUploadedBannerName("");
+            setUploadedBanner(false);
+        }
+    }, [team]);
+
+    const onFileChnage = (e) => {
+        if (e.target.name == "logo") {
+            setUploadedLogo(false);
+            setSelectedLogo(e.target.files[0]);
+            setSelectedLogoName(e.target.files[0].name);
+        }
+
+        if (e.target.name == "banner") {
+            setUploadedBanner(false);
+            setSelectedBanner(e.target.files[0]);
+            setSelectedBannerName(e.target.files[0].name);
+        }
+    };
+    const onFileUpload = async (file, id) => {
+        setLoading(true);
+
+        // *** UPLOAD TO AZURE STORAGE ***
+        const blobsInContainer = await uploadFileToBlob(file).then(() => {
+            if (id == 1) {
+                // prepare UI for results
+                setUploadedLogo(true);
+                setUploadedLogoName(selectedLogoName);
+                //   reseting selected files
+                setSelectedLogo(null);
+                setSelectedLogoName("");
+            }
+
+            if (id == 2) {
+                // prepare UI for results
+                setUploadedBanner(true);
+                setUploadedBannerName(selectedBannerName);
+                //   reseting selected files
+                setSelectedBanner(null);
+                setSelectedBannerName("");
+            }
+        });
+
+        setLoading(false);
+    };
+
+    const onDeleteFile = (fileName, id) => {
+        deleteBlob(fileName).then(() => {
+            if (id == 1) {
+                setSelectedLogo(null);
+                setUploadedLogoName("");
+                setUploadedLogo(false);
+            }
+
+            if (id == 2) {
+                setSelectedBanner(null);
+                setUploadedBannerName("");
+                setUploadedBanner(false);
+            }
+        });
+    };
+
 
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
-            TeamName: "",
-            TeamAddress: "",
-            TeamPhone: "",
-            TeamEmail: "",
-            TeamContactPerson: "",
-            TeamDivisions: "",
-            TeamAdminManager: "",
-            TeamCoordinatorTMS: "",
-            TeamCoordinatorITMS: "",
-            Accreditation: "",
-            Facebook: "",
-            Twitter: "",
-            LinkedIn: "",
+            TeamName: "Sultan 11",
+            TeamAddress: "Address",
+            TeamPhone: "9876543210",
+            TeamEmail: "team@gmail.com",
+            TeamContactPerson: "contact person",
+            TeamDivisions: "division",
+            TeamAdminManager: "admin manager",
+            TeamCoordinatorTMS: "TMS",
+            TeamCoordinatorITMS: "ITMS",
+            Accreditation: "Accreditation",
+            Facebook: "Facebook",
+            Twitter: "Twitter",
+            LinkedIn: "LinkedIn",
             logo: "",
             banner: "",
             // sportsList: [],
@@ -137,7 +242,8 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
 
         setLoading(true);
         try {
-            deleteAcademy(data).then((response) => {
+            let finalData = { team: data }
+            deleteTeam(finalData).then((response) => {
                 if (response.status == "success") {
                     handleClose();
                     enqueueSnackbar("Team Deleted Succesfully", { variant: "success" });
@@ -152,6 +258,8 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
             });
         } catch (error) {
             console.log(error);
+            setLoading(false);
+        } finally {
             setLoading(false);
         }
     }
@@ -204,7 +312,7 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
                                                 }}
                                             >
                                                 <Avatar
-                                                    src={user.avatar}
+                                                    src={team?.logo}
                                                     sx={{
                                                         height: 64,
                                                         mb: 2,
@@ -216,20 +324,20 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
                                                     gutterBottom
                                                     variant="h5"
                                                 >
-                                                    {user.name}
+                                                    {team?.Team}
                                                 </Typography>
-                                                <Typography
+                                                {/* <Typography
                                                     color="textSecondary"
                                                     variant="body2"
                                                 >
-                                                    {team.email}
-                                                </Typography>
-                                                <Typography
+                                                    {team?.email}
+                                                </Typography> */}
+                                                {/* <Typography
                                                     color="textSecondary"
                                                     variant="body2"
                                                 >
-                                                    {`${user.city}`}
-                                                </Typography>
+                                                    {team.address}
+                                                </Typography> */}
                                                 {/* <Typography
                                                     color="textSecondary"
                                                     variant="body2"
@@ -259,12 +367,50 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
                                                         margin="dense"
                                                         name="logo"
                                                         onBlur={formik.handleBlur}
-                                                        onChange={formik.handleChange}
+                                                        onChange={onFileChnage}
                                                         type="file"
                                                         value={formik.values.logo}
                                                         variant="outlined"
                                                     />
                                                     <Button onClick={() => { document.getElementById("uploadTeamLogo").click() }}>Upload Logo</Button>
+
+                                                    <Button disabled>
+                                                        <Typography>{selectedLogoName}</Typography>
+                                                    </Button>
+                                                    {uploadedLogo ? (
+                                                        <Button disabled variant="contained">
+                                                            Uploaded &#10004;{" "}
+                                                        </Button>
+                                                    ) : (
+                                                        <Button
+                                                            variant="contained"
+                                                            disabled={!selectedLogo}
+                                                            onClick={(e) => {
+                                                                onFileUpload(selectedLogo, 1);
+                                                            }}
+                                                        >
+                                                            Upload
+                                                        </Button>
+                                                    )}
+                                                    {uploadedLogo ? (
+                                                        <>
+                                                            <Button target="blank" href={handlePriview(uploadedLogoName)}>
+                                                                <Typography>{uploadedLogoName}</Typography>
+                                                            </Button>
+                                                            <IconButton
+                                                                onClick={() => {
+                                                                    onDeleteFile(uploadedLogoName, 1);
+                                                                }}
+                                                                aria-label="delete"
+                                                                size="small"
+                                                            >
+                                                                <DeleteIcon />
+                                                            </IconButton>
+                                                        </>
+                                                    ) : (
+                                                        ""
+                                                    )}
+
                                                 </CardActions>
                                             </Grid>
                                             <Grid
@@ -283,12 +429,52 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
                                                         margin="dense"
                                                         name="banner"
                                                         onBlur={formik.handleBlur}
-                                                        onChange={formik.handleChange}
+                                                        onChange={onFileChnage}
                                                         type="file"
                                                         value={formik.values.banner}
                                                         variant="outlined"
                                                     />
                                                     <Button onClick={() => { document.getElementById("uploadTeamBanner").click() }}>Upload Banner</Button>
+
+                                                    <Button disabled>
+                                                        <Typography>{selectedBannerName}</Typography>
+                                                    </Button>
+                                                    {uploadedBanner ? (
+                                                        <Button disabled variant="contained">
+                                                            Uploaded &#10004;{" "}
+                                                        </Button>
+                                                    ) : (
+                                                        <Button
+                                                            variant="contained"
+                                                            disabled={!selectedBanner}
+                                                            onClick={(e) => {
+                                                                onFileUpload(selectedBanner, 2);
+                                                            }}
+                                                        >
+                                                            Upload
+                                                        </Button>
+                                                    )}
+                                                    <br></br>
+                                                    {uploadedBanner ? (
+                                                        <>
+                                                            <Button target="blank" href={handlePriview(uploadedBannerName)}>
+                                                                <Typography>{uploadedBannerName}</Typography>
+                                                            </Button>
+                                                            <IconButton
+                                                                onClick={() => {
+                                                                    onDeleteFile(uploadedBannerName, 2);
+                                                                }}
+                                                                aria-label="delete"
+                                                                size="small"
+                                                            >
+                                                                <DeleteIcon />
+                                                            </IconButton>
+                                                        </>
+                                                    ) : (
+                                                        ""
+                                                    )}
+
+
                                                 </CardActions>
                                             </Grid>
                                         </Grid>
@@ -623,10 +809,10 @@ export const TeamDetailsDialog = ({ open, handleClose, team, mutate }) => {
                                 </Grid>
                             </Grid>
                             {/* Teams List */}
-                            <Typography>Teams - Teams </Typography>
+                            {/* <Typography>Teams - Teams </Typography>
                             <Box sx={{ mt: 3 }}>
                                 <PlayerListResults players={players} />
-                            </Box>
+                            </Box> */}
 
                         </Container>
                     </Box>

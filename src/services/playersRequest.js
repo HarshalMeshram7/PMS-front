@@ -1,15 +1,15 @@
 import axios from "axios";
 import useStorage from "src/hooks/useStorage";
-import { MAIN_URL,MAIN_URL2 } from "./apiConfig";
+import { MAIN_URL2 } from "./apiConfig";
 
-// Add Club
-export const addClub = async (data) => {
+// Add Players
+export const addPlayers = async (data) => {
     const { token } = useStorage();
     if (!token) {
         throw "No Token";
     }
     try {
-        const res = await axios.post(`${MAIN_URL2}/Saveclub`, data, {
+        const res = await axios.post(`${MAIN_URL2}/SavePlayer`, data, {
             headers: {
                 Authorization: "Bearer " + token,
             },
@@ -20,14 +20,34 @@ export const addClub = async (data) => {
         throw error;
     }
 };
-// Get All Club
-export const getAllClubs = async (params) => {
+
+// Update Players
+export const updatePlayers = async (data) => {
     const { token } = useStorage();
-    if (!token) { 
+    if (!token) {
         throw "No Token";
     }
     try {
-        const res = await axios.get(`${MAIN_URL2}/getCLubListbypattern`, {
+        const res = await axios.post(`${MAIN_URL2}/UpdatePlayer`, data, {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        });
+        return res.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};
+
+// Get All Players
+export const getAllPlayers = async (params) => {
+    const { token } = useStorage();
+    if (!token) {
+        throw "No Token";
+    }
+    try {
+        const res = await axios.get(`${MAIN_URL2}/getPlayersbypattern`, {
             params: params,
             headers: {
                 Authorization: "Bearer " + token,
@@ -39,56 +59,43 @@ export const getAllClubs = async (params) => {
         throw error;
     }
 };
-// Get Club
-export const getClub = async (params) => {
+
+// Get players Details by ID
+export const getPlayerByID = async (params) => {
     const { token } = useStorage();
-    if (!token) {
-        throw "No Token";
-    }
-    try {
-        const res = await axios.get(`${MAIN_URL2}/getClub`, {
-            params: params,
-            headers: {
-                Authorization: "Bearer " + token,
-            },
-        });
-        return res?.data?.result[0];
-    } catch (error) {
-        console.log(error);
-        throw error;
+    if (params == {} || params == undefined || params == null) {
+        return
+    }else{
+
+        try {
+            const res = await axios.get(`${MAIN_URL2}/getPlayerDetailsByID`, {
+                params: {ID:params},
+                headers: {
+                    Authorization: "Bearer " + token,
+                },
+            });
+            return res?.data?.result;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
     }
 };
 
-export const deleteClub = async (ID) => {
+export const deletePlayer = async (data) => {
     const { token } = useStorage();
     if (!token) {
         throw "No Token";
     }
     try {
 
-        const res = await axios.post(`${MAIN_URL2}/deleteclub/`,{club:ID}, {
+        const res = await axios.delete(`${MAIN_URL2}/deleteplayer/`, {
             headers: {
                 Authorization: "Bearer " + token,
             },
+            data
         });
-        return res.data;
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
-};
-// Update Club
-export const updateClub = async (data) => {
-    const { token } = useStorage();
-    if (!token) {
-        throw "No Token";
-    }
-    try {
-        const res = await axios.post(`${MAIN_URL2}/Updateclub`, data, {
-            headers: {
-                Authorization: "Bearer " + token,
-            },
-        });
+        console.log(res);
         return res.data;
     } catch (error) {
         console.log(error);

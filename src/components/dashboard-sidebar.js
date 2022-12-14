@@ -127,17 +127,17 @@ const items = [
     role: '3'
   },
 
-  {
-    href: '/scorecard',
-    icon: (<AssignmentIcon fontSize="small" />),
-    title: 'Scorecard',
-    role: '3'
-  },
 
   {
     href: '/tournament-matches',
     icon: (<TourIcon fontSize="small" />),
     title: 'Tournaments and Matches',
+    role: '3'
+  },
+  {
+    href: '/scorecard',
+    icon: (<AssignmentIcon fontSize="small" />),
+    title: 'Scorecard',
     role: '3'
   },
 
@@ -148,12 +148,12 @@ const items = [
     role: '3'
   },
 
-  {
-    href: '/profile',
-    icon: (<ManageAccountsIcon fontSize="small" />),
-    title: 'Profile',
-    role: '4'
-  },
+  // {
+  //   href: '/profile',
+  //   icon: (<ManageAccountsIcon fontSize="small" />),
+  //   title: 'Profile',
+  //   role: '4'
+  // },
   // {
   //   href: '/settings',
   //   icon: (<CogIcon fontSize="small" />),
@@ -277,13 +277,11 @@ export const DashboardSidebar = (props) => {
           }}
         />
         <Box sx={{ flexGrow: 1 }}>
-          {items.filter(item =>
-
-
-            item.role <= access[0][role]
-
-
-          ).map((item) => (
+          {items
+          // .filter(item =>
+          //   item.role <= access[0][role]
+          // )
+          .map((item) => (
             <NavItem
               key={item.title}
               icon={item.icon}

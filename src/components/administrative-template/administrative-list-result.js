@@ -9,7 +9,6 @@ import {
   Checkbox,
   Table,
   TableBody,
-  Button,
   TableCell,
   TableHead,
   TablePagination,
@@ -20,41 +19,42 @@ import { getInitials } from '../../utils/get-initials';
 
 
 
-export const PlayerListResults = ({ players, handleOpenPlayerDetails, handleOpenDeleteDialogue,  ...rest }) => {
-  const [selectedPlayerIds, setSelectedPlayerIds] = useState([]);
+export const AdministrativeListResults = ({ administrative,handleOpenAdministrativeDetails, ...rest }) => {
+  const [selectedContractIds, setSelectedContractIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
+
   const handleSelectAll = (event) => {
-    let newSelectedPlayerIds;
+    let newSelectedContractIds;
 
     if (event.target.checked) {
-      newSelectedPlayerIds = players.map((customer) => customer.id);
+      newSelectedContractIds = administrative.map((customer) => customer.id);
     } else {
-      newSelectedPlayerIds = [];
+      newSelectedContractIds = [];
     }
 
-    setSelectedPlayerIds(newSelectedPlayerIds);
+    setSelectedContractIds(newSelectedContractIds);
   };
 
   const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedPlayerIds.indexOf(id);
-    let newSelectedPlayerIds = [];
+    const selectedIndex = selectedContractIds.indexOf(id);
+    let newSelectedContractIds = [];
 
     if (selectedIndex === -1) {
-      newSelectedPlayerIds = newSelectedPlayerIds.concat(selectedPlayerIds, id);
+      newSelectedContractIds = newSelectedContractIds.concat(selectedContractIds, id);
     } else if (selectedIndex === 0) {
-      newSelectedPlayerIds = newSelectedPlayerIds.concat(selectedPlayerIds.slice(1));
-    } else if (selectedIndex === selectedPlayerIds.length - 1) {
-      newSelectedPlayerIds = newSelectedPlayerIds.concat(selectedPlayerIds.slice(0, -1));
+      newSelectedContractIds = newSelectedContractIds.concat(selectedContractIds.slice(1));
+    } else if (selectedIndex === selectedContractIds.length - 1) {
+      newSelectedContractIds = newSelectedContractIds.concat(selectedContractIds.slice(0, -1));
     } else if (selectedIndex > 0) {
-      newSelectedPlayerIds = newSelectedPlayerIds.concat(
-        selectedPlayerIds.slice(0, selectedIndex),
-        selectedPlayerIds.slice(selectedIndex + 1)
+      newSelectedContractIds = newSelectedContractIds.concat(
+        selectedContractIds.slice(0, selectedIndex),
+        selectedContractIds.slice(selectedIndex + 1)
       );
     }
 
-    setSelectedPlayerIds(newSelectedPlayerIds);
+    setSelectedContractIds(newSelectedContractIds);
   };
 
   const handleLimitChange = (event) => {
@@ -65,7 +65,6 @@ export const PlayerListResults = ({ players, handleOpenPlayerDetails, handleOpen
     setPage(newPage);
   };
 
-
   return (
     <Card {...rest}>
       <PerfectScrollbar>
@@ -75,49 +74,49 @@ export const PlayerListResults = ({ players, handleOpenPlayerDetails, handleOpen
               <TableRow>
                 {/* <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedPlayerIds.length === players.length}
+                    checked={selectedContractIds.length === administrative.length}
                     color="primary"
                     indeterminate={
-                      selectedPlayerIds.length > 0
-                      && selectedPlayerIds.length < players.length
+                      selectedContractIds.length > 0
+                      && selectedContractIds.length < administrative.length
                     }
                     onChange={handleSelectAll}
                   />
                 </TableCell> */}
                 <TableCell>
-                  Full Name
+                  Names
                 </TableCell>
                 <TableCell>
                   Email
                 </TableCell>
                 <TableCell>
+                  Location
+                </TableCell>
+                <TableCell>
                   Phone
                 </TableCell>
                 <TableCell>
-                  Action
+                  Registration date
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {players?.slice(0, limit).map((players, key) => (
+              {administrative.slice(0, limit).map((player, key) => (
                 <TableRow
+                 onClick = {handleOpenAdministrativeDetails}
                   hover
-                  style={{ cursor: "pointer" }}
+                  style={{cursor:"pointer"}}
                   key={key}
-                  selected={selectedPlayerIds.indexOf(players.id) !== -1}
+                  selected={selectedContractIds.indexOf(player.id) !== -1}
                 >
-
                   {/* <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedPlayerIds.indexOf(player.id) !== -1}
+                      checked={selectedContractIds.indexOf(player.id) !== -1}
                       onChange={(event) => handleSelectOne(event, player.id)}
                       value="true"
                     />
                   </TableCell> */}
-
-                  <TableCell
-                  onClick={()=>handleOpenPlayerDetails(players)}
-                  >
+                  <TableCell>
                     <Box
                       sx={{
                         alignItems: 'center',
@@ -125,66 +124,50 @@ export const PlayerListResults = ({ players, handleOpenPlayerDetails, handleOpen
                       }}
                     >
                       <Avatar
-                        src={players.Photo}
+                        src={player.avatarUrl}
                         sx={{ mr: 2 }}
                       >
-                        {getInitials(players.FullName)}
+                        {getInitials(player.name)}
                       </Avatar>
                       <Typography
                         color="textPrimary"
                         variant="body1"
                       >
-                        {players.FullName}
+                        {player.name}
                       </Typography>
                     </Box>
                   </TableCell>
-
-                  <TableCell onClick={()=>handleOpenPlayerDetails(players)}                  >
-                    {players.Email}
-                  </TableCell>
-
-                  <TableCell onClick={()=>handleOpenPlayerDetails(players)}
-                  >
-                    {players.ContactNo}
-                  </TableCell>
-
                   <TableCell>
-                    <Button
-                      onClick={() => {
-                        handleOpenDeleteDialogue(players);
-                      }}
-                    >
-                      X
-                    </Button>
+                    {player.email}
                   </TableCell>
-
-                  {/* <TableCell>
+                  <TableCell>
                     {`${player.address.city}, ${player.address.state}, ${player.address.country}`}
-                  </TableCell> */}
-
-                  {/* <TableCell>
+                  </TableCell>
+                  <TableCell>
+                    {player.phone}
+                  </TableCell>
+                  <TableCell>
                     {format(player.createdAt, 'dd/MM/yyyy')}
-                  </TableCell> */}
+                  </TableCell>
                 </TableRow>
-
               ))}
             </TableBody>
           </Table>
         </Box>
       </PerfectScrollbar>
-      {/* <TablePagination
+      <TablePagination
         component="div"
-        count={players.length}
+        count={administrative.length}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleLimitChange}
         page={page}
         rowsPerPage={limit}
         rowsPerPageOptions={[5, 10, 25]}
-      /> */}
+      />
     </Card>
   );
 };
 
-PlayerListResults.propTypes = {
-  players: PropTypes.array.isRequired
+AdministrativeListResults.propTypes = {
+  administrative: PropTypes.array.isRequired
 };

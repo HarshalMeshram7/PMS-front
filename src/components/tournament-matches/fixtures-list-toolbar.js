@@ -11,7 +11,7 @@ import {
   import { Upload as UploadIcon } from '../../icons/upload';
   import { Download as DownloadIcon } from '../../icons/download';
   
-  export const AdministrativeListToolbar = (props) => {
+  export const FixturesListToolbar = (props) => {
   
   return(
     <Box {...props}>
@@ -28,7 +28,7 @@ import {
           sx={{ m: 1 }}
           variant="h4"
         >
-          Administrative Template
+          Tournament and Matches Fixtures
         </Typography>
         <Box sx={{ m: 1 }}>
           {/* <Button
@@ -48,7 +48,7 @@ import {
             variant="contained"
             onClick={ props.handleOpenAddAdministrative }
           >
-            Create Template
+            Create Tournament
           </Button>
         </Box>
       </Box>
@@ -70,7 +70,7 @@ import {
                     </InputAdornment>
                   )
                 }}
-                placeholder="Create Administrative Template"
+                placeholder="Search Tournament"
                 variant="outlined"
               />
             </Box>

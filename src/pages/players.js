@@ -9,23 +9,29 @@ import { PlayerDetailsDialog } from 'src/components/player/player-details-dialog
 import { useAllPlayers } from 'src/adapters/playersAdapter.js';
 import DeleteDialog from "src/components/common/deleteDialog";
 import { deletePlayer } from 'src/services/playersRequest.js';
+import { initialValues } from 'src/components/player/PlayerDetailsData.js';
 
 const Players = () => {
   const [showAddPlayerDialog, setShowAddPlayerDialog] = useState(false);
   const [showPlayerDetailsDialog, setShowPlayerDetailsDialog] = useState(false);
   const [params, setParams] = useState({});
+  const [player, setPlayer] = useState({});
+  const [openDeleteDialogue, setOpenDeleteDialogue] = useState(false);
+  const [initValue, setInitValue] = useState(null);
+
 
   const handleOpenAddPlayer = () => setShowAddPlayerDialog(true);
   const handleCloseAddPlayer = () => setShowAddPlayerDialog(false);
 
-  const handleOpenPlayerDetails = () => {
+  const handleOpenPlayerDetails = async (player) => {
+    let res = await initialValues(player.ID)
+    setInitValue(res)
+    setPlayer(player)
     setShowPlayerDetailsDialog(true)
   };
   
   
   const handleClosePlayerDetails = () => setShowPlayerDetailsDialog(false);
-  const [player, setPlayer] = useState({});
-  const [openDeleteDialogue, setOpenDeleteDialogue] = useState(false);
 
   const { players, loading, mutate } = useAllPlayers({ ...params });
 
@@ -83,6 +89,8 @@ const Players = () => {
         />
 
         <PlayerDetailsDialog
+          initValue={initValue}
+          player={player}
           open={showPlayerDetailsDialog}
           handleClose={handleClosePlayerDetails}
         />

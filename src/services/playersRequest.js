@@ -60,25 +60,27 @@ export const getAllPlayers = async (params) => {
     }
 };
 
-// // Get Academy Details
-// export const getAcademy = async (params) => {
-//     const { token } = useStorage();
-//     if (!token) {
-//         throw "No Token";
-//     }
-//     try {
-//         const res = await axios.get(`${MAIN_URL2}/getAcademy`, {
-//             params: params,
-//             headers: {
-//                 Authorization: "Bearer " + token,
-//             },
-//         });
-//         return res?.data?.result[0];
-//     } catch (error) {
-//         console.log(error);
-//         throw error;
-//     }
-// };
+// Get players Details by ID
+export const getPlayerByID = async (params) => {
+    const { token } = useStorage();
+    if (params == {} || params == undefined || params == null) {
+        return
+    }else{
+
+        try {
+            const res = await axios.get(`${MAIN_URL2}/getPlayerDetailsByID`, {
+                params: {ID:params},
+                headers: {
+                    Authorization: "Bearer " + token,
+                },
+            });
+            return res?.data?.result;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+};
 
 export const deletePlayer = async (data) => {
     const { token } = useStorage();

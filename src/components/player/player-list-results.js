@@ -65,7 +65,6 @@ export const PlayerListResults = ({ players, handleOpenPlayerDetails, handleOpen
     setPage(newPage);
   };
 
-  console.log(players);
 
   return (
     <Card {...rest}>
@@ -117,7 +116,7 @@ export const PlayerListResults = ({ players, handleOpenPlayerDetails, handleOpen
                   </TableCell> */}
 
                   <TableCell
-                  onClick={handleOpenPlayerDetails}
+                  onClick={()=>handleOpenPlayerDetails(players)}
                   >
                     <Box
                       sx={{
@@ -140,11 +139,11 @@ export const PlayerListResults = ({ players, handleOpenPlayerDetails, handleOpen
                     </Box>
                   </TableCell>
 
-                  <TableCell onClick={handleOpenPlayerDetails}                  >
+                  <TableCell onClick={()=>handleOpenPlayerDetails(players)}                  >
                     {players.Email}
                   </TableCell>
 
-                  <TableCell onClick={handleOpenPlayerDetails}
+                  <TableCell onClick={()=>handleOpenPlayerDetails(players)}
                   >
                     {players.ContactNo}
                   </TableCell>

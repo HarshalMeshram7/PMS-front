@@ -59,19 +59,12 @@ import { DataModel, initialValues } from "./PlayerDetailsData.js";
 import { getFullName } from "src/utils/getFullName.js";
 import { updatePlayers } from "src/services/playersRequest.js";
 
-export const PlayerDetailsDialog = ({ open, handleClose }) => {
-  const { enqueueSnackbar } = useSnackbar();
-  const user = {
-    avatar: "",
-    city: "",
-    country: "USA",
-    jobTitle: "Senior Developer",
-    name: "club.Club",
-    timezone: "GTM-7",
-  };
-  const [loading, setLoading] = useState();
-  const [value, setValue] = React.useState("0");
+export const PlayerDetailsDialog = ({ open, handleClose ,player ,initValue}) => {
 
+  const { enqueueSnackbar } = useSnackbar();
+  const [loading, setLoading] = useState();
+  const [value, setValue] = useState("0");
+ 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -90,7 +83,7 @@ export const PlayerDetailsDialog = ({ open, handleClose }) => {
 
   const formik = useFormik({
     enableReinitialize: true,
-    initialValues: initialValues,
+    initialValues: initValue,
     validationSchema: Yup.object({}),
 
     onSubmit: async (data) => {
@@ -109,29 +102,6 @@ export const PlayerDetailsDialog = ({ open, handleClose }) => {
       }
     },
   });
-
-  const handleDelete = (data) => {
-    setLoading(true);
-    try {
-      // deleteAcademy(data).then((response) => {
-      //     if (response.status == "success") {
-      //         handleClose();
-      //         enqueueSnackbar("Club Deleted Succesfully", { variant: "success" });
-
-      //         setLoading(false);
-      //     }
-      //     else {
-      //         handleClose();
-      //         enqueueSnackbar(`Error : ${response.message}`, { variant: "error" });
-      //         setLoading(false);
-      //     }
-      // });
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
-  };
 
   return (
     <Dialog
@@ -175,7 +145,7 @@ export const PlayerDetailsDialog = ({ open, handleClose }) => {
                       }}
                     >
                       <Avatar
-                        src={user.avatar}
+                        src=""
                         sx={{
                           height: 64,
                           mb: 2,
@@ -183,13 +153,13 @@ export const PlayerDetailsDialog = ({ open, handleClose }) => {
                         }}
                       />
                       <Typography color="textPrimary" gutterBottom variant="h5">
-                        {getFullName(formik.values.PersonalFirstName, formik.values.PersonalLastName)}
+                        {getFullName(formik.values?.PersonalFirstName, formik.values?.PersonalLastName)}
                       </Typography>
                       <Typography color="textSecondary" variant="body2">
-                        {formik.values.City}
+                        {formik.values?.City}
                       </Typography>
                       <Typography color="textSecondary" variant="body2">
-                        {formik.values.Country}
+                        {formik.values?.Country}
                       </Typography>
                     </Box>
                   </CardContent>
@@ -202,7 +172,7 @@ export const PlayerDetailsDialog = ({ open, handleClose }) => {
                       </Typography>
                     </Grid>
                     <Grid item lg={6} md={6} xs={6}>
-                      <Typography>{formik.values.DateOfBirth}</Typography>
+                      <Typography>{formik.values?.DateOfBirth}</Typography>
                     </Grid>
                     {/* MORE DETAILS OF PLAYER */}
                     <Grid item lg={6} md={6} xs={6}>
@@ -211,7 +181,7 @@ export const PlayerDetailsDialog = ({ open, handleClose }) => {
                       </Typography>
                     </Grid>
                     <Grid item lg={6} md={6} xs={6}>
-                      <Typography>{formik.values.PlayingPosition}</Typography>
+                      <Typography>{formik.values?.PlayingPosition}</Typography>
                     </Grid>
 
                     {/* <Grid item lg={6} md={6} xs={6}>

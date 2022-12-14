@@ -1,120 +1,108 @@
-export const initialValues = {
-  // Personal Information
-  ID: 6,
-  PersonalFirstName: "Monish",
-  PersonalLastName: "Barse",
-  PersonalGender: "Male",
-  PersonalDateOfBirth: "1990-01-01",
-  PersonalPhone: "9876543210",
-  PersonalEmail: "a@gmail.com",
-  PersonalPassword: "Password",
-  PersonalRecoveryEMail: "a@gmail.com",
-  PersonalTypeOfPlayerID: 1,
-  PersonalEducationQualification: "EducationQualification",
-  Personaledudocuments: "edudocuments",
-  Personalphoto: "photo",
-  PersonalBasePrice: "5555",
-  PersonalPlayingPosition: "req.body.PlayingPosition",
-  PersonalTMSITMSApplicable: 1,
-  Personaldocuments: "req.body.documents",
-  PersonalLongDescription: "req.body.LongDescription",
-  PersonalFacebook: "req.body.Facebook",
-  PersonalTwitter: "req.body.Twitter",
-  PersonalLinkedIn: "req.body.Linkedin",
-
-  // Address
-  Address1: "Address1",
-  Address2: "Address2",
-  City: "Nagpur",
-  Country: "India",
-  Nationality: "Nationality",
-  ZipCode: "ZipCode",
-  IsLocal: "0",
-
-  // Player AcademyClub
-  playersacademyclub: {
-    AcademyID: [0, 49],
-    ClubID: [],
-  },
-
-  // Document
-  DocumentTypeID: "1",
-  DocumentStatusID: "1",
-  DocumentFilePath: "documents.pdf",
-
-  Document: {
-    DocumentTypeID: "1",
-    StatusID: "1",
-    FilePath: "documents.pdf",
-  },
-
-  // Parents Information
-  familyinfoName: "Family name ok",
-  familyinfoCity: "Family City ok",
-  familyinfoCountry: "Family country ok",
-  familyinfoJobTelNo: "",
-  familyinfoHomeTelNo: "",
-  familyinfoMobileNo: "78888",
-  familyinfoEmail: "Family mail ok",
-  familyinfoFamilyMember: "",
+import { useState } from "react";
+import { getPlayerByID } from "src/services/playersRequest";
 
 
-  // TMS_ITMS
-  TMS_ITMSTransferdClubID: 1,
-  TMS_ITMSTransferredToWhichClub: "to india 11",
-  TMS_ITMSTransferFromDate: "2021-06-13",
-  TMS_ITMSTransferToDate: "2022-06-14",
-  TMS_ITMSMOUDocument: "mou",
-  TMS_ITMSAgreementDocument: "agree",
-  TMS_ITMSOtherDocuments: "other",
-  TMS_ITMSPaymentDetails: "other ok",      // not in data base table
-
-
-  // Fitness
-  FitnessPhysicalFitnessInfo: "physical ok",
-  FitnessLaboratoryInfo: "labinfo ok",
-  FitnessPastMedication: "no past med ok",
-  FitnessCurrentMedication: "no past med ok",  // not in data base table
-  FitnessPlayersInjuryID: 1,
-  FitnessDietPlan: 1,
-  FitnessTestDetails: "tested ok",    // not in data base table
-  FitnessTestConductedDate: "2021-06-13",    // not in data base table
-  FitnessTestResult: "tested",   // not in data base table
-
-
-  // Training Module
-  TrainingShortTerm: "ok",  // not in data base table
-  TrainingLongTerm: "ok",   // not in data base table
-  TrainingSpecial: "ok",    // not in data base table
-
-
-  //Training Management
-  ManagementPlan: "tested",    // not in data base table
-  ManagementGoalSetting: "tested",   // not in data base table
-
-
-  //Profile
-
-
-  //Player Statistic
-  StaticMatchesPlayed: "checked",     // not in data base table
-  StaticPointScore: "checked",      // not in data base table
-  StaticPenaltyScore: "checked",      // not in data base table
-  StaticVoilations: "checked",      // not in data base table
-  StaticDisqualification: "checked",      // not in data base table
-
-
-  //Evaluation
-
-
-  //Communication
-  CommunicationCoaches: "checked",      // not in data base table
-  CommunicationTeamMember: "checked",     // not in data base table
-  CommunicationGroupMessaging: "checked",     // not in data base table
-  CommunicationLiveChat: "checked",     // not in data base table
-  CommunicationNotificationRemainder: "checked",      // not in data base table
-
-
+export const initialValues = async (ID) => {
+  try {
+    let data = await getPlayerByID(ID)
+   console.log(data)
+    let initialValues = {
+      // Personal Information
+      ID: ID,
+      PersonalFirstName: data?.PersonalInfo[0]?.FirstName || "Enter Name",
+      PersonalLastName: data?.PersonalInfo[0]?.LastName ||"Enter Last Name",
+      PersonalGender: data?.PersonalInfo[0]?.Gender || "Male",
+      PersonalDateOfBirth: data?.PersonalInfo[0]?.DateOfBirth ||"1990-01-01",
+      PersonalPhone: data?.PersonalInfo[0]?.ContactNo ||"9876543210",
+      PersonalEmail: data?.PersonalInfo[0]?.Email || "a@gmail.com",
+      PersonalPassword: data?.PersonalInfo[0]?.Password || "Password",
+      PersonalRecoveryEMail: data?.PersonalInfo[0]?.RecoveryEMail ||"a@gmail.com",
+      PersonalTypeOfPlayerID: data?.PersonalInfo[0]?.PlayersTypeID ||1,
+      PersonalEducationQualification: data?.PersonalInfo[0]?.EducationQualification ||"EducationQualification",
+      Personaledudocuments: data?.PersonalInfo[0]?.HighestEduDocument ||"edudocuments",
+      Personalphoto: data?.PersonalInfo[0]?.Photo || "photo",
+      PersonalBasePrice: data?.PersonalInfo[0]?.BasePrice || "5555",
+      PersonalPlayingPosition: data?.PersonalInfo[0]?.PlayingPosition || "req.body.PlayingPosition",
+      PersonalTMSITMSApplicable: data?.PersonalInfo[0]?.TMS_ITMS || 1,
+      Personaldocuments: data?.PersonalInfo[0]?.TMSdocument || "req.body.documents",
+      PersonalLongDescription: data?.PersonalInfo[0]?.LongDescription || "req.body.LongDescription",
+      PersonalFacebook: data?.PersonalInfo[0]?.Facebook || "req.body.dgfgfgf",
+      PersonalTwitter: data?.PersonalInfo[0]?.Twitter || "req.body.Twitter",
+      PersonalLinkedIn: data?.PersonalInfo[0]?.Linkedin || "req.body.Linkedin",
+      // Address
+      Address1: data?.Address?.Address1 || "Address1",
+      Address2: data?.Address?.Address2 || "Address2",
+      City: data?.Address?.City || "Nagpur",
+      Country: data?.Address?.Country || "India",
+      Nationality: data?.Address?.Nationality || "Nationality",
+      ZipCode: data?.Address?.ZipCode || "ZipCode",
+      IsLocal: data?.Address?.IsLocal || "0",
+      // Player AcademyClub
+      playersacademyclub: {
+        AcademyID: [0, 49],
+        ClubID: [],
+      },
+      // Document
+      DocumentTypeID: data?.Document?.DocumentTypeID || "1",
+      DocumentStatusID: data?.Document?.StatusID || "1",
+      DocumentFilePath: data?.Document?.FilePath || "documents.pdf",
+      Document: {
+        DocumentTypeID: "1",
+        StatusID: "1",
+        FilePath: "documents.pdf",
+      },
+      // Parents Information
+      familyinfoName: data?.familyinfo?.Name || "Family name ok",
+      familyinfoCity: data?.familyinfo?.City || "Family City ok",
+      familyinfoCountry: data?.familyinfo?.Country || "Family country ok",
+      familyinfoJobTelNo: data?.familyinfo?.JobTelNo || "",
+      familyinfoHomeTelNo: data?.familyinfo?.HomeTelNo || "",
+      familyinfoMobileNo: data?.familyinfo?.MobileNo || "78888",
+      familyinfoEmail: data?.familyinfo?.Email || "Family mail ok",
+      familyinfoFamilyMember: data?.familyinfo?.FamilyMember || "",
+      // TMS_ITMS
+      TMS_ITMSTransferdClubID: data?.TMS_ITMS?.ID || 1,
+      TMS_ITMSTransferredToWhichClub: data?.TMS_ITMS?.TransferdClubID || "to india 11",
+      TMS_ITMSTransferFromDate: data?.TMS_ITMS?.TransferFromDate || "2021-06-13",
+      TMS_ITMSTransferToDate: data?.TMS_ITMS?.TransferToDate || "2022-06-14",
+      TMS_ITMSMOUDocument: data?.TMS_ITMS?.MOUDocument || "mou",
+      TMS_ITMSAgreementDocument: data?.TMS_ITMS?.AgreementDocument || "agree",
+      TMS_ITMSOtherDocuments: data?.TMS_ITMS?.OtherDocuments || "other",
+      TMS_ITMSPaymentDetails: "field not in db",      // not in data base table
+      // Fitness
+      FitnessPhysicalFitnessInfo: data?.Fitness?.PhysicalFitness || "physical ok",
+      FitnessLaboratoryInfo: data?.Fitness?.LabInfo || "labinfo ok",
+      FitnessPastMedication: data?.Fitness?.PastMedication || "no past med ok",
+      FitnessCurrentMedication: "field not in db",  // not in data base table
+      FitnessPlayersInjuryID: data?.Fitness?.PlayersInjuryID || 1,
+      FitnessDietPlan: data?.Fitness?.DietPlan || 1,
+      FitnessTestDetails: "field not in db",    // not in data base table
+      FitnessTestConductedDate: "2021-06-13",    // not in data base table
+      FitnessTestResult: "field not in db",   // not in data base table
+      // Training Module
+      TrainingShortTerm: "field not in db",  // not in data base table
+      TrainingLongTerm: "field not in db",   // not in data base table
+      TrainingSpecial: "field not in db",    // not in data base table
+      //Training Management
+      ManagementPlan: "field not in db",    // not in data base table
+      ManagementGoalSetting: "field not in db",   // not in data base table
+      //Profile
+      //Player Statistic
+      StaticMatchesPlayed: "field not in db",     // not in data base table
+      StaticPointScore: "field not in db",      // not in data base table
+      StaticPenaltyScore: "field not in db",      // not in data base table
+      StaticVoilations: "field not in db",      // not in data base table
+      StaticDisqualification: "field not in db",      // not in data base table
+      //Evaluation
+      //Communication
+      CommunicationCoaches: "field not in db",      // not in data base table
+      CommunicationTeamMember: "field not in db",     // not in data base table
+      CommunicationGroupMessaging: "field not in db",     // not in data base table
+      CommunicationLiveChat: "field not in db",     // not in data base table
+      CommunicationNotificationRemainder: "field not in db",      // not in data base table
+    }
+    return initialValues
+  } catch (err) { console.log(err) }
 };
 
 export const DataModel = (data) => {
